@@ -1,0 +1,332 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <title>ST表 | YLQQ のBLOG</title>
+        <meta name="author" content="YLQQ">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <link rel="icon" href="https://img-blog.csdnimg.cn/63ad414cab504eaaaedb4e264c7f708a.jpeg">
+        <script src="https://cdn.staticfile.org/instant.page/5.1.0/instantpage.min.js" type="module"></script>
+        <script src="https://cdn.staticfile.org/font-awesome/6.1.1/js/all.min.js"></script>
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+        
+        <link rel="stylesheet" href="/dist/APlayer.min.css">
+        
+        <script src="https://cdn.staticfile.org/vue/3.2.33/vue.global.prod.min.js"></script>
+        
+        <script src="/js/anime.js"></script>
+    <meta name="generator" content="Hexo 5.4.2"></head>
+    <body>
+        <div id="loading" style="height:100vh;width:100vw;position:fixed;display:flex;z-index:200;justify-content:space-between;background:#fff;transition:opacity 0.3s ease-out"><div style="position:fixed;height:100vh;width:100vw;display:flex;justify-content:center;align-items:center"><div id="loadcontent" style="width:50vmin;height:50vmin;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px #a3ddfb;text-align:center"><div><h2>LOADING...</h2><p style="word-break:keep-all">加载过慢请开启缓存(浏览器默认开启)</p><div><img alt="loading" src="/loading.gif"></div></div></div></div></div>
+        <div id="layout">
+            <i data-fa-symbol="calendar-solid" class="fa-solid fa-calendar fa-fw"></i>
+            <i data-fa-symbol="bookmark-solid" class="fa-solid fa-bookmark fa-fw"></i>
+            <i data-fa-symbol="tags-solid" class="fa-solid fa-tags fa-fw"></i>
+            <transition name="into">
+                <div v-show="show_page" style="display: -not-none">
+                    <div id="menu_show">
+                         
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">YLQQ のBLOG</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;HOME</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;ME</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archive</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Classification</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://www.acwing.com/user/myspace/index/174985/">
+            <i class="fa-solid fa-a fa-fw"></i>
+            <span>&ensp;Acwing</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/user/673830">
+            <i class="fa-solid fa-l fa-fw"></i>
+            <span>&ensp;Luogu</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_62886369?spm=1000.2115.3001.5343">
+            <i class="fa-solid fa-c fa-fw"></i>
+            <span>&ensp;CSDN</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://www.bilibili.com/">
+            <i class="fa-brands fa-bilibili fa-fw"></i>
+            <span>&ensp;bilibili</span>
+        </a>
+        
+    </div>
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div class="curtain" @click="menu_show = !menu_show" v-show="menu_show"></div>
+        <div :class="'title'" @click="menu_show = !menu_show">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;YLQQ のBLOG</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">HOME</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">ME</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archive</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Classification</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://www.acwing.com/user/myspace/index/174985/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-a fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Acwing</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/user/673830">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-l fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Luogu</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_62886369?spm=1000.2115.3001.5343">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-c fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">CSDN</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://www.bilibili.com/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-brands fa-bilibili fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">bilibili</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+                    </div>
+                    <div id="main">
+                        
+<div class="article">
+    <div>
+        <h1>ST表 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+            </span>
+            2022/8/15
+        </span>
+        
+        <span class="category">
+            <a href="/categories/ST表/">
+                <span class="icon">
+                    <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
+                </span>
+                ST表
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/倍增/" style="color: #03a9f4">
+                    倍增
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/区间最值/" style="color: #00a596">
+                    区间最值
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    <div class="content" v-pre>
+        <p><strong>预处理区间最值O(nlogn)</strong></p>
+<p><strong>查询O(1)</strong></p>
+<span id="more"></span>
+<p>对于一组长度为N的队列，进行M次询问，每次询问一个区间，查找该区间内的最大数值</p>
+<p>如果用暴力枚举的话，时间复杂度最坏能到O(N<em>N</em>M)，当数据量大时肯定会TLE</p>
+<p>ST表是一种预处理复杂度为O(logn)，查询复杂度为O(1)的一种查区间最值的方法，但是这种方法有缺陷，仅限于数据元素不变的静态表，当数据元素会实时发生变化时并不适用（用线段树解决动态区间最值问题，蒻苟还没学线段树，不会这个）</p>
+<p>ST表，预处理二维数组 st [ i ][ j ]，其中表示数组中第 i 位置开始 2^j 个位置内的最值，所以对于int类型，j的范围就在30以下，该预处理二维数组的大小还是挺小的。<br><img src="https://img-blog.csdnimg.cn/f2d16d5a779b4335b95aac6aabbd4c28.png"><br>有点类似倍增，我们发现 st [ 3 ][ 2 ] 可以将2分成两个1，就是把2^2分成了2^1的两个部分，用 max ( st [ 3 ][ 1 ]，st [ 5 ][ 1 ] ) 两个部分来表示 st [ 3 ][ 2 ] 的区间最大值。</p>
+<p>查询的时候先计算出查询区间的长度(我们需要找到一个最大的k满足2^k&lt;=len)，因为不能保证区间长度是2的次方，所以我们需要在区间内找到一个x值，使得 x + 2^k -1= r，因此</p>
+<p>x=r-2^k+1 ，我们只需要查询 max ( st [ l ][ m ] ，st [ r - ( 1&lt;&lt;m ) + 1 ][ m ] ))即可</p>
+<pre><code>#include &lt;bits/stdc++.h&gt;
+#define rep(i,n,m) for(int i=n;i&lt;=m;++i)
+#define per(i,n,m) for(int i=n;i&gt;=m;--i)
+using namespace std;
+const int N=2e6+10;
+int st[N][30];
+//这个区间是左闭右开 是[N,N+2^30)
+int main()
+&#123;
+    ios::sync_with_stdio(0);cin.tie(0);
+    int n,q;cin&gt;&gt;n&gt;&gt;q;
+    rep(i,1,n)cin&gt;&gt;st[i][0]; 第i个位置到i+2^0位置的最值，[i,i+2^0)，左闭右开 
+    rep(j,1,30)&#123;  //枚举区间的长度，从 2^0 → 2^30
+        for(int i=1;i+(1&lt;&lt;j)-1&lt;=n;++i)&#123;   //
+           //防止数组值越界，因此区间右值不能超过数组右端点 i+(1&lt;&lt;j)-1
+            st[i][j]=max(st[i][j-1],st[i+(1&lt;&lt;j-1)][j-1]);
+        &#125;
+    &#125;
+    while (q--) &#123;
+        int l,r;cin&gt;&gt;l&gt;&gt;r;
+        int m=log(r-l+1)/log(2);
+        //l到r之间的长度大小（2的次方）
+        cout&lt;&lt;max(st[l][m],st[r-(1&lt;&lt;m)+1][m]))&lt;&lt;&#39;\n&#39;;
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+<p>当然，也可以用ST表查询最小值，静态区间最值问题都可以解决，要抓紧时间学学线段树了，马上就大二了。。。</p>
+<p>附上洛谷 题目：<br><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3865">P3865 【模板】ST 表 - 洛谷 | 计算机科学教育新生态 </a></p>
+
+    </div>
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.7.2/gitalk.min.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                         
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2022 - 2022 YLQQ のBLOG
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            @YLQQ
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+</footer>
+                    </div>
+                </div>
+            </transition>
+            <div id="img_show">
+                <img id="img_content" alt="img_show">
+            </div>
+        </div>
+        
+        <canvas id="background" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1"></canvas>
+        <canvas id="fireworks" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:2147483647"></canvas>
+       
+        <div id="aplayer"></div>
+        <script src="/js/firework.js"></script>
+        <script src="/js/background.js"></script>
+        <script src="/dist/APlayer.min.js"></script>
+        <script src="/dist/music.js"></script>
+        <script src="https://cdn.staticfile.org/highlight.js/11.5.1/highlight.min.js"></script>
+        <script src="/js/particlex.js"></script>
+        <script src="/js/showimg.js"></script>
+        
+<script src="https://cdn.staticfile.org/gitalk/1.7.2/gitalk.min.js"></script>
+<script>
+    var clientID = "0493fa1263c54a7ccd58", clientSecret = "61ccc8d414025003b773ee525ba8a2dc912052c8";
+    
+    const gitalk = new Gitalk({
+        clientID: clientID,
+        clientSecret: clientSecret,
+        repo: "ylqqqq.github.io",
+        owner: "YLQQQQ",
+        admin: ["YLQQQQ"],
+        language: "zh-CN",
+        id: location.pathname,
+        distractionFreeMode: false,
+        
+    })
+    gitalk.render("gitalk-container")
+</script>
+
+
+    </body>
+</html>

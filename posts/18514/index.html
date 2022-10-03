@@ -1,0 +1,345 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <title>codeforces135D | YLQQ のBLOG</title>
+        <meta name="author" content="YLQQ">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <link rel="icon" href="https://img-blog.csdnimg.cn/63ad414cab504eaaaedb4e264c7f708a.jpeg">
+        <script src="https://cdn.staticfile.org/instant.page/5.1.0/instantpage.min.js" type="module"></script>
+        <script src="https://cdn.staticfile.org/font-awesome/6.1.1/js/all.min.js"></script>
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+        
+        <link rel="stylesheet" href="/dist/APlayer.min.css">
+        
+        <script src="https://cdn.staticfile.org/vue/3.2.33/vue.global.prod.min.js"></script>
+        
+        <script src="/js/anime.js"></script>
+    <meta name="generator" content="Hexo 5.4.2"></head>
+    <body>
+        <div id="loading" style="height:100vh;width:100vw;position:fixed;display:flex;z-index:200;justify-content:space-between;background:#fff;transition:opacity 0.3s ease-out"><div style="position:fixed;height:100vh;width:100vw;display:flex;justify-content:center;align-items:center"><div id="loadcontent" style="width:50vmin;height:50vmin;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px #a3ddfb;text-align:center"><div><h2>LOADING...</h2><p style="word-break:keep-all">加载过慢请开启缓存(浏览器默认开启)</p><div><img alt="loading" src="/loading.gif"></div></div></div></div></div>
+        <div id="layout">
+            <i data-fa-symbol="calendar-solid" class="fa-solid fa-calendar fa-fw"></i>
+            <i data-fa-symbol="bookmark-solid" class="fa-solid fa-bookmark fa-fw"></i>
+            <i data-fa-symbol="tags-solid" class="fa-solid fa-tags fa-fw"></i>
+            <transition name="into">
+                <div v-show="show_page" style="display: -not-none">
+                    <div id="menu_show">
+                         
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">YLQQ のBLOG</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;HOME</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;ME</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archive</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Classification</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://www.acwing.com/user/myspace/index/174985/">
+            <i class="fa-solid fa-a fa-fw"></i>
+            <span>&ensp;Acwing</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/user/673830">
+            <i class="fa-solid fa-l fa-fw"></i>
+            <span>&ensp;Luogu</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_62886369?spm=1000.2115.3001.5343">
+            <i class="fa-solid fa-c fa-fw"></i>
+            <span>&ensp;CSDN</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://www.bilibili.com/">
+            <i class="fa-brands fa-bilibili fa-fw"></i>
+            <span>&ensp;bilibili</span>
+        </a>
+        
+    </div>
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div class="curtain" @click="menu_show = !menu_show" v-show="menu_show"></div>
+        <div :class="'title'" @click="menu_show = !menu_show">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;YLQQ のBLOG</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">HOME</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">ME</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archive</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Classification</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://www.acwing.com/user/myspace/index/174985/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-a fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Acwing</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/user/673830">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-l fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Luogu</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_62886369?spm=1000.2115.3001.5343">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-c fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">CSDN</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://www.bilibili.com/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-brands fa-bilibili fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">bilibili</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+                    </div>
+                    <div id="main">
+                        
+<div class="article">
+    <div>
+        <h1>codeforces135D </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+            </span>
+            2022/9/9
+        </span>
+        
+        <span class="category">
+            <a href="/categories/codeforces/">
+                <span class="icon">
+                    <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
+                </span>
+                codeforces
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/博弈论/" style="color: #ff7d73">
+                    博弈论
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/动态规划/" style="color: #00bcd4">
+                    动态规划
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/Nim游戏/" style="color: #03a9f4">
+                    Nim游戏
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    <div class="content" v-pre>
+        <p><strong>这场我真的会谢，A题都看错意思了快20min才开出来</strong><br><strong>c做到一半以为不会就玩手机去了，结束后仔细做会儿改个bug就出来了</strong><br><strong>so，补个D吧</strong></p>
+<span id="more"></span>
+
+<p>题目给t(1&lt;=t&lt;=1000)个操作，每个操作输入一个源字符串(长度为偶，且len&lt;=2000)，同时Alice和Bob各有一个字符串且初始都为空，即””。<br>每次操作每个人可以从源字符串的头或尾选择一个字符剪切到自己字符串的头部。<br>当源字符串为空时，两个人的字符串按字典序比较，小的人获胜。<br>问是Alice或BOb胜还是平局。</p>
+<p>字符区间为[l,r]时，每一轮二人都可选择一个字符,显然有以下选择</p>
+<pre><code>Alice Bob
+s[l]  s[l+1]
+s[l]  s[r]
+s[r]  s[l]
+s[r]  s[r-1]
+</code></pre>
+<p>对于一轮操作中的两个字符，要么s[i]==s[j],要么s[i]!=[j]，可知Alice先手，则先手必然选择最优结果<br>以此类推当两个字符不同时，Alice是必胜状态，此外Bob不存在胜利情况。</p>
+<p>我们可以用一个二维dp[i][j] 表示下标 i 到 j 之间Alice是否处于必胜状态，否则就是平局</p>
+<p>由题目数据可知我们要查询区每段区间，有（n*n）/2 的复杂度，因为数据量比较小，还是可以过的</p>
+<pre><code>int dp[3000][3000];
+int dfs(int l,int r)&#123;
+    //已经查询过了
+    if(dp[l][r]!=-1)return dp[l][r];
+    //仅剩最后两个字符，不相等则Alice必胜，反之平局
+    if(l+1==r)return s[l]!=s[r];
+    int flag=0;
+    //查询四种情况，要么选择的使得Alice必胜，要么剩下的字符串使得Alice必胜
+
+    //当Alice选择s[l]时，不论Bob选择s[l+1]ors[r]都赢
+    if((dfs(l+2,r)||s[l]&lt;s[l+1])&amp;&amp;(dfs(l+1,r-1)||s[l]&lt;s[r]))flag=1;
+    //当Alice选择s[r]时，不论Bob选择s[r-1]ors[l]都赢
+    if((dfs(l,r-2)||s[r]&lt;s[r-1])&amp;&amp;(dfs(l+1,r-1)||s[r]&lt;s[l]))flag=1;
+    return dp[l][r] = flag;
+&#125;
+void solve()
+&#123;
+    cin&gt;&gt;s;
+    int len=s.size();s=&#39; &#39;+s;
+    //初始化
+    rep(i,1,len)&#123;
+        rep(j,1,len)&#123;
+            dp[i][j]=-1;
+        &#125;
+    &#125;
+    if(dfs(1,len))cout&lt;&lt;&quot;Alice&quot;&lt;&lt;endl;
+    else cout&lt;&lt;&quot;Draw&quot;&lt;&lt;endl;
+&#125;
+</code></pre>
+<p>害。<br><img src="https://img-blog.csdnimg.cn/img_convert/c406b389bdf3ecd325544e5eec2a97c1.jpeg"></p>
+
+    </div>
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.7.2/gitalk.min.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                         
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2022 - 2022 YLQQ のBLOG
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            @YLQQ
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+</footer>
+                    </div>
+                </div>
+            </transition>
+            <div id="img_show">
+                <img id="img_content" alt="img_show">
+            </div>
+        </div>
+        
+        <canvas id="background" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1"></canvas>
+        <canvas id="fireworks" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:2147483647"></canvas>
+       
+        <div id="aplayer"></div>
+        <script src="/js/firework.js"></script>
+        <script src="/js/background.js"></script>
+        <script src="/dist/APlayer.min.js"></script>
+        <script src="/dist/music.js"></script>
+        <script src="https://cdn.staticfile.org/highlight.js/11.5.1/highlight.min.js"></script>
+        <script src="/js/particlex.js"></script>
+        <script src="/js/showimg.js"></script>
+        
+<script src="https://cdn.staticfile.org/gitalk/1.7.2/gitalk.min.js"></script>
+<script>
+    var clientID = "0493fa1263c54a7ccd58", clientSecret = "61ccc8d414025003b773ee525ba8a2dc912052c8";
+    
+    const gitalk = new Gitalk({
+        clientID: clientID,
+        clientSecret: clientSecret,
+        repo: "ylqqqq.github.io",
+        owner: "YLQQQQ",
+        admin: ["YLQQQQ"],
+        language: "zh-CN",
+        id: location.pathname,
+        distractionFreeMode: false,
+        
+    })
+    gitalk.render("gitalk-container")
+</script>
+
+
+    </body>
+</html>

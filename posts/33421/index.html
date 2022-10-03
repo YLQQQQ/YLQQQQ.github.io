@@ -1,0 +1,428 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <title>区间数据离散化 | YLQQ のBLOG</title>
+        <meta name="author" content="YLQQ">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <link rel="icon" href="https://img-blog.csdnimg.cn/63ad414cab504eaaaedb4e264c7f708a.jpeg">
+        <script src="https://cdn.staticfile.org/instant.page/5.1.0/instantpage.min.js" type="module"></script>
+        <script src="https://cdn.staticfile.org/font-awesome/6.1.1/js/all.min.js"></script>
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+        
+        <link rel="stylesheet" href="/dist/APlayer.min.css">
+        
+        <script src="https://cdn.staticfile.org/vue/3.2.33/vue.global.prod.min.js"></script>
+        
+        <script src="/js/anime.js"></script>
+    <meta name="generator" content="Hexo 5.4.2"></head>
+    <body>
+        <div id="loading" style="height:100vh;width:100vw;position:fixed;display:flex;z-index:200;justify-content:space-between;background:#fff;transition:opacity 0.3s ease-out"><div style="position:fixed;height:100vh;width:100vw;display:flex;justify-content:center;align-items:center"><div id="loadcontent" style="width:50vmin;height:50vmin;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px #a3ddfb;text-align:center"><div><h2>LOADING...</h2><p style="word-break:keep-all">加载过慢请开启缓存(浏览器默认开启)</p><div><img alt="loading" src="/loading.gif"></div></div></div></div></div>
+        <div id="layout">
+            <i data-fa-symbol="calendar-solid" class="fa-solid fa-calendar fa-fw"></i>
+            <i data-fa-symbol="bookmark-solid" class="fa-solid fa-bookmark fa-fw"></i>
+            <i data-fa-symbol="tags-solid" class="fa-solid fa-tags fa-fw"></i>
+            <transition name="into">
+                <div v-show="show_page" style="display: -not-none">
+                    <div id="menu_show">
+                         
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">YLQQ のBLOG</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;HOME</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;ME</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archive</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Classification</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://www.acwing.com/user/myspace/index/174985/">
+            <i class="fa-solid fa-a fa-fw"></i>
+            <span>&ensp;Acwing</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/user/673830">
+            <i class="fa-solid fa-l fa-fw"></i>
+            <span>&ensp;Luogu</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_62886369?spm=1000.2115.3001.5343">
+            <i class="fa-solid fa-c fa-fw"></i>
+            <span>&ensp;CSDN</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://www.bilibili.com/">
+            <i class="fa-brands fa-bilibili fa-fw"></i>
+            <span>&ensp;bilibili</span>
+        </a>
+        
+    </div>
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div class="curtain" @click="menu_show = !menu_show" v-show="menu_show"></div>
+        <div :class="'title'" @click="menu_show = !menu_show">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;YLQQ のBLOG</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">HOME</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">ME</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archive</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Classification</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://www.acwing.com/user/myspace/index/174985/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-a fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Acwing</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/user/673830">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-l fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Luogu</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_62886369?spm=1000.2115.3001.5343">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-c fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">CSDN</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://www.bilibili.com/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-brands fa-bilibili fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">bilibili</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+                    </div>
+                    <div id="main">
+                        
+<div class="article">
+    <div>
+        <h1>区间数据离散化 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+            </span>
+            2022/4/27
+        </span>
+        
+        <span class="category">
+            <a href="/categories/数据离散化/">
+                <span class="icon">
+                    <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
+                </span>
+                数据离散化
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/区间操作/" style="color: #ff7d73">
+                    区间操作
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/二分/" style="color: #ff7d73">
+                    二分
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    <div class="content" v-pre>
+        <p><strong>区间区间又是区间…</strong></p>
+<span id="more"></span>
+
+<p> 对于一类范围很大，而实际用到的范围又很小的题目，如下题，数轴上的范围2*10^9次，而实际上有操作过的个数最多有n个，如果用前缀和计算该题的话在数据小的情况下是可以做的，但是本题范围若有前缀和的话遍历加每一个值也必然会tle，这时候我们就用到了离散化这个方法</p>
+<p>**AcWing 802. 区间和 **  </p>
+<p>假定有一个无限长的数轴，数轴上每个坐标上的数都是 0。</p>
+<p>现在，我们首先进行 n 次操作，每次操作将某一位置 x 上的数加 c。</p>
+<p>接下来，进行 m 次询问，每个询问包含两个整数 l 和 r，你需要求出在区间 [l,r] 之间的所有数的和。</p>
+<p>输入格式</p>
+<p>第一行包含两个整数 n 和 m。</p>
+<p>接下来 n 行，每行包含两个整数 x 和 c。</p>
+<p>再接下来 m 行，每行包含两个整数 l 和 r。</p>
+<p>输出格式</p>
+<p>共 m 行，每行输出一个询问中所求的区间内数字和。</p>
+<p>数据范围</p>
+<p>−10^9≤x≤10^9<br>1≤n,m≤10^5<br>−10^9≤l≤r≤10^9<br>−10000≤c≤10000</p>
+<p>输入样例：</p>
+<pre><code>3 3
+1 2
+3 6
+7 5
+1 3
+4 6
+7 8
+</code></pre>
+<p>输出样例：</p>
+<pre><code>8
+0
+5
+</code></pre>
+<p>题解： </p>
+<p>把需要操作的位置都放到 all 数组里，对于操作的数据我们放在 add 内，对于要查询的区间我们放在 query 内，此外我们定义一个 find（x） 函数来查找数值为x的值在 all 数组内的下标，在放完所有数据之后，我们要对 all 数组内的值整理一次，先用sort使数据有序排列，这样才能保证在用find查找下标的时候有效进行，然后还得对 all 数组内相同的数据进行清除，然后遍历 add 内的值，给a数组进行赋值，再对all遍历计算有效前缀和，最后遍历query输出答案</p>
+<pre><code>例如:
+ 
+在最以下数据进行操作之后
+   1 2
+   3 6
+   7 5
+ 
+   1 3
+   4 6
+   7 8
+ 
+读取数据之后各vector的内容
+ 
+   add&#123;&#123;1,2&#125;,&#123;3,6&#125;,&#123;7,5&#125;&#125;
+ 
+   query&#123;&#123;1,3&#125;,&#123;4,6&#125;,&#123;7,8&#125;&#125;
+ 
+   all&#123;1,3,7,1,3,4,6,7,8&#125;
+ 
+对all排序去重之后为
+   
+   all&#123;1,3,4,6,7,8&#125;   //即在数轴上就用到了这些位置
+   
+   先遍历add对a数组进行操作后
+ 
+    a &#123;2， 6 ，0， 0 ， 5 ，0 &#125;
+   
+   然后用sum计算a内的前缀和
+   
+   sum&#123;2 , 8 , 8 , 8 , 13, 13 &#125;   
+   
+   然后遍历query内的值，对sum中的范围进行求差（得用find查找all中下标）
+   
+   而对应的sum下标和值即为
+ 
+        0   1   2   3   4   5
+   sum &#123;2 , 8 , 8 , 8 , 13, 13 &#125; 
+    all&#123;1,  3,  4,  6,   7,  8 &#125;  
+   所以对以下三个区间
+      1 3
+      4 6
+      7 8
+   三个用find查找的下标区间为
+      0 1
+      2 3
+      4 5
+   计算得出答案
+</code></pre>
+<p>   代码呈上😉😉😉😉 </p>
+<pre><code>#include &lt;bits/stdc++.h&gt;
+#define repp(i,n,m) for(int i=n;i&lt;=m;++i)
+#define reps(i,n,m) for(int i=n;i&gt;=m;--i)
+#define INF 0x3f3f3f3f
+using namespace std;
+typedef long long ll;
+typedef pair&lt;int,int&gt; PII;
+const int N=300010;
+int a[N],sum[N];
+vector&lt;PII&gt; add,query;
+vector&lt;int&gt;all;
+int find(int x)&#123;    //离散化查找下标
+ int l=0,r=all.size()-1;
+ while(l&lt;r)&#123;
+     int mid=l+r&gt;&gt;1;
+     if(all[mid]&gt;=x)r=mid;
+     else l=mid+1;
+ &#125;
+ return r+1;
+&#125;
+int main()
+&#123;
+ ios::sync_with_stdio(0);cin.tie(0);
+ int n,m;cin&gt;&gt;n&gt;&gt;m;
+ repp(i,1,n)&#123;        //数据读入
+     int x,y;cin&gt;&gt;x&gt;&gt;y;
+     add.push_back(&#123;x,y&#125;);
+     all.push_back(x);
+ &#125;
+ repp(i,1,m)&#123;
+     int x,y;cin&gt;&gt;x&gt;&gt;y;
+     query.push_back(&#123;x,y&#125;);
+     all.push_back(x);
+     all.push_back(y);
+ &#125;
+ 
+ sort(all.begin(),all.end());        //排序+去重
+ all.erase(unique(all.begin(),all.end()),all.end());
+ 
+ for(auto it:add)&#123;        //赋值操作
+     int x=find(it.first);
+     a[x]+=it.second;
+ &#125; 
+ 
+ repp(i,1,all.size()) sum[i]=sum[i-1]+a[i];   //前缀和计算
+ 
+ for(auto it : query) &#123;                       //区间和
+     int l=find(it.first),r=find(it.second);
+     cout&lt;&lt;sum[r]-sum[l-1]&lt;&lt;endl;
+ &#125;
+ return 0;
+&#125;
+</code></pre>
+
+    </div>
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.7.2/gitalk.min.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                         
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2022 - 2022 YLQQ のBLOG
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            @YLQQ
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+</footer>
+                    </div>
+                </div>
+            </transition>
+            <div id="img_show">
+                <img id="img_content" alt="img_show">
+            </div>
+        </div>
+        
+        <canvas id="background" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1"></canvas>
+        <canvas id="fireworks" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:2147483647"></canvas>
+       
+        <div id="aplayer"></div>
+        <script src="/js/firework.js"></script>
+        <script src="/js/background.js"></script>
+        <script src="/dist/APlayer.min.js"></script>
+        <script src="/dist/music.js"></script>
+        <script src="https://cdn.staticfile.org/highlight.js/11.5.1/highlight.min.js"></script>
+        <script src="/js/particlex.js"></script>
+        <script src="/js/showimg.js"></script>
+        
+<script src="https://cdn.staticfile.org/gitalk/1.7.2/gitalk.min.js"></script>
+<script>
+    var clientID = "0493fa1263c54a7ccd58", clientSecret = "61ccc8d414025003b773ee525ba8a2dc912052c8";
+    
+    const gitalk = new Gitalk({
+        clientID: clientID,
+        clientSecret: clientSecret,
+        repo: "ylqqqq.github.io",
+        owner: "YLQQQQ",
+        admin: ["YLQQQQ"],
+        language: "zh-CN",
+        id: location.pathname,
+        distractionFreeMode: false,
+        
+    })
+    gitalk.render("gitalk-container")
+</script>
+
+
+    </body>
+</html>

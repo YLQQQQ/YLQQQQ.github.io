@@ -1,0 +1,404 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <title>codeforces792BCD | YLQQ のBLOG</title>
+        <meta name="author" content="YLQQ">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <link rel="icon" href="https://img-blog.csdnimg.cn/63ad414cab504eaaaedb4e264c7f708a.jpeg">
+        <script src="https://cdn.staticfile.org/instant.page/5.1.0/instantpage.min.js" type="module"></script>
+        <script src="https://cdn.staticfile.org/font-awesome/6.1.1/js/all.min.js"></script>
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+        
+        <link rel="stylesheet" href="/dist/APlayer.min.css">
+        
+        <script src="https://cdn.staticfile.org/vue/3.2.33/vue.global.prod.min.js"></script>
+        
+        <script src="/js/anime.js"></script>
+    <meta name="generator" content="Hexo 5.4.2"></head>
+    <body>
+        <div id="loading" style="height:100vh;width:100vw;position:fixed;display:flex;z-index:200;justify-content:space-between;background:#fff;transition:opacity 0.3s ease-out"><div style="position:fixed;height:100vh;width:100vw;display:flex;justify-content:center;align-items:center"><div id="loadcontent" style="width:50vmin;height:50vmin;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px #a3ddfb;text-align:center"><div><h2>LOADING...</h2><p style="word-break:keep-all">加载过慢请开启缓存(浏览器默认开启)</p><div><img alt="loading" src="/loading.gif"></div></div></div></div></div>
+        <div id="layout">
+            <i data-fa-symbol="calendar-solid" class="fa-solid fa-calendar fa-fw"></i>
+            <i data-fa-symbol="bookmark-solid" class="fa-solid fa-bookmark fa-fw"></i>
+            <i data-fa-symbol="tags-solid" class="fa-solid fa-tags fa-fw"></i>
+            <transition name="into">
+                <div v-show="show_page" style="display: -not-none">
+                    <div id="menu_show">
+                         
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">YLQQ のBLOG</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;HOME</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;ME</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archive</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Classification</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://www.acwing.com/user/myspace/index/174985/">
+            <i class="fa-solid fa-a fa-fw"></i>
+            <span>&ensp;Acwing</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/user/673830">
+            <i class="fa-solid fa-l fa-fw"></i>
+            <span>&ensp;Luogu</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_62886369?spm=1000.2115.3001.5343">
+            <i class="fa-solid fa-c fa-fw"></i>
+            <span>&ensp;CSDN</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://www.bilibili.com/">
+            <i class="fa-brands fa-bilibili fa-fw"></i>
+            <span>&ensp;bilibili</span>
+        </a>
+        
+    </div>
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div class="curtain" @click="menu_show = !menu_show" v-show="menu_show"></div>
+        <div :class="'title'" @click="menu_show = !menu_show">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;YLQQ のBLOG</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">HOME</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">ME</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archive</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Classification</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://www.acwing.com/user/myspace/index/174985/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-a fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Acwing</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/user/673830">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-l fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Luogu</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_62886369?spm=1000.2115.3001.5343">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-c fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">CSDN</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://www.bilibili.com/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-brands fa-bilibili fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">bilibili</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+                    </div>
+                    <div id="main">
+                        
+<div class="article">
+    <div>
+        <h1>codeforces792BCD </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+            </span>
+            2022/5/20
+        </span>
+        
+        <span class="category">
+            <a href="/categories/codeforces/">
+                <span class="icon">
+                    <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
+                </span>
+                codeforces
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/思维/" style="color: #00a596">
+                    思维
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/贪心/" style="color: #00bcd4">
+                    贪心
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    <div class="content" v-pre>
+        <p><strong>这么好的日子宅寝室写题解</strong><br><strong>QAQ</strong></p>
+<span id="more"></span>
+<p> B：</p>
+<p>题意：输入题目给定的a，b，c，（其中a&lt;b&lt;c）求三个值x，y，z 使得满足</p>
+<p>x mod y = a,     1</p>
+<p>y mod z = b,     2</p>
+<p>z mod x = c      3</p>
+<p>输出任何满足条件的x，y，z</p>
+<p>题解：要求任意满足条件的三个值互相取模得到输入值，我们不妨假设一个输出的值就是其对应的输入值，如y=b，此时要求得另外两解，我们可以对a和c进行调用，我们可以发现以下规律，但是这会有一个特殊情况，因为c使最大的，所以 a+b+c&lt;3*c，a+b+c 可能是  a+b 的整数倍 ，所以固定y值时可能出现第三个条件不满足的情况，所以我们应该固定最大的z对应的c值。<br><img src="https://img-blog.csdnimg.cn/257a77cfcb7f4f9aa21a14a74f519511.png"></p>
+<pre><code>#include&lt;iostream&gt;
+using namespace std;
+void solve()
+&#123;
+    int a,b,c;cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;
+    cout&lt;&lt;a+b+c&lt;&lt;&#39; &#39;&lt;&lt;b+c&lt;&lt;&#39; &#39;&lt;&lt;c&lt;&lt;endl;
+&#125;
+int main()
+&#123;
+    int n;cin&gt;&gt;n;
+    while(n--)solve();
+&#125;
+</code></pre>
+<p> C ：</p>
+<p>题意：</p>
+<p>对每组数据输入 n * m (1 ≤  n, m ≤ 2⋅10^5 )的矩阵，其中每个位置的值不超过10^9，要求对换两列元素使得矩阵每行非递增，输出对调的两列下标，若不存在满足情况的两列则输出 -1</p>
+<p>题解：</p>
+<p>先找到任一 一行的非递减的的位置下标存入数组bb，记该行不满足的下标数量为num，若num大于2则直接输出 -1，若 num==0 即矩阵本就满足情况，输出1  1，若以上情况都不存在即num==2的时候，对调矩阵中每行该下标位置的元素值，然后遍历每一行元素判断是否非递减排列，若不满足输出-1，否则最后输出 两个下标位置。</p>
+<pre><code>#include &lt;bits/stdc++.h&gt;
+#define rep(i,n,m) for(int i=n;i&lt;=m;++i)
+#define per(i,n,m) for(int i=n;i&gt;=m;--i)
+using namespace std;
+typedef long long ll;;
+void solve()
+&#123;
+    int n,m;cin&gt;&gt;n&gt;&gt;m;
+    vector&lt;vector&lt;int&gt;&gt; a(n,vector&lt;int&gt;(m));
+    vector&lt;int&gt; bb;
+    rep(i,0,n-1)
+        rep(j,0,m-1)
+            cin&gt;&gt;a[i][j];   //输入每个元素值
+        
+    for(int i=0;i&lt;n&amp;&amp;bb.empty();++i)&#123;   
+        //当下标越界或者该行发现有不满足条件的元素出现时跳出
+        vector&lt;int&gt; b=a[i];
+        sort(b.begin(),b.end());  //对数组b排序，然后对原数值进行比较
+        for(int j=0;j&lt;m;++j)&#123;
+            if(a[i][j]!=b[j])bb.push_back(j);  //加入不满足的下标
+        &#125;
+    &#125;
+    if(bb.size()==0)&#123;cout&lt;&lt;1&lt;&lt;&#39; &#39;&lt;&lt;1&lt;&lt;endl;return ;&#125;  //不存在不满足的情况
+    else if(bb.size()&gt;2)&#123;cout&lt;&lt;-1&lt;&lt;endl;return ;&#125;   //不满足的情况太多，&gt;2
+    rep(i,0,n-1)swap(a[i][bb[0]],a[i][bb[1]]);    //否则交换两列数值
+    rep(i,0,n-1)&#123;
+        rep(j,0,m-2)&#123;
+            if(a[i][j]&gt;a[i][j+1])&#123;       //判断是否满足条件
+                cout&lt;&lt;-1&lt;&lt;endl;
+                return ;
+            &#125;
+        &#125;
+    &#125;
+    cout&lt;&lt;bb[0]+1&lt;&lt;&#39; &#39;&lt;&lt;bb[1]+1&lt;&lt;endl;  //因为记的下标是从0开始的，所以记得+1
+    
+&#125;
+int main()
+&#123;
+    ios::sync_with_stdio(0);cin.tie(0);
+    int n;cin&gt;&gt;n;
+    while(n--)solve();
+    return 0;
+&#125;
+</code></pre>
+<p>天啦噜，昨晚开a【200001】【200001】的数组爆栈了，麻木了我一个多小时，今天学到了个新招 ，用vector 开二维，就 vector&lt;vector<int>&gt; a(n,vector<int>(m)); 这样写，是 n * m 的二维数组。</p>
+<p>D</p>
+<p>题意：每组数据给定 n 个陷阱的伤害值，k 次跳越一个陷阱的机会，每跳过一个陷阱，后面所有的陷阱伤害值都会 +1，求经过所有陷阱后所受伤害的 最小值。</p>
+<p>题解：</p>
+<p>当所有的陷阱都要跳进去时，所受伤害就是每个陷阱伤害值的和 ans，对于每一个陷阱，如果跳过当前的陷阱，对于整体所受的伤害 ans 就是 ans = ans - a [ i ] +( n - i )  = n - i - a [ i ] ，而对于当前跳的第 j 个陷阱，若跳过该陷阱 ，后面还有 k - j 次机会可以跳，即还有k - j 个陷阱的+1 不用算到ans之中去，所有对于k次机会，一共有 （k - 1）*k / 2点伤害不用承受。</p>
+<p>我们只需求出跳越每个陷阱对整体所减少的伤害值，并贪心求最大减伤即可。</p>
+<pre><code>#include &lt;bits/stdc++.h&gt;
+#define rep(i,n,m) for(int i=n;i&lt;=m;++i)
+#define per(i,n,m) for(int i=n;i&gt;=m;--i)
+//#define INF 0x3f3f3f3f
+using namespace std;
+typedef long long ll;
+const int N=200010;
+void solve()
+&#123;
+    ll n,k,ans=0;cin&gt;&gt;n&gt;&gt;k;
+    
+    vector&lt; ll &gt;a(n);
+    
+    for(int i=0;i&lt;n;++i)&#123;
+        int x;cin&gt;&gt;x;
+        ans+=x;      //计总伤害值
+        a[i]=1LL*(n-i-1-x);   //记得取1LL，不然会超范围
+    &#125;        
+    sort(a.begin(),a.end());  
+ 
+    rep(i,0,k-1)  ans+=a[i];  //贪心使伤害最小化
+ 
+    cout&lt;&lt; ans - ( k * (k-1) / 2 )&lt;&lt;endl;  //减去对当前跳过的陷阱后面跳过的陷阱+1的伤害
+&#125;
+int main()
+&#123;
+    ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+    int n;cin&gt;&gt;n;
+    while(n--)solve();
+    return 0;
+&#125;
+</code></pre>
+<p>cf分天天掉，上绿还没稳住一直拼命往下掉，<del>蒻苟本狗</del></p>
+
+    </div>
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.7.2/gitalk.min.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                         
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2022 - 2022 YLQQ のBLOG
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            @YLQQ
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+</footer>
+                    </div>
+                </div>
+            </transition>
+            <div id="img_show">
+                <img id="img_content" alt="img_show">
+            </div>
+        </div>
+        
+        <canvas id="background" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1"></canvas>
+        <canvas id="fireworks" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:2147483647"></canvas>
+       
+        <div id="aplayer"></div>
+        <script src="/js/firework.js"></script>
+        <script src="/js/background.js"></script>
+        <script src="/dist/APlayer.min.js"></script>
+        <script src="/dist/music.js"></script>
+        <script src="https://cdn.staticfile.org/highlight.js/11.5.1/highlight.min.js"></script>
+        <script src="/js/particlex.js"></script>
+        <script src="/js/showimg.js"></script>
+        
+<script src="https://cdn.staticfile.org/gitalk/1.7.2/gitalk.min.js"></script>
+<script>
+    var clientID = "0493fa1263c54a7ccd58", clientSecret = "61ccc8d414025003b773ee525ba8a2dc912052c8";
+    
+    const gitalk = new Gitalk({
+        clientID: clientID,
+        clientSecret: clientSecret,
+        repo: "ylqqqq.github.io",
+        owner: "YLQQQQ",
+        admin: ["YLQQQQ"],
+        language: "zh-CN",
+        id: location.pathname,
+        distractionFreeMode: false,
+        
+    })
+    gitalk.render("gitalk-container")
+</script>
+
+
+    </body>
+</html>

@@ -1,0 +1,431 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <title>Dijkstra | YLQQ のBLOG</title>
+        <meta name="author" content="YLQQ">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <link rel="icon" href="https://img-blog.csdnimg.cn/63ad414cab504eaaaedb4e264c7f708a.jpeg">
+        <script src="https://cdn.staticfile.org/instant.page/5.1.0/instantpage.min.js" type="module"></script>
+        <script src="https://cdn.staticfile.org/font-awesome/6.1.1/js/all.min.js"></script>
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+        
+        <link rel="stylesheet" href="/dist/APlayer.min.css">
+        
+        <script src="https://cdn.staticfile.org/vue/3.2.33/vue.global.prod.min.js"></script>
+        
+        <script src="/js/anime.js"></script>
+    <meta name="generator" content="Hexo 5.4.2"></head>
+    <body>
+        <div id="loading" style="height:100vh;width:100vw;position:fixed;display:flex;z-index:200;justify-content:space-between;background:#fff;transition:opacity 0.3s ease-out"><div style="position:fixed;height:100vh;width:100vw;display:flex;justify-content:center;align-items:center"><div id="loadcontent" style="width:50vmin;height:50vmin;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px #a3ddfb;text-align:center"><div><h2>LOADING...</h2><p style="word-break:keep-all">加载过慢请开启缓存(浏览器默认开启)</p><div><img alt="loading" src="/loading.gif"></div></div></div></div></div>
+        <div id="layout">
+            <i data-fa-symbol="calendar-solid" class="fa-solid fa-calendar fa-fw"></i>
+            <i data-fa-symbol="bookmark-solid" class="fa-solid fa-bookmark fa-fw"></i>
+            <i data-fa-symbol="tags-solid" class="fa-solid fa-tags fa-fw"></i>
+            <transition name="into">
+                <div v-show="show_page" style="display: -not-none">
+                    <div id="menu_show">
+                         
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">YLQQ のBLOG</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;HOME</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;ME</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archive</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Classification</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://www.acwing.com/user/myspace/index/174985/">
+            <i class="fa-solid fa-a fa-fw"></i>
+            <span>&ensp;Acwing</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/user/673830">
+            <i class="fa-solid fa-l fa-fw"></i>
+            <span>&ensp;Luogu</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_62886369?spm=1000.2115.3001.5343">
+            <i class="fa-solid fa-c fa-fw"></i>
+            <span>&ensp;CSDN</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://www.bilibili.com/">
+            <i class="fa-brands fa-bilibili fa-fw"></i>
+            <span>&ensp;bilibili</span>
+        </a>
+        
+    </div>
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div class="curtain" @click="menu_show = !menu_show" v-show="menu_show"></div>
+        <div :class="'title'" @click="menu_show = !menu_show">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;YLQQ のBLOG</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">HOME</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">ME</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archive</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Classification</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://www.acwing.com/user/myspace/index/174985/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-a fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Acwing</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/user/673830">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-l fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Luogu</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_62886369?spm=1000.2115.3001.5343">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-c fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">CSDN</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://www.bilibili.com/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-brands fa-bilibili fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">bilibili</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+                    </div>
+                    <div id="main">
+                        
+<div class="article">
+    <div>
+        <h1>Dijkstra </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+            </span>
+            2022/6/13
+        </span>
+        
+        <span class="category">
+            <a href="/categories/Dijkstra/">
+                <span class="icon">
+                    <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
+                </span>
+                Dijkstra
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/最短路/" style="color: #00bcd4">
+                    最短路
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/单源/" style="color: #00a596">
+                    单源
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    <div class="content" v-pre>
+        <p><strong>堆优化的dijkstra板子</strong>*</p>
+<span id="more"></span>
+<p>对于单源最短路的问题，目前已知最快的解决算法就是堆优化处理过的dijkstra（条件当然是不存在负边的情况下，若存在负边的情况则要用spfa辽，但是蒻苟不会嘻嘻🤭）</p>
+<p>dijkstra的本质是贪心，对于求目标两个位置间的最短权边和，查找从起点位置到每个点的最短距离，同时更新与该当前点相关的点的距离。</p>
+<p>这种存图方式只需要开一个数组存储每个点引出的第一条边，然后存储每个点作为起点的每条边，这样就可以做到不重不漏。</p>
+<p>在链式前向星存图中，我们需要定义一个结构体：</p>
+<pre><code>struct EDGE 
+&#123;
+    int next;
+    int to;
+&#125;edge[1000000];
+</code></pre>
+<p>和一个数组</p>
+<pre><code>int head[1000000];
+</code></pre>
+<p>和一个变量：</p>
+<pre><code>int cnt=0;//指针
+</code></pre>
+<p>你会发现竟然没存起点！！其实起点是用headhead存的</p>
+<p><strong>举例：</strong><br><img src="https://img-blog.csdnimg.cn/4251f50ed86040a7bcb9cc38c9a646e4.png"><br>如图：这样的一个有向图，输入是：</p>
+<pre><code>1 2
+1 3
+1 4
+2 3
+</code></pre>
+<p><strong>逐步分析：</strong><br>1.输入1 2，代表1连向2。</p>
+<pre><code>cnt++;//作为结构体下标，没有意义
+head[1]=cnt;//结点1的第一个儿子存在了edge[cnt]里面
+edge[cnt].to=2;结点1的儿子是2
+</code></pre>
+<p>此时： cnt=1</p>
+<p><img src="https://img-blog.csdnimg.cn/b685f2dda2604fc5bf0ae668134aa5a5.png"></p>
+<p>2.输入1 3，代表1连向3。</p>
+<pre><code>cnt++;
+head[1]=cnt;
+edge[cnt].to=3;结点1的儿子是3
+//这时,3成为了结点1的儿子，不过2被挤了下去...
+//所以要引入结构体中next元素，记录：3还有个兄弟（next）是2
+//所以代码要换成：
+cnt++;
+edge[cnt].to=3;//结点1连向3
+edge[cnt].next=head[1];//3的兄弟是2
+head[1]=cnt;//更新head
+</code></pre>
+<p>此时： cnt=2<br><img src="https://img-blog.csdnimg.cn/d1790bebf3bd4e1997bdb8e6808cb914.png"><br>3.输入1 4，代表1连向4。<br>此时cnt=3<br><img src="https://img-blog.csdnimg.cn/f7c6347d69b14f3d9cb6a7a23a2d2cdf.png"><br>4.输入2 3，代表2连向3。</p>
+<p>此时： cnt=4<br><img src="https://img-blog.csdnimg.cn/94eec493c18b481eb72a64f8db4ade5c.png"><br>可以理解的是，next存的是当前结点连接的最近的兄弟结点的下标，如1-&gt;2，1-&gt;3，1-&gt;4，则4的next是3，3的next是2。</p>
+<p>而head 存的是当前结点指向的最远的结点的下标，1-&gt;2，1-&gt;3，则head [1] =3，</p>
+<p>对于带权值的问题，在结构体中加入一个元素记录权值即可</p>
+<p>代码：(带权值）</p>
+<pre><code>#include&lt;iostream&gt;
+using namespace std;
+struct edge 
+&#123; 
+    int next;
+    int to;
+    int wei;
+&#125;edge[MAXM];
+int head[MAXN];//head[i]为i点的第一条边
+int cnt=0;
+void addedge(int u,int v,int w) //起点，终点，权值 
+&#123;
+    edge[++cnt].next=head[u];//更新cnt
+    edge[cnt].to=v;
+    edge[cnt].w=w;
+    head[u]=cnt;
+&#125;
+int main()
+&#123;
+    int n;
+    for(int i=1;i&lt;=n;i++)
+    &#123;
+        int a,b,wei;
+        addedge(a,b,wei);
+        //如果是无向图，还要addedge(b,a,wei);
+    &#125;
+&#125;
+</code></pre>
+<p><strong>边的遍历</strong></p>
+<p>在遍历以x为起点的所有边时，只需要这样就行</p>
+<pre><code>    for(int i=head[x];i!=0;i=edge[i].next)
+</code></pre>
+<p>这个循环的结束条件是i等于0，因为最后一条边，也就是存边时第一条边，在把head值存进next时，head还没有更新过，也就是0。所以当next返回0时，就说明这些边遍历完毕了。</p>
+<p><strong>代码</strong><br><strong>堆优化</strong></p>
+<p>在寻找最短值的时候，用优先队列priority_queue&lt;pair&lt;int,int&gt;&gt;来存储，其中的pair中记录的分别是每条边的权值和终点结点。</p>
+<p>优化完成后的总复杂度为O(mlogn)</p>
+<pre><code>#include &lt;bits/stdc++.h&gt;
+#define rep(i,n,m) for(int i=n;i&lt;=m;++i)
+#define per(i,n,m) for(int i=n;i&gt;=m;--i)
+#define INF 0x3f3f3f3f
+using namespace std;
+typedef long long ll;
+const int N=250010;
+int head[N],ne[N],to[N],w[N],dist[N];
+// head记录当前结点连接的最远结点的下标，ne记录当前结点连接的最近结点的下标，
+//to记录当前边指向的结点，w记录权值，dist记录目标起点到各个点的最短距离
+bool st[N];  //记录当前结点是否已经找到最短距离
+int n,m,s,cnt=0;  //cnt是记录每次数据的指针，相当于下标
+void addw(int a,int b,int c)&#123;
+    w[++cnt]=c;
+    to[cnt]=b;
+    ne[cnt]=head[a];  //更新指向最近结点的下标
+    head[a]=cnt;  //更新指向最远结点的下标
+&#125;
+void Dijkstra()
+&#123;
+    priority_queue&lt;pair&lt;int,int&gt;,vector&lt;pair&lt;int,int&gt;&gt;,greater&lt;pair&lt;int,int&gt;&gt;&gt; heap;
+    //优先队列自带的排序函数greater，使得默认按第一个元素升序排序
+    heap.push(&#123;0,s&#125;);dist[s]=0;  //s记录的是所求起点，将其放入堆中，距离为0，终点是其自己
+    while(!heap.empty())&#123;
+        pair&lt;int,int&gt; temp=heap.top();
+        heap.pop();     //弹出权值最小的点，待处理
+        int x=temp.first,y=temp.second;  
+        if(st[y])continue;  //如果该点已经找到最短距离，则跳过
+        st[y]=true;  //更新该点已经找到最短距离
+        for(int i=head[y];i!=0;i=ne[i])&#123;  //遍历与该点连接的结点
+            int t=to[i];    
+            if(dist[t]&gt;x+w[i])&#123;  //找到连接的可更新的最短结点
+                dist[t]=x+w[i];  //更新权值路径
+                heap.push(&#123;dist[t],t&#125;);  //把该更新过的结点放到堆中待处理
+            &#125;
+        &#125;
+    &#125;
+&#125;
+int main()
+&#123;
+    cin&gt;&gt;n&gt;&gt;m;
+    memset(dist,INF,sizeof(dist)); //初始化距离无穷大
+    for(int i=1;i&lt;=m;++i)&#123;
+        int a,b,c;cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;
+        addw(a,b,c);
+    &#125;
+    Dijkstra();
+    rep(i,1,n)cout&lt;&lt;dist[i]&lt;&lt;&#39; &#39;;
+    return 0;
+&#125;
+</code></pre>
+<p>带负权边问题的spfa算法之后再考虑学不学🙄🙄🙄🙄</p>
+
+    </div>
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.7.2/gitalk.min.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                         
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2022 - 2022 YLQQ のBLOG
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            @YLQQ
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+</footer>
+                    </div>
+                </div>
+            </transition>
+            <div id="img_show">
+                <img id="img_content" alt="img_show">
+            </div>
+        </div>
+        
+        <canvas id="background" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1"></canvas>
+        <canvas id="fireworks" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:2147483647"></canvas>
+       
+        <div id="aplayer"></div>
+        <script src="/js/firework.js"></script>
+        <script src="/js/background.js"></script>
+        <script src="/dist/APlayer.min.js"></script>
+        <script src="/dist/music.js"></script>
+        <script src="https://cdn.staticfile.org/highlight.js/11.5.1/highlight.min.js"></script>
+        <script src="/js/particlex.js"></script>
+        <script src="/js/showimg.js"></script>
+        
+<script src="https://cdn.staticfile.org/gitalk/1.7.2/gitalk.min.js"></script>
+<script>
+    var clientID = "0493fa1263c54a7ccd58", clientSecret = "61ccc8d414025003b773ee525ba8a2dc912052c8";
+    
+    const gitalk = new Gitalk({
+        clientID: clientID,
+        clientSecret: clientSecret,
+        repo: "ylqqqq.github.io",
+        owner: "YLQQQQ",
+        admin: ["YLQQQQ"],
+        language: "zh-CN",
+        id: location.pathname,
+        distractionFreeMode: false,
+        
+    })
+    gitalk.render("gitalk-container")
+</script>
+
+
+    </body>
+</html>

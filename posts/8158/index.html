@@ -1,0 +1,426 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <title>树状数组入门 | YLQQ のBLOG</title>
+        <meta name="author" content="YLQQ">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <link rel="icon" href="https://img-blog.csdnimg.cn/63ad414cab504eaaaedb4e264c7f708a.jpeg">
+        <script src="https://cdn.staticfile.org/instant.page/5.1.0/instantpage.min.js" type="module"></script>
+        <script src="https://cdn.staticfile.org/font-awesome/6.1.1/js/all.min.js"></script>
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+        
+        <link rel="stylesheet" href="/dist/APlayer.min.css">
+        
+        <script src="https://cdn.staticfile.org/vue/3.2.33/vue.global.prod.min.js"></script>
+        
+        <script src="/js/anime.js"></script>
+    <meta name="generator" content="Hexo 5.4.2"></head>
+    <body>
+        <div id="loading" style="height:100vh;width:100vw;position:fixed;display:flex;z-index:200;justify-content:space-between;background:#fff;transition:opacity 0.3s ease-out"><div style="position:fixed;height:100vh;width:100vw;display:flex;justify-content:center;align-items:center"><div id="loadcontent" style="width:50vmin;height:50vmin;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px #a3ddfb;text-align:center"><div><h2>LOADING...</h2><p style="word-break:keep-all">加载过慢请开启缓存(浏览器默认开启)</p><div><img alt="loading" src="/loading.gif"></div></div></div></div></div>
+        <div id="layout">
+            <i data-fa-symbol="calendar-solid" class="fa-solid fa-calendar fa-fw"></i>
+            <i data-fa-symbol="bookmark-solid" class="fa-solid fa-bookmark fa-fw"></i>
+            <i data-fa-symbol="tags-solid" class="fa-solid fa-tags fa-fw"></i>
+            <transition name="into">
+                <div v-show="show_page" style="display: -not-none">
+                    <div id="menu_show">
+                         
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">YLQQ のBLOG</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;HOME</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;ME</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archive</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Classification</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://www.acwing.com/user/myspace/index/174985/">
+            <i class="fa-solid fa-a fa-fw"></i>
+            <span>&ensp;Acwing</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/user/673830">
+            <i class="fa-solid fa-l fa-fw"></i>
+            <span>&ensp;Luogu</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_62886369?spm=1000.2115.3001.5343">
+            <i class="fa-solid fa-c fa-fw"></i>
+            <span>&ensp;CSDN</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://www.bilibili.com/">
+            <i class="fa-brands fa-bilibili fa-fw"></i>
+            <span>&ensp;bilibili</span>
+        </a>
+        
+    </div>
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div class="curtain" @click="menu_show = !menu_show" v-show="menu_show"></div>
+        <div :class="'title'" @click="menu_show = !menu_show">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;YLQQ のBLOG</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">HOME</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">ME</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archive</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Classification</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://www.acwing.com/user/myspace/index/174985/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-a fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Acwing</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/user/673830">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-l fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Luogu</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_62886369?spm=1000.2115.3001.5343">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-c fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">CSDN</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://www.bilibili.com/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-brands fa-bilibili fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">bilibili</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+                    </div>
+                    <div id="main">
+                        
+<div class="article">
+    <div>
+        <h1>树状数组入门 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+            </span>
+            2022/8/17
+        </span>
+        
+        <span class="category">
+            <a href="/categories/图论/">
+                <span class="icon">
+                    <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
+                </span>
+                图论
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/区间操作/" style="color: #00bcd4">
+                    区间操作
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/数组/" style="color: #00bcd4">
+                    数组
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    <div class="content" v-pre>
+        <p>​<strong>树状数组处理区间问题</strong></p>
+<span id="more"></span>
+
+<p>树状数组是解决动态前缀和问题的数据结构，大佬们总是把ST表，树状数组，线段树三个东西联系在一起，都是用于解决动态区间问题的方法。</p>
+<p>树状数组是2的次方前缀和数组，像树一样，如图所示，每个位置 i 的前缀和长度为 lowbit（i），而每层之间深度所差的区间长度也为lowbit（i），例如要对 t[4] +1，则其后面的包含 t[4] 的 t[8]也进行+1。</p>
+<p>因此当我们要求 6的前缀和，因该是6所包含的区间加上6包含区间的前面的区间，即是 t[4] + t[6]。</p>
+<p>若求 3 到 6的区间和时，便是 前缀和 6 - 前缀和 2，而 前缀和 6 = t[6] +  t[4] ，所以3 到 6 的区间和便是  t[6] +  t[4] - t[2]       </p>
+<p><img src="https://img-blog.csdnimg.cn/b490a2826e7d48b4ab5f03b54c20d2dd.png"></p>
+<p>单点加值：</p>
+<pre><code>//包含a点的父亲位置都要加上b
+void add(int a,int b)&#123;
+    for(int i=a;i&lt;=n;i+=lowbit(i))
+        t[i]+=b;
+&#125;
+</code></pre>
+<p> 前缀和：</p>
+<pre><code>//x所包含的区间和 + x区间前面所包含的区间和
+//x区间的长度为lowbit(x)
+int sum(int x)&#123;
+    int ans=0;
+    for(int i=x;i&gt;0;i-=lowbit(i))
+        ans+=t[i];
+    return ans;
+&#125;
+</code></pre>
+<p>下面就是单点改值和区间和查询的问题</p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3374">P3374 【模板】树状数组 1 - 洛谷 | 计算机科学教育新生态 </a></p>
+<p>题目描述<br>如题，已知一个数列，你需要进行下面两种操作：</p>
+<p>输入格式<br>第一行包含两个正整数 n,m，分别表示该数列数字的个数和操作的总个数。</p>
+<p>第二行包含 n 个用空格分隔的整数，其中第 i 个数字表示数列第 i 项的初始值。</p>
+<p>接下来 m 行每行包含 3 个整数，表示一个操作，具体如下：</p>
+<p>这样子这道题就变得显而易见了</p>
+<p>lowbit(x) 的返回值是x二进制最小位1，所以返回的是x&amp;-x，这里我用宏定义</p>
+<pre><code>#include &lt;bits/stdc++.h&gt;
+#define rep(i,n,m) for(int i=n;i&lt;=m;++i)
+#define per(i,n,m) for(int i=n;i&gt;=m;--i)
+#define PII pair&lt;int,int&gt;
+#define lowbit(x) x&amp;-x
+#define INF 1&lt;&lt;30
+using namespace std;
+typedef long long ll;
+const int N=5e5+10;
+int t[N],n,q;
+void add(int a,int b)&#123;
+    //父亲节点都 +b
+    for(int i=a;i&lt;=n;i+=lowbit(i))t[i]+=b;
+&#125;
+int sum(int x)&#123;
+    int ans=0;
+    前面每一段区间和
+    for(int i=x;i&gt;0;i-=lowbit(i))ans+=t[i];
+    return ans;
+&#125;
+int main()
+&#123;
+    ios::sync_with_stdio(0);cin.tie(0);
+    cin&gt;&gt;n&gt;&gt;q;
+    rep(i,1,n)&#123;
+        int x;cin&gt;&gt;x;
+        add(i,x);
+    &#125;
+    while(q--)&#123;
+        int a,b,c;cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;
+        if(a==1)
+            add(b,c);
+        else 
+            cout&lt;&lt;sum(c)-sum(b-1)&lt;&lt;endl;
+            //前缀和差
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+<p>还有区间改值和单点查询的问题，</p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3368">P3368 【模板】树状数组 2 - 洛谷 | 计算机科学教育新生态 </a></p>
+<p>题目描述<br>如题，已知一个数列，你需要进行下面两种操作：</p>
+<p>输入格式<br>第一行包含两个整数 N、M，分别表示该数列数字的个数和操作的总个数。</p>
+<p>第二行包含 N 个用空格分隔的整数，其中第 i 个数字表示数列第 i 项的初始值。</p>
+<p>接下来 M 行每行包含 22 或 44个整数，表示一个操作，具体如下：</p>
+<p>操作 1： 格式：1 x y k 含义：将区间 [x,y] 内每个数加上 k；</p>
+<p>操作 2： 格式：2 x 含义：输出第 x 个数的值。</p>
+<pre><code>下标i    0  1  2  3  4  5  6  7    
+
+原数值a  0  1  2  1 -2  4  9  0
+
+差分值b  0  1  1 -1 -3  6  5 -9
+</code></pre>
+<p>对于区间改值后的区间和，我们知道可以用差分做，那差分是什么呢，</p>
+<p>差分 b[i] 就是 a[i] - a[i-1]  ，而 a[n] 可以用 表示（哈哈哈，公式好大个），当区间 [l，r] 内+x时，只需 b[l] +x，b[r+1] -x，即可保证只有区间内值增加</p>
+<p>对于该题，我们不妨初始化差分数组为0，然后使次区间改值时对差分数组边界进行两次操作 </p>
+<p>最后的单点查询就是改变的差分值加上原数值，即 sum(x) + a[x] </p>
+<p>（以下用t数组代表差分数组，q数组表示原数值数组）</p>
+<pre><code>#include &lt;bits/stdc++.h&gt;
+#define rep(i,n,m) for(int i=n;i&lt;=m;++i)
+#define per(i,n,m) for(int i=n;i&gt;=m;--i)
+#define PII pair&lt;int,int&gt;
+#define lowbit(x)  x&amp;-x
+#define INF 1&lt;&lt;30
+using namespace std;
+typedef long long ll;
+const int N=5e5+10;
+int q[N],t[N],n,T;
+void add(int a,int b)&#123;
+    for(int i=a;i&lt;=n;i+=lowbit(i))t[i]+=b;
+&#125;
+int sum(int x)&#123;
+    int ans=0;
+    for(int i=x;i&gt;0;i-=lowbit(i))ans+=t[i];
+    return ans;
+&#125;
+int main()
+&#123;
+    ios::sync_with_stdio(0);cin.tie(0);
+    cin&gt;&gt;n&gt;&gt;T;
+    rep(i,1,n)cin&gt;&gt;q[i];
+    while(T--)&#123;
+        int x,a,b,c;cin&gt;&gt;x;
+        if(x==1)&#123;
+            cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;
+            //差分边界进行操作
+            add(a,c);
+            add(b+1,-c);
+        &#125;else &#123;
+            cin&gt;&gt;a;
+            //单点查询值=差分数组前缀和+原数值
+            cout&lt;&lt;sum(a)+q[a]&lt;&lt;endl;   
+        &#125;
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+<p>对于某些会越界的样例，必要时要int改long long。</p>
+<p>今天刚学，有点囫囵吞枣，描述的不太清楚。</p>
+
+    </div>
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.7.2/gitalk.min.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                         
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2022 - 2022 YLQQ のBLOG
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            @YLQQ
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+</footer>
+                    </div>
+                </div>
+            </transition>
+            <div id="img_show">
+                <img id="img_content" alt="img_show">
+            </div>
+        </div>
+        
+        <canvas id="background" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1"></canvas>
+        <canvas id="fireworks" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:2147483647"></canvas>
+       
+        <div id="aplayer"></div>
+        <script src="/js/firework.js"></script>
+        <script src="/js/background.js"></script>
+        <script src="/dist/APlayer.min.js"></script>
+        <script src="/dist/music.js"></script>
+        <script src="https://cdn.staticfile.org/highlight.js/11.5.1/highlight.min.js"></script>
+        <script src="/js/particlex.js"></script>
+        <script src="/js/showimg.js"></script>
+        
+<script src="https://cdn.staticfile.org/gitalk/1.7.2/gitalk.min.js"></script>
+<script>
+    var clientID = "0493fa1263c54a7ccd58", clientSecret = "61ccc8d414025003b773ee525ba8a2dc912052c8";
+    
+    const gitalk = new Gitalk({
+        clientID: clientID,
+        clientSecret: clientSecret,
+        repo: "ylqqqq.github.io",
+        owner: "YLQQQQ",
+        admin: ["YLQQQQ"],
+        language: "zh-CN",
+        id: location.pathname,
+        distractionFreeMode: false,
+        
+    })
+    gitalk.render("gitalk-container")
+</script>
+
+
+    </body>
+</html>

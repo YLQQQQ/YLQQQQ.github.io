@@ -1,0 +1,398 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <title>二分图最大匹配 | YLQQ のBLOG</title>
+        <meta name="author" content="YLQQ">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <link rel="icon" href="https://img-blog.csdnimg.cn/63ad414cab504eaaaedb4e264c7f708a.jpeg">
+        <script src="https://cdn.staticfile.org/instant.page/5.1.0/instantpage.min.js" type="module"></script>
+        <script src="https://cdn.staticfile.org/font-awesome/6.1.1/js/all.min.js"></script>
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+        
+        <link rel="stylesheet" href="/dist/APlayer.min.css">
+        
+        <script src="https://cdn.staticfile.org/vue/3.2.33/vue.global.prod.min.js"></script>
+        
+        <script src="/js/anime.js"></script>
+    <meta name="generator" content="Hexo 5.4.2"></head>
+    <body>
+        <div id="loading" style="height:100vh;width:100vw;position:fixed;display:flex;z-index:200;justify-content:space-between;background:#fff;transition:opacity 0.3s ease-out"><div style="position:fixed;height:100vh;width:100vw;display:flex;justify-content:center;align-items:center"><div id="loadcontent" style="width:50vmin;height:50vmin;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px #a3ddfb;text-align:center"><div><h2>LOADING...</h2><p style="word-break:keep-all">加载过慢请开启缓存(浏览器默认开启)</p><div><img alt="loading" src="/loading.gif"></div></div></div></div></div>
+        <div id="layout">
+            <i data-fa-symbol="calendar-solid" class="fa-solid fa-calendar fa-fw"></i>
+            <i data-fa-symbol="bookmark-solid" class="fa-solid fa-bookmark fa-fw"></i>
+            <i data-fa-symbol="tags-solid" class="fa-solid fa-tags fa-fw"></i>
+            <transition name="into">
+                <div v-show="show_page" style="display: -not-none">
+                    <div id="menu_show">
+                         
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">YLQQ のBLOG</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;HOME</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;ME</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archive</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Classification</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://www.acwing.com/user/myspace/index/174985/">
+            <i class="fa-solid fa-a fa-fw"></i>
+            <span>&ensp;Acwing</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/user/673830">
+            <i class="fa-solid fa-l fa-fw"></i>
+            <span>&ensp;Luogu</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_62886369?spm=1000.2115.3001.5343">
+            <i class="fa-solid fa-c fa-fw"></i>
+            <span>&ensp;CSDN</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://www.bilibili.com/">
+            <i class="fa-brands fa-bilibili fa-fw"></i>
+            <span>&ensp;bilibili</span>
+        </a>
+        
+    </div>
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div class="curtain" @click="menu_show = !menu_show" v-show="menu_show"></div>
+        <div :class="'title'" @click="menu_show = !menu_show">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;YLQQ のBLOG</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">HOME</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">ME</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archive</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Classification</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://www.acwing.com/user/myspace/index/174985/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-a fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Acwing</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/user/673830">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-l fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Luogu</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_62886369?spm=1000.2115.3001.5343">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-c fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">CSDN</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://www.bilibili.com/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-brands fa-bilibili fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">bilibili</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+                    </div>
+                    <div id="main">
+                        
+<div class="article">
+    <div>
+        <h1>二分图最大匹配 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+            </span>
+            2022/8/15
+        </span>
+        
+        <span class="category">
+            <a href="/categories/图论/">
+                <span class="icon">
+                    <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
+                </span>
+                图论
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/二分图/" style="color: #03a9f4">
+                    二分图
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/染色问题/" style="color: #03a9f4">
+                    染色问题
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/匈牙利算法/" style="color: #ff7d73">
+                    匈牙利算法
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    <div class="content" v-pre>
+        <p><strong>判断二分图</strong><br><strong>寻找最大匹配</strong></p>
+<span id="more"></span>
+<p>最近学点图论，总不能暑假啥都没学。</p>
+<p>所谓二分图，就是对于左右两个集合，每个集合内的任意两点不连边，边只连接两个不同集合内的分别一点，如图（A集合有{1，2，3，4}，B集合{1，2，3，4}，两个集合的数量和元素都不需要相同）</p>
+<p> <img src="https://img-blog.csdnimg.cn/67c0fcdb16dd4ebf9eca633d7b516fbc.png"><br> 以上的边练成的路径为A（1）→B（2），A（2）→B（1），这是二分图的一种成立条件，即单边无环，但还存在有环的情况，如下<br> <img src="https://img-blog.csdnimg.cn/01f6ad4ff7494948a243bb452fa4ce64.png"><br> 此时的环为A（1）→B（2）→A（3）→B（3）→A（1），此时环内一共有四个元素，可以可以证明的是，若当环内元素为奇数个时，该图必然不为二分图，<br><img src="https://img-blog.csdnimg.cn/d19613adb4b84d5e9248ff838ec57502.png"></p>
+<p>若环内元素有奇数个时，？的位置必然为A，此时A→A与二分图定义矛盾，所以二分图内的环必为偶数环。</p>
+<p>对于给定的一个带连边的图，可以用染色法判定二分图，</p>
+<p>思路：我们可以把两个不同的集合中的元素染色为1和2。</p>
+<p>遍历A中的每一个点，若该点未被染色，则染为1，然后顺着与该点相连的点，将其染为相反的颜色，若过程中发现有下一个点的颜色与当前点的颜色相同，则该图不是二分图。</p>
+<pre><code>#include&lt;bits/stdc++.h&gt;
+using namespace std;
+int const N=2e5+10;
+int h[N],ne[N],w[N],cnt=0;
+int color[N];
+void add(int a,int b)&#123;  //数组存连接点 ，和最短路存路径的方法相同
+    w[++cnt]=b,ne[cnt]=h[a],h[a]=cnt;
+&#125;
+bool dfs(int x,int u)&#123;
+    color[x]=u;
+    for(int i=h[x];i!=-1;i=ne[i])&#123;  //查找与该点相连的一条路到底
+        int j=w[i];
+        if(!color[j])&#123;   //用3-u来表示相反的颜色
+           if(!dfs(j,3-u))return false;
+        &#125;
+        else if(color[j]==u)return false;
+           //邻接点的颜色与当前点颜色相同，跳出
+    &#125;
+    return true;
+&#125;
+int main()
+&#123;
+    int n,m,k=1;cin&gt;&gt;n&gt;&gt;m;
+    memset(h,-1,sizeof h);
+    while (m -- )&#123;
+        int a,b;cin&gt;&gt;a&gt;&gt;b;
+        add(a,b);add(b,a);  //因为dfs的时候一条路到底，所以相反的路径也要加
+    &#125;
+    for(int i=1;i&lt;=n;++i)&#123;
+        if(!color[i])&#123;  //该点已经被染色
+            if(!dfs(i,1))&#123;  //染色失败，不为二分图
+                k=0;
+                break;
+            &#125;
+        &#125;
+    &#125;
+    if(k)cout&lt;&lt;&quot;Yes&quot;&lt;&lt;endl;
+    else cout&lt;&lt;&quot;No&quot;&lt;&lt;endl;
+&#125;
+</code></pre>
+<p>ok，二分图判断完毕，开始匹配问题</p>
+<p>上题：</p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3386">P3386 【模板】二分图最大匹配 - 洛谷 | 计算机科学教育新生态</a></p>
+<p>所谓的匹配：就是在二分图中每个集合的元素只能连一条边，这两个元素的连接就是匹配。</p>
+<p>最大匹配：在一个二分图中存在最多的匹配数量</p>
+<p>完全匹配：两个集合中的全部元素都能匹配上</p>
+<p><img src="https://img-blog.csdnimg.cn/f0ea624669094a99a0f71d138dd89838.png"><br>匈牙利算法可以帮助解决这个问题</p>
+<p>如图绿线表示两点有连接，按遍历A集合的顺序来，我们先看A中点1，发现A（1）可以与B（2）连，就连这俩<br><img src="https://img-blog.csdnimg.cn/9400ab6d38d041db9ebc4b8b25e393ef.png"><br> 然后看A2的时候发现A2可以和B2连，也就连接他们<br> <img src="https://img-blog.csdnimg.cn/6878bce8b95840539836bdd316634018.png"><br> 然后到A3的时候，发现A3的第一个连接点B1已经被连了，这就是所谓的增广路了，一点被多个点所连接，这时候我们需要查看B1所连接的点有没有另外的连接点，发现A1还连接着B2，但B2被A2连接了，我们又看A2还另外连B3，而B3没有被连，那么我们就将A2连B3，于是A1就可以连B2，A3可以连B1了，知识点很少，挺容易看懂的</p>
+<pre><code>#include &lt;bits/stdc++.h&gt;
+#define rep(i,n,m) for(int i=n;i&lt;=m;++i)
+#define per(i,n,m) for(int i=n;i&gt;=m;--i)
+#define PII pair&lt;int,int&gt;
+#define INF 1&lt;&lt;30
+using namespace std;
+typedef long long ll;
+const int N=2e3+10;
+bool link[N][N];
+int p[N],st[N],n,m,e,ans=0;
+//p【i】=j  表示第二个集合中的i点和第一个集合中的j点匹配
+bool dfs(int x)&#123;
+    rep(i,1,m)&#123;
+        if(link[x][i]&amp;&amp;!st[i])&#123;   //如果该点和x点有连接，并且此时i点还没被用过
+           st[i]=1;
+           if(p[i]==0||dfs(p[i]))&#123;  //i点没有匹配的边，或者i点所匹配的边还有另外的匹配
+               p[i]=x;   //更新i的匹配点是x
+               return 1;
+           &#125;
+        &#125;
+    &#125;
+    return 0;
+&#125;
+ 
+int main()
+&#123;
+    ios::sync_with_stdio(0);cin.tie(0);
+    cin&gt;&gt;n&gt;&gt;m&gt;&gt;e;
+    while(e--)&#123;
+        int x,y;cin&gt;&gt;x&gt;&gt;y;
+        link[x][y]=1;   //x点和y点有连接
+    &#125;
+    rep(i,1,n)&#123;  //遍历第一个集合
+        memset(st,0,sizeof st);
+        if(dfs(i))ans++;  //如果该点匹配成功
+    &#125;
+    cout&lt;&lt;ans;
+    return 0;
+&#125;
+</code></pre>
+
+    </div>
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.7.2/gitalk.min.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                         
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2022 - 2022 YLQQ のBLOG
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            @YLQQ
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+</footer>
+                    </div>
+                </div>
+            </transition>
+            <div id="img_show">
+                <img id="img_content" alt="img_show">
+            </div>
+        </div>
+        
+        <canvas id="background" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1"></canvas>
+        <canvas id="fireworks" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:2147483647"></canvas>
+       
+        <div id="aplayer"></div>
+        <script src="/js/firework.js"></script>
+        <script src="/js/background.js"></script>
+        <script src="/dist/APlayer.min.js"></script>
+        <script src="/dist/music.js"></script>
+        <script src="https://cdn.staticfile.org/highlight.js/11.5.1/highlight.min.js"></script>
+        <script src="/js/particlex.js"></script>
+        <script src="/js/showimg.js"></script>
+        
+<script src="https://cdn.staticfile.org/gitalk/1.7.2/gitalk.min.js"></script>
+<script>
+    var clientID = "0493fa1263c54a7ccd58", clientSecret = "61ccc8d414025003b773ee525ba8a2dc912052c8";
+    
+    const gitalk = new Gitalk({
+        clientID: clientID,
+        clientSecret: clientSecret,
+        repo: "ylqqqq.github.io",
+        owner: "YLQQQQ",
+        admin: ["YLQQQQ"],
+        language: "zh-CN",
+        id: location.pathname,
+        distractionFreeMode: false,
+        
+    })
+    gitalk.render("gitalk-container")
+</script>
+
+
+    </body>
+</html>
