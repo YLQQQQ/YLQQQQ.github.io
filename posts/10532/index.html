@@ -1,0 +1,361 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <title>KMP字符串匹配 | YLQQ のBLOG</title>
+        <meta name="author" content="YLQQ">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <link rel="icon" href="https://img-blog.csdnimg.cn/d3dab4bff6aa47a7be5794c7304c762f.jpeg">
+        <script src="https://cdn.staticfile.org/instant.page/5.1.0/instantpage.min.js" type="module"></script>
+        <script src="https://cdn.staticfile.org/font-awesome/6.1.1/js/all.min.js"></script>
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+        
+        <link rel="stylesheet" href="/dist/APlayer.min.css">
+        
+        <script src="https://cdn.staticfile.org/vue/3.2.33/vue.global.prod.min.js"></script>
+        
+        <script src="/js/anime.js"></script>
+    <meta name="generator" content="Hexo 5.4.2"></head>
+    <body>
+        <div id="loading" style="height:100vh;width:100vw;position:fixed;display:flex;z-index:200;justify-content:space-between;background:#fff;transition:opacity 0.3s ease-out"><div style="position:fixed;height:100vh;width:100vw;display:flex;justify-content:center;align-items:center"><div id="loadcontent" style="width:50vmin;height:50vmin;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px #a3ddfb;text-align:center"><div><h2>LOADING...</h2><p style="word-break:keep-all">加载过慢请开启缓存(浏览器默认开启)</p><div><img alt="loading" src="/loading.gif"></div></div></div></div></div>
+        <div id="layout">
+            <i data-fa-symbol="calendar-solid" class="fa-solid fa-calendar fa-fw"></i>
+            <i data-fa-symbol="bookmark-solid" class="fa-solid fa-bookmark fa-fw"></i>
+            <i data-fa-symbol="tags-solid" class="fa-solid fa-tags fa-fw"></i>
+            <transition name="into">
+                <div v-show="show_page" style="display: -not-none">
+                    <div id="menu_show">
+                         
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">YLQQ のBLOG</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;HOME</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;ME</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archive</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Classification</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://www.acwing.com/user/myspace/index/174985/">
+            <i class="fa-solid fa-a fa-fw"></i>
+            <span>&ensp;Acwing</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/user/673830">
+            <i class="fa-solid fa-l fa-fw"></i>
+            <span>&ensp;Luogu</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_62886369?spm=1000.2115.3001.5343">
+            <i class="fa-solid fa-c fa-fw"></i>
+            <span>&ensp;CSDN</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://www.bilibili.com/">
+            <i class="fa-brands fa-bilibili fa-fw"></i>
+            <span>&ensp;bilibili</span>
+        </a>
+        
+    </div>
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div class="curtain" @click="menu_show = !menu_show" v-show="menu_show"></div>
+        <div :class="'title'" @click="menu_show = !menu_show">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;YLQQ のBLOG</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">HOME</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">ME</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archive</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Classification</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://www.acwing.com/user/myspace/index/174985/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-a fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Acwing</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/user/673830">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-l fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Luogu</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_62886369?spm=1000.2115.3001.5343">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-c fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">CSDN</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://www.bilibili.com/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-brands fa-bilibili fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">bilibili</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+                    </div>
+                    <div id="main">
+                        
+<div class="article">
+    <div>
+        <h1>KMP字符串匹配 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+            </span>
+            2022/11/1
+        </span>
+        
+        <span class="category">
+            <a href="/categories/KMP/">
+                <span class="icon">
+                    <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
+                </span>
+                KMP
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/字符串/" style="color: #ffa2c4">
+                    字符串
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/匹配/" style="color: #ffa2c4">
+                    匹配
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    <div class="content" v-pre>
+        <p>个人感觉，Y总讲的有点抽象，于是上b站看了几个，喵喵的和几个讲的挺好的，但是因为不是c写的代码看不懂(呜呜呜)，所以看来wls的版本就就懂了，代码还是Y总的短。</p>
+<span id="more"></span>
+
+<p>朴素查询两个长度分别为n，m的字符串的时间复杂度是O(n * m),<br>而KMP算法只需要O(n + m)，代码很简洁。</p>
+<p>当我们需要在长度m的字符串p中，查询具有完整的长度为n的字符串s时，</p>
+<p>下面直接开始KMP的操作<br><img src="/picture/kmp1.png"><br>我们开始会将两个字符串逐一匹配，直到无法匹配<br><img src="/picture/kmp2.png"><br>当发现两个字符无法匹配时，我们如果同时回溯i 和 j 的话就时朴素做法了，但是KMP是保证i不回溯，只回溯j，此时我们发现在两个p的前一段和s已匹配的后一段中有一部分是相同的，如下图<br><img src="/picture/kmp3.png"><br>那我们是不是只用将j回溯到1，判断此时p[j + 1] 和 s[i] 是否相等，如果相等的话可以进行下一步操作，如果不相等的话，j还应该继续往前回溯<br><img src="/picture/kmp4.png"><br>然后继续匹配，直到 j==n 时说明匹配成功<br><img src="/picture/kmp5.png"></p>
+<p>而KMP的重点就是如何进行回溯操作呢，我们发现当寻找s已匹配后缀和p的前缀最大相同时，其实都是对相同的子字符串进行操作，所以我们可以对p字符串查找每个下标对应的前缀长度，这时候我们需要开辟最重要的ne数组。<br>从上面我们可以了解到，ne数组存的是可回溯长度，也就是前后缀相同的子字符串长度，<br>但是查询这个也需要O(n * n)暴力查询吗，当然也不需要。(最大相同长度不应该等于整个字符串长度)<br>对于 i = 1, 我们初始 ne[1] = 0 i = 2, j = 0,<br>当 p[i] != p[j + 1] 时，我们需要使 j = ne[j] ,使得 j 回溯(j &gt; 0)<br><img src="/picture/kmp6.png"><br>显而易见，当 i == 2 时，ab字符串不存在前后缀相同的子串，所以ne[2] = 0 ，<br><img src="/picture/kmp7.png"><br>当 i = 3 时，我们发现 p[i] == p[j + 1]，子串aba的最大相同长度是1，所以可以把j后移一位即 j++，然后更新 ne[3] = j = 1,<br><img src="/picture/kmp8.png"><br>同理，当 i = 4 时，j应该后移一位，ne[4] = 2,<br><img src="/picture/kmp9.png"><br>当 i = 5 时， j++，于是 ne[5] = 3,<br><img src="/picture/kmp10.png"><br>当 i = 6 时，发现 p[i] != p[j + 1] ,于是 j = ne[j] = 1,<br>然而发现 p[6] != p[1] ,所以 继续 j = ne[j] = 0 结束.<br>因为此时p[i] != p[j + 1] ,所以 j++ 不用执行，ne[6] = 0。<br>以上ne更新完毕.<br>对于ne数组的更新，O(n) 的复杂度<br>我们用代码实现</p>
+<pre><code>    for(int i = 2, j = 0; i &lt;= n; ++i )&#123;
+        while(j &amp;&amp; p[i] != p[j + 1])j = ne[j];
+        if(p[i] == p[j + 1])j++;
+        ne[i] = j;
+    &#125;
+</code></pre>
+<p>十分简洁，而对于之后的查询相同也是以上类似的做法</p>
+<pre><code>    for(int i = 1, j = 0; i &lt;= m; ++i)&#123;
+        while(j &amp;&amp; s[i] != p[j + 1])j = ne[j];
+        if(p[j + 1] == s[i])j++;
+        if(j == n)&#123; 
+        //当 p 字符串全部匹配，输出此时s中对应的p字符串的首字母下标
+        //然后回溯j   
+            cout &lt;&lt; i - n + 1 &lt;&lt; &#39; &#39;;
+            j = ne[j];
+        &#125;
+    &#125;
+</code></pre>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3375">KMP洛谷模板题</a></p>
+<pre><code>#include &lt;bits/stdc++.h&gt;
+#define rep(i,n,m) for(int i=n;i&lt;=m;++i)
+#define per(i,n,m) for(int i=n;i&gt;=m;--i)
+#define all(x) x.begin(),x.end()
+#define pb(x) push_back(x)
+#define PII pair&lt;int,int&gt;
+#define VI vector&lt;int&gt;
+#define lowbit(x) x&amp;-x
+#define INF 1&lt;&lt;30
+using namespace std;
+typedef long long ll;
+const int N=2e5+10;
+string s, p;
+int ne[N], n, m;
+int main()
+&#123;
+    ios::sync_with_stdio(0);cin.tie(0);
+    cin &gt;&gt; s &gt;&gt; p;
+    n = p.size();
+    m = s.size();
+    s = &#39; &#39; + s;
+    p = &#39; &#39; + p;
+    VI ans;
+    for(int i = 2, j = 0; i &lt;= n; ++i )&#123;
+        while(j &amp;&amp; p[i] != p[j + 1])j = ne[j];
+        if(p[i] == p[j + 1])j++;
+        ne[i] = j;
+    &#125;
+    for(int i = 1, j = 0; i &lt;= m; ++i)&#123;
+        while(j &amp;&amp; s[i] != p[j + 1])j = ne[j];
+        if(p[j + 1] == s[i])j++;
+        if(j == n)&#123;
+            cout &lt;&lt; i - n + 1 &lt;&lt; &#39;\n&#39;;
+            j = ne[j];
+        &#125;
+    &#125;
+    rep(i, 1, n)cout &lt;&lt; ne[i] &lt;&lt; &#39; &#39;;
+    return 0;
+&#125;
+</code></pre>
+<p>呜呜呜，我要好好学习，不能摆烂<br><img src="/picture/QAQ.png"></p>
+
+    </div>
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.7.2/gitalk.min.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                         
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2022 - 2022 YLQQ のBLOG
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            @YLQQ
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+</footer>
+                    </div>
+                </div>
+            </transition>
+            <div id="img_show">
+                <img id="img_content" alt="img_show">
+            </div>
+        </div>
+        
+        <canvas id="background" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1"></canvas>
+        <canvas id="fireworks" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:2147483647"></canvas>
+       
+        <div id="aplayer"></div>
+        <script src="/js/firework.js"></script>
+        <script src="/js/background.js"></script>
+        <script src="/dist/APlayer.min.js"></script>
+        <script src="/dist/music.js"></script>
+        <script src="https://cdn.staticfile.org/highlight.js/11.5.1/highlight.min.js"></script>
+        <script src="/js/particlex.js"></script>
+        <script src="/js/showimg.js"></script>
+        
+<script src="https://cdn.staticfile.org/gitalk/1.7.2/gitalk.min.js"></script>
+<script>
+    var clientID = "5db84a53ccf04fabb2fb", clientSecret = "967c62d354b6a82d711d387692d392e43d616894";
+    
+    const gitalk = new Gitalk({
+        clientID: clientID,
+        clientSecret: clientSecret,
+        repo: "YLQQQQ.github.io",
+        owner: "YLQQQQ",
+        admin: ["YLQQQQ"],
+        language: "zh-CN",
+        id: location.pathname,
+        distractionFreeMode: false,
+        
+    })
+    gitalk.render("gitalk-container")
+</script>
+
+
+    </body>
+</html>
