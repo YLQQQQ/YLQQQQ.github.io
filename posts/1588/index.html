@@ -222,7 +222,7 @@
 <span id="more"></span>
 <p><strong>反省为什么练了这么久还这么拉</strong><br><strong>可能真是sb</strong><br>zhihu偷图<br><img src="https://pic1.zhimg.com/v2-0373e544ff1bdb66b979bbc8c7a144e0_b.jpg"><br><strong>round#826</strong><br>D:<br>题意：一颗二叉树的所有最小儿子上分布着1-n的不同数，问时候可以交换任意个结点的左右儿子，使得最后最小儿子从左到右递增排序，输出ans值</p>
 <p>dfs跑一下</p>
-<pre><code>int a[N],ans=0;
+<pre><code class="cpp">int a[N],ans=0;
 void dfs(int l,int r)&#123;
     if(l&gt;=r)return ;
     if(l+1==r)&#123;
@@ -259,7 +259,7 @@ void solve()
 </code></pre>
 <p>F ：<br>题意：给定一个数组，问是否可以将其分为若干连续段，使得每一段的最左或最右值表示该段中其他元素的个数</p>
 <p>左右dp一下</p>
-<pre><code>const int N=3e5+10;
+<pre><code class="cpp">const int N=3e5+10;
 int dp[N],a[N];
 void solve()
 &#123;
@@ -282,7 +282,7 @@ void solve()
 </code></pre>
 <p><strong>round#827</strong><br>这道题卡了好久。。。<br>D:一个数组是否使得其中gcd(a[i],a[j])==1，求i+j的最大值</p>
 <p>因为a[i]&lt;=1000，所以map存一下暴力，我他妈脑子有坑,还用暴力tle了两发</p>
-<pre><code>map&lt;int,int&gt;p;
+<pre><code class="cpp">map&lt;int,int&gt;p;
 void solve()
 &#123;
     int n,ans=-1;cin&gt;&gt;n;
@@ -302,7 +302,7 @@ void solve()
 &#125;
 </code></pre>
 <p>E：前缀和，前最大值存一下二分</p>
-<pre><code>ll a[N],p[N],h[N];
+<pre><code class="cpp">ll a[N],p[N],h[N];
 void solve()
 &#123;
     ll n,m;cin&gt;&gt;n&gt;&gt;m;
@@ -326,7 +326,7 @@ void solve()
 </code></pre>
 <p>F:问每次操作给初始字符串都为’a’的s和t加k次字符串x，是否可以排序使得a&lt;b</p>
 <p>记录操作后a和b的最大字符和长度</p>
-<pre><code>void solve() &#123;
+<pre><code class="cpp">void solve() &#123;
     int n,lens=1,lent=1;cin&gt;&gt;n;
     char maxs=&#39;a&#39;,maxt=&#39;a&#39;;
     rep(i,1,n)&#123;
@@ -350,7 +350,7 @@ void solve()
 </code></pre>
 <p>G:重新排列数组a，使得a的前缀异或和按最大排列</p>
 <p>int二进制位只有三十多，所以排列前31次找出按位补1位的最大值，剩下的随便</p>
-<pre><code>int a[N],num;
+<pre><code class="cpp">int a[N],num;
 bool cmp(int a,int b)&#123;
     return (a|num) &gt; (b|num);
 &#125;

@@ -216,14 +216,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/染色问题/" style="color: #ff7d73">
+                <a href="/tags/染色问题/" style="color: #03a9f4">
                     染色问题
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/匈牙利算法/" style="color: #ffa2c4">
+                <a href="/tags/匈牙利算法/" style="color: #ff7d73">
                     匈牙利算法
                 </a>
             </span>
@@ -241,7 +241,7 @@
 <p>对于给定的一个带连边的图，可以用染色法判定二分图，</p>
 <p>思路：我们可以把两个不同的集合中的元素染色为1和2。</p>
 <p>遍历A中的每一个点，若该点未被染色，则染为1，然后顺着与该点相连的点，将其染为相反的颜色，若过程中发现有下一个点的颜色与当前点的颜色相同，则该图不是二分图。</p>
-<pre><code>#include&lt;bits/stdc++.h&gt;
+<pre><code class="cpp">#include&lt;bits/stdc++.h&gt;
 using namespace std;
 int const N=2e5+10;
 int h[N],ne[N],w[N],cnt=0;
@@ -289,7 +289,7 @@ int main()
 <p>完全匹配：两个集合中的全部元素都能匹配上</p>
 <p><img src="https://img-blog.csdnimg.cn/f0ea624669094a99a0f71d138dd89838.png"><br>匈牙利算法可以帮助解决这个问题</p>
 <p>如图绿线表示两点有连接，按遍历A集合的顺序来，我们先看A中点1，发现A（1）可以与B（2）连，就连这俩<br><img src="https://img-blog.csdnimg.cn/9400ab6d38d041db9ebc4b8b25e393ef.png"><br> 然后看A2的时候发现A2可以和B2连，也就连接他们<br> <img src="https://img-blog.csdnimg.cn/6878bce8b95840539836bdd316634018.png"><br> 然后到A3的时候，发现A3的第一个连接点B1已经被连了，这就是所谓的增广路了，一点被多个点所连接，这时候我们需要查看B1所连接的点有没有另外的连接点，发现A1还连接着B2，但B2被A2连接了，我们又看A2还另外连B3，而B3没有被连，那么我们就将A2连B3，于是A1就可以连B2，A3可以连B1了，知识点很少，挺容易看懂的</p>
-<pre><code>#include &lt;bits/stdc++.h&gt;
+<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
 #define rep(i,n,m) for(int i=n;i&lt;=m;++i)
 #define per(i,n,m) for(int i=n;i&gt;=m;--i)
 #define PII pair&lt;int,int&gt;

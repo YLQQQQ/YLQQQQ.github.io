@@ -209,14 +209,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/数组/" style="color: #ffa2c4">
+                <a href="/tags/数组/" style="color: #ff7d73">
                     数组
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/并查集/" style="color: #00bcd4">
+                <a href="/tags/并查集/" style="color: #00a596">
                     并查集
                 </a>
             </span>
@@ -229,7 +229,7 @@
 <span id="more"></span>
 <p>当我们面对许多数据量（且其中某一部分数据之间相互有联系的时候），如下六个元素，1和2之间连接，3、4和5相互连接，在处理某部分问题的时候十分难处理，因此聪明的人类引出了并查集这个概念方法来解决问题，可以将分别联系的数据整理成一颗颗分叉的树。（好耶~）<br><img src="https://img-blog.csdnimg.cn/0e8829a7b00849cba2bf77ecbfe30ddc.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aWz5Lq65Y-q5Lya5b2x5ZON5oiR5pWy5Luj56CB55qE6YCf5bqmUUFR,size_20,color_FFFFFF,t_70,g_se,x_16"><br>并查集是将所有元素分为几个集合，每个集合内的元素互相连接，用广泛的介绍就是，如果A和B是好朋友，B和C是好朋友，虽然A和C不认识，但是通过B的介绍，A和C也能成为好朋友，这样ABC都能在一个集合内，这如同树一般的分叉连接，并且不同的集合内不会有共同的元素<br><img src="https://img-blog.csdnimg.cn/9015ccbb7cd747d8ba16671423b99baf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aWz5Lq65Y-q5Lya5b2x5ZON5oiR5pWy5Luj56CB55qE6YCf5bqmUUFR,size_20,color_FFFFFF,t_70,g_se,x_16"><br>1、并查集的find函数</p>
 <p>对于并查集的实用，主要有两个函数，一个是find函数，用于查找该元素的头元素，对于以下途中的元素可知，A，C，D的头元素都是B，此时B元素就是该集合的老大。<br><img src="https://img-blog.csdnimg.cn/f8de6a95a3154c5ca5c0ad42c7eb2858.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aWz5Lq65Y-q5Lya5b2x5ZON5oiR5pWy5Luj56CB55qE6YCf5bqmUUFR,size_10,color_FFFFFF,t_70,g_se,x_16"></p>
-<pre><code>int pre[100];   //对数组f，f[i]=j中表示i元素的上一层元素是j
+<pre><code class="cpp">int pre[100];   //对数组f，f[i]=j中表示i元素的上一层元素是j
 int find ( int n )
 &#123;
     int head=n;
@@ -253,7 +253,7 @@ int find ( int n )
 &#125;
 </code></pre>
 <p>如果我们不进行路径压缩那部分的话就会发现，每次要查找一个元素的老大的话，都要一直往上一层循环找，当层数很大的时候就很费时间复杂度，这时候我们就可以用路径压缩，使得在一个元素往上找老大的过程中遇到的元素都直接指向老大，如图<br><img src="https://img-blog.csdnimg.cn/dc1a0e29ca69489a91825f43cc2b1428.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aWz5Lq65Y-q5Lya5b2x5ZON5oiR5pWy5Luj56CB55qE6YCf5bqmUUFR,size_14,color_FFFFFF,t_70,g_se,x_16"></p>
-<pre><code>void join(int i,int j)&#123;
+<pre><code class="cpp">void join(int i,int j)&#123;
     int x=pre[i],y=pre[j];  //x和y分别是i和j的老大
     if(x!=y)  pre[x]=y ;  //如果i和j的老大不是是同一个人
           //让j组织的老大的成为i组织老大的老大
@@ -263,7 +263,7 @@ int find ( int n )
 <p><strong>例题来自ACWing</strong></p>
 <p><img src="https://img-blog.csdnimg.cn/dc1bac1ba2e54292bdca747ff8a8d56b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aWz5Lq65Y-q5Lya5b2x5ZON5oiR5pWy5Luj56CB55qE6YCf5bqmUUFR,size_16,color_FFFFFF,t_70,g_se,x_16"><br>这道题用主要用贪心的思想，同时加上并查集的优化，先求出最大的保质期时间，然后对于每一天的的头元素都是改天的日期，在从利润最大的商品往最小的商品遍历的时候，如果说对保质期使i的商品，若pre [ i ] == i，那么可以说明这一天的还没有卖出东西，所以可以把目前利润最大的卖了，同时使得目前该保质期的商品的 pre [ i ] = i - 1，即使得保质期为i的头元素为 i - 1， 这样当遇到第二大利润且保质期也是 i 的时候这个商品只能在该保质期的前的第 i - 1 天卖，从前往后的头元素表示着可以卖出商品的时间，如果该时间等于0了也说明天数卖完了</p>
 <p>这题里用的并查集pre [ i ] = j 表示在第 i 天之前距 i 最近的还未出售过商品的日期是 j ，在每用完第j天后更新 j = j - 1，使得某天后面的pre [ i ]都与前面空闲的某天直接联系。</p>
-<pre><code>#include &lt;bits/stdc++.h&gt;
+<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
 #define N 10010
 int n, pre[N];

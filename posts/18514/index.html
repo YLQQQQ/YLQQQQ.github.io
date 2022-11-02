@@ -209,7 +209,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/博弈论/" style="color: #00bcd4">
+                <a href="/tags/博弈论/" style="color: #ff7d73">
                     博弈论
                 </a>
             </span>
@@ -223,7 +223,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/Nim游戏/" style="color: #03a9f4">
+                <a href="/tags/Nim游戏/" style="color: #00bcd4">
                     Nim游戏
                 </a>
             </span>
@@ -246,7 +246,7 @@ s[r]  s[r-1]
 <p>对于一轮操作中的两个字符，要么s[i]==s[j],要么s[i]!=[j]，可知Alice先手，则先手必然选择最优结果<br>以此类推当两个字符不同时，Alice是必胜状态，此外Bob不存在胜利情况。</p>
 <p>我们可以用一个二维dp[i][j] 表示下标 i 到 j 之间Alice是否处于必胜状态，否则就是平局</p>
 <p>由题目数据可知我们要查询区每段区间，有（n*n）/2 的复杂度，因为数据量比较小，还是可以过的</p>
-<pre><code>int dp[3000][3000];
+<pre><code class="cpp">int dp[3000][3000];
 int dfs(int l,int r)&#123;
     //已经查询过了
     if(dp[l][r]!=-1)return dp[l][r];

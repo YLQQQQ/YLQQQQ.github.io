@@ -209,7 +209,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/最值/" style="color: #03a9f4">
+                <a href="/tags/最值/" style="color: #ffa2c4">
                     最值
                 </a>
             </span>
@@ -222,7 +222,7 @@
 <span id="more"></span>
 
 <p>题目：给定一个n✖n大小的矩阵，求其中子矩阵的和最大值（来自洛谷p1719）<br><img src="https://img-blog.csdnimg.cn/a2ffc98c905d402a86b43906a549d895.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aWz5Lq65Y-q5Lya5b2x5ZON5oiR5pWy5Luj56CB55qE6YCf5bqmUUFR,size_16,color_FFFFFF,t_70,g_se,x_16"><br>求一个方向上的前缀和，该方法计算矩阵竖直方向上的前缀和 a[i][j]=a[i-1][j]+x ，然后用 i 和 j 确定子矩阵行坐标的范围，即第 j 行到第 i  行，然后再循环一个k来计算子矩阵内从第1列到第k列的和，若和为负值了就重新计算子矩阵（当然本道题的限制是答案是正数，若要突破这个限制，即把判断sum&lt;0改成sum&lt;ans就行啦）</p>
-<pre><code>#include &lt;bits/stdc++.h&gt;
+<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
 #define N 10010
 #define rep(i,a,b)  for(int i=a;i&lt;=b;++i)  
 using namespace std;

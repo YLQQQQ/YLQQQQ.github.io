@@ -209,14 +209,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/思维/" style="color: #03a9f4">
+                <a href="/tags/思维/" style="color: #ff7d73">
                     思维
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/贪心/" style="color: #00bcd4">
+                <a href="/tags/贪心/" style="color: #00a596">
                     贪心
                 </a>
             </span>
@@ -234,7 +234,7 @@
 <p>z mod x = c      3</p>
 <p>输出任何满足条件的x，y，z</p>
 <p>题解：要求任意满足条件的三个值互相取模得到输入值，我们不妨假设一个输出的值就是其对应的输入值，如y=b，此时要求得另外两解，我们可以对a和c进行调用，我们可以发现以下规律，但是这会有一个特殊情况，因为c使最大的，所以 a+b+c&lt;3*c，a+b+c 可能是  a+b 的整数倍 ，所以固定y值时可能出现第三个条件不满足的情况，所以我们应该固定最大的z对应的c值。<br><img src="https://img-blog.csdnimg.cn/257a77cfcb7f4f9aa21a14a74f519511.png"></p>
-<pre><code>#include&lt;iostream&gt;
+<pre><code class="cpp">#include&lt;iostream&gt;
 using namespace std;
 void solve()
 &#123;
@@ -252,7 +252,7 @@ int main()
 <p>对每组数据输入 n * m (1 ≤  n, m ≤ 2⋅10^5 )的矩阵，其中每个位置的值不超过10^9，要求对换两列元素使得矩阵每行非递增，输出对调的两列下标，若不存在满足情况的两列则输出 -1</p>
 <p>题解：</p>
 <p>先找到任一 一行的非递减的的位置下标存入数组bb，记该行不满足的下标数量为num，若num大于2则直接输出 -1，若 num==0 即矩阵本就满足情况，输出1  1，若以上情况都不存在即num==2的时候，对调矩阵中每行该下标位置的元素值，然后遍历每一行元素判断是否非递减排列，若不满足输出-1，否则最后输出 两个下标位置。</p>
-<pre><code>#include &lt;bits/stdc++.h&gt;
+<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
 #define rep(i,n,m) for(int i=n;i&lt;=m;++i)
 #define per(i,n,m) for(int i=n;i&gt;=m;--i)
 using namespace std;
@@ -302,7 +302,7 @@ int main()
 <p>题解：</p>
 <p>当所有的陷阱都要跳进去时，所受伤害就是每个陷阱伤害值的和 ans，对于每一个陷阱，如果跳过当前的陷阱，对于整体所受的伤害 ans 就是 ans = ans - a [ i ] +( n - i )  = n - i - a [ i ] ，而对于当前跳的第 j 个陷阱，若跳过该陷阱 ，后面还有 k - j 次机会可以跳，即还有k - j 个陷阱的+1 不用算到ans之中去，所有对于k次机会，一共有 （k - 1）*k / 2点伤害不用承受。</p>
 <p>我们只需求出跳越每个陷阱对整体所减少的伤害值，并贪心求最大减伤即可。</p>
-<pre><code>#include &lt;bits/stdc++.h&gt;
+<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
 #define rep(i,n,m) for(int i=n;i&lt;=m;++i)
 #define per(i,n,m) for(int i=n;i&gt;=m;--i)
 //#define INF 0x3f3f3f3f

@@ -209,14 +209,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/字符串/" style="color: #ffa2c4">
+                <a href="/tags/字符串/" style="color: #ff7d73">
                     字符串
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/匹配/" style="color: #ffa2c4">
+                <a href="/tags/匹配/" style="color: #ff7d73">
                     匹配
                 </a>
             </span>
@@ -232,14 +232,14 @@
 <p>当我们需要在长度m的字符串p中，查询具有完整的长度为n的字符串s时，</p>
 <p>下面直接开始KMP的操作<br><img src="/picture/kmp1.png"><br>我们开始会将两个字符串逐一匹配，直到无法匹配<br><img src="/picture/kmp2.png"><br>当发现两个字符无法匹配时，我们如果同时回溯i 和 j 的话就时朴素做法了，但是KMP是保证i不回溯，只回溯j，此时我们发现在两个p的前一段和s已匹配的后一段中有一部分是相同的，如下图<br><img src="/picture/kmp3.png"><br>那我们是不是只用将j回溯到1，判断此时p[j + 1] 和 s[i] 是否相等，如果相等的话可以进行下一步操作，如果不相等的话，j还应该继续往前回溯<br><img src="/picture/kmp4.png"><br>然后继续匹配，直到 j==n 时说明匹配成功<br><img src="/picture/kmp5.png"></p>
 <p>而KMP的重点就是如何进行回溯操作呢，我们发现当寻找s已匹配后缀和p的前缀最大相同时，其实都是对相同的子字符串进行操作，所以我们可以对p字符串查找每个下标对应的前缀长度，这时候我们需要开辟最重要的ne数组。<br>从上面我们可以了解到，ne数组存的是可回溯长度，也就是前后缀相同的子字符串长度，<br>但是查询这个也需要O(n * n)暴力查询吗，当然也不需要。(最大相同长度不应该等于整个字符串长度)<br>对于 i = 1, 我们初始 ne[1] = 0 i = 2, j = 0,<br>当 p[i] != p[j + 1] 时，我们需要使 j = ne[j] ,使得 j 回溯(j &gt; 0)<br><img src="/picture/kmp6.png"><br>显而易见，当 i == 2 时，ab字符串不存在前后缀相同的子串，所以ne[2] = 0 ，<br><img src="/picture/kmp7.png"><br>当 i = 3 时，我们发现 p[i] == p[j + 1]，子串aba的最大相同长度是1，所以可以把j后移一位即 j++，然后更新 ne[3] = j = 1,<br><img src="/picture/kmp8.png"><br>同理，当 i = 4 时，j应该后移一位，ne[4] = 2,<br><img src="/picture/kmp9.png"><br>当 i = 5 时， j++，于是 ne[5] = 3,<br><img src="/picture/kmp10.png"><br>当 i = 6 时，发现 p[i] != p[j + 1] ,于是 j = ne[j] = 1,<br>然而发现 p[6] != p[1] ,所以 继续 j = ne[j] = 0 结束.<br>因为此时p[i] != p[j + 1] ,所以 j++ 不用执行，ne[6] = 0。<br>以上ne更新完毕.<br>对于ne数组的更新，O(n) 的复杂度<br>我们用代码实现</p>
-<pre><code>    for(int i = 2, j = 0; i &lt;= n; ++i )&#123;
+<pre><code class="cpp">    for(int i = 2, j = 0; i &lt;= n; ++i )&#123;
         while(j &amp;&amp; p[i] != p[j + 1])j = ne[j];
         if(p[i] == p[j + 1])j++;
         ne[i] = j;
     &#125;
 </code></pre>
 <p>十分简洁，而对于之后的查询相同也是以上类似的做法</p>
-<pre><code>    for(int i = 1, j = 0; i &lt;= m; ++i)&#123;
+<pre><code class="cpp">    for(int i = 1, j = 0; i &lt;= m; ++i)&#123;
         while(j &amp;&amp; s[i] != p[j + 1])j = ne[j];
         if(p[j + 1] == s[i])j++;
         if(j == n)&#123; 
@@ -251,7 +251,7 @@
     &#125;
 </code></pre>
 <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3375">KMP洛谷模板题</a></p>
-<pre><code>#include &lt;bits/stdc++.h&gt;
+<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
 #define rep(i,n,m) for(int i=n;i&lt;=m;++i)
 #define per(i,n,m) for(int i=n;i&gt;=m;--i)
 #define all(x) x.begin(),x.end()

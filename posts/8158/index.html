@@ -209,7 +209,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/区间操作/" style="color: #ff7d73">
+                <a href="/tags/区间操作/" style="color: #ffa2c4">
                     区间操作
                 </a>
             </span>
@@ -234,14 +234,14 @@
 <p>若求 3 到 6的区间和时，便是 前缀和 6 - 前缀和 2，而 前缀和 6 = t[6] +  t[4] ，所以3 到 6 的区间和便是  t[6] +  t[4] - t[2]       </p>
 <p><img src="https://img-blog.csdnimg.cn/b490a2826e7d48b4ab5f03b54c20d2dd.png"></p>
 <p>单点加值：</p>
-<pre><code>//包含a点的父亲位置都要加上b
+<pre><code class="cpp">//包含a点的父亲位置都要加上b
 void add(int a,int b)&#123;
     for(int i=a;i&lt;=n;i+=lowbit(i))
         t[i]+=b;
 &#125;
 </code></pre>
 <p> 前缀和：</p>
-<pre><code>//x所包含的区间和 + x区间前面所包含的区间和
+<pre><code class="cpp">//x所包含的区间和 + x区间前面所包含的区间和
 //x区间的长度为lowbit(x)
 int sum(int x)&#123;
     int ans=0;
@@ -258,7 +258,7 @@ int sum(int x)&#123;
 <p>接下来 m 行每行包含 3 个整数，表示一个操作，具体如下：</p>
 <p>这样子这道题就变得显而易见了</p>
 <p>lowbit(x) 的返回值是x二进制最小位1，所以返回的是x&amp;-x，这里我用宏定义</p>
-<pre><code>#include &lt;bits/stdc++.h&gt;
+<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
 #define rep(i,n,m) for(int i=n;i&lt;=m;++i)
 #define per(i,n,m) for(int i=n;i&gt;=m;--i)
 #define PII pair&lt;int,int&gt;
@@ -316,7 +316,7 @@ int main()
 <p>对于该题，我们不妨初始化差分数组为0，然后使次区间改值时对差分数组边界进行两次操作 </p>
 <p>最后的单点查询就是改变的差分值加上原数值，即 sum(x) + a[x] </p>
 <p>（以下用t数组代表差分数组，q数组表示原数值数组）</p>
-<pre><code>#include &lt;bits/stdc++.h&gt;
+<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
 #define rep(i,n,m) for(int i=n;i&lt;=m;++i)
 #define per(i,n,m) for(int i=n;i&gt;=m;--i)
 #define PII pair&lt;int,int&gt;

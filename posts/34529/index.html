@@ -209,7 +209,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/思维/" style="color: #ff7d73">
+                <a href="/tags/思维/" style="color: #03a9f4">
                     思维
                 </a>
             </span>
@@ -228,7 +228,7 @@
 <p>然后遍历i从0~n-1，每次查看p[i]的位置是否在区间l到r内，</p>
 <p>如果不在l到r内，更行区间，且说明这个位置的数放上去后是区间的边界，mex值在区间改变后也会发生改变，改位置就是固定的，ans不做处理</p>
 <p>如果在l到r内，因为i之前的数组的位置都已经找过了，而l和r的位置也存的是i之前的数，那么在这个区间内，除了已经找过的数，其他任意位置是可以随意放的，这时候的任意位置个数就是r-l+1-i，（注意这里的i意思是已经确定了i个数，如果减去，就意味着还有这么些个位置没有放），所以ans*=（这些位置个数）</p>
-<pre><code>#include &lt;bits/stdc++.h&gt;
+<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
 #define rep(i,n,m) for(int i=n;i&lt;=m;++i)
 #define per(i,n,m) for(int i=n;i&gt;=m;--i)
 #define INF 0x3f3f3f3f
