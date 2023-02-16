@@ -216,7 +216,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/递归/" style="color: #00bcd4">
+                <a href="/tags/递归/" style="color: #ff7d73">
                     递归
                 </a>
             </span>
@@ -228,6 +228,20 @@
         <p>水了一个寒假，快开学了QAQ</p>
 <span id="more"></span>
 
+
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>过度~~~</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
 <p>何为分治？</p>
 <h2 id="分治："><a href="#分治：" class="headerlink" title="分治："></a>分治：</h2><blockquote>
 <p>将一个大问题用类似于二分的手法将其分成一半进行递归求解。</p>
@@ -284,15 +298,63 @@ int main()
 <blockquote>
 <p>题意：给定一棵 n 个节点的数，m 次询问每次问是否存在距离为 k 的点对</p>
 </blockquote>
-<p>思路：</p>
+<p>思路：<br>对于一颗树，我们考虑选择一个根节点 $root$，那么删除该根节点后，就会出现若干棵子树<br>然后我们考虑的距离有两种：<br><img src="/picture/dfz2.png"></p>
+<blockquote>
+<p>1 ：一颗子树中的两个节点之间的距离<br>2 ：两个属于不同子树的节点之间的距离，这个路径是经过根节点的。（如果有一个节点是根节点，那么可以看成第二种情况下一个节点到根节点的距离为 0）</p>
+</blockquote>
+<p>如果我们枚举每一个节点为根节点，那每一个递归层的复杂度是 $O(nlogn)$,如果一颗树的路径是一条线性链表的话，那复杂度就变成了$O(n^2logn)$，直接寄了，所以我们可以考虑找到一棵树的重心作为根节点，那么我们的复杂度就可以变成$O(nlog^2n)$</p>
+<blockquote>
+<p>（树的重心：它的子树的数量最大值最小）<br>我们可以用一个递归来找重心</p>
+</blockquote>
+<pre><code class="cpp">void get_root(int u, int pre, int sum)&#123;
+    siz[u] = 1; mx[u] = 0;
+    for(int i = head[u]; i; i = ne[i])&#123;
+        int to = e[i];
+        if(to == pre || vis[to]) continue; //如果当前点已经做过重心
+        get_root(to, u, sum);
+        siz[u] += siz[to]; //子树大小相加
+        mx[u] = max(mx[u], siz[to]); //找最大子树大小
+    &#125;
+    mx[u] = max(mx[u], sum - siz[u]); //当前子树外的所有点 sum - siz[u]
+    if(mx[u] &lt; mx[root] || !root) root = u; //如果最大子树大小比 mx[root]小就更新
+&#125;
+</code></pre>
+<p>另外，在一个根节点下面的所有dist都知道了以后，如果两个点是同一颗子树中的，那他俩的dist相加肯定不是正确的路径长度，所以我们可以用一个col来标记当前节点属于哪一棵子树，最后我们二分该根节点下的所有节点，如果不属于同一颗子树且满足dist[l] + dist[r] == query[i] ，则答案存在</p>
+<pre><code class="cpp">    sort(q + 1, q + 1 + tol, cmp); //我们对所有点按 到 根节点的距离长度排序
+    rep(i, 1, m)&#123;
+        int l = 1, r = tol;
+        if(ok[i]) continue;
+        while(l &lt; r)&#123;
+            int x = q[l], y = q[r];
+            if(dist[x] + dist[y] &lt; query[i])&#123; 
+                l ++;
+            &#125;else if(dist[x] + dist[y] &gt; query[i])&#123;
+                r --;
+            &#125;else if(col[x] == col[y])&#123;
+                if(col[y] == col[q[r - 1]]) r --;
+                else l ++;
+            &#125;else &#123;
+                ok[i] = 1;
+                break;
+            &#125;
+        &#125;
+    &#125;
+</code></pre>
+<p>最终代码</p>
 <pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
 #define rep(i, n, m) for(int i = n; i &lt;= m; ++i)
 #define per(i, n, m) for(int i = n; i &gt;= m; --i)
 using namespace std;
 const int N = 2e5 + 10;
-int ne[N], w[N], e[N], head[N], cnt = 0;
+int ne[N], w[N], e[N], head[N], cnt = 0; //邻接表
 int n, m, root, ok[N], query[N], siz[N], mx[N], vis[N];
-int tol, dist[N], q[N], col[N];
+int tol, q[N], dist[N], col[N];
+/*
+ok：是否存在点对满足解  query：每次询问的k值 siz：以当前为根节点的子树大小
+mx：以当前节点为根节点，其子树中大小的最小值 vis：当前节点是否当过重心
+tol：队列的大小， q：队列 
+dist：当前节点到根节点的距离 col：当前点属于哪棵子树
+*/
 void add(int a, int b, int c)&#123;
     e[++cnt] = b, w[cnt] = c, ne[cnt] = head[a], head[a] = cnt; 
 &#125;
@@ -312,9 +374,9 @@ void get_root(int u, int pre, int sum)&#123;
     if(mx[u] &lt; mx[root] || !root) root = u;
 &#125;
 void get_dist(int u, int pre, int dis, int camp)&#123;
-    q[++tol] = u;
+    q[++tol] = u;   // 入队列
     dist[u] = dis;
-    col[u] = camp;
+    col[u] = camp;  // u节点属于子树 camp
     for(int i = head[u]; i; i = ne[i])&#123;
         int to = e[i];
         if(to == pre || vis[to]) continue;
@@ -350,7 +412,7 @@ void cal(int u)&#123;
         &#125;
     &#125;
 &#125;
-void solve(int u)&#123;
+void solve(int u)&#123; // 分治
     vis[u] = 1;
     cal(u);
     for(int i = head[u]; i; i = ne[i])&#123;
