@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
-        <title>并查集初步学习 | YLQQ のBLOG</title>
+        <title>点分治 | YLQQ のBLOG</title>
         <meta name="author" content="YLQQ">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -182,14 +182,14 @@
                         
 <div class="article">
     <div>
-        <h1>并查集初步学习 </h1>
+        <h1>点分治 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
             </span>
-            2022/4/10
+            2023/2/16
         </span>
         
         <span class="category">
@@ -209,15 +209,15 @@
             
             <span class="tag">
                 
-                <a href="/tags/数组/" style="color: #00bcd4">
-                    数组
+                <a href="/tags/分治/" style="color: #ff7d73">
+                    分治
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/并查集/" style="color: #00bcd4">
-                    并查集
+                <a href="/tags/递归/" style="color: #00bcd4">
+                    递归
                 </a>
             </span>
             
@@ -225,79 +225,66 @@
         
     </div>
     <div class="content" v-pre>
-        <p><strong>树的关系图欸</strong></p>
+        <p>水了一个寒假，快开学了QAQ</p>
 <span id="more"></span>
-<p>当我们面对许多数据量（且其中某一部分数据之间相互有联系的时候），如下六个元素，1和2之间连接，3、4和5相互连接，在处理某部分问题的时候十分难处理，因此聪明的人类引出了并查集这个概念方法来解决问题，可以将分别联系的数据整理成一颗颗分叉的树。（好耶~）<br><img src="https://img-blog.csdnimg.cn/0e8829a7b00849cba2bf77ecbfe30ddc.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aWz5Lq65Y-q5Lya5b2x5ZON5oiR5pWy5Luj56CB55qE6YCf5bqmUUFR,size_20,color_FFFFFF,t_70,g_se,x_16"><br>并查集是将所有元素分为几个集合，每个集合内的元素互相连接，用广泛的介绍就是，如果A和B是好朋友，B和C是好朋友，虽然A和C不认识，但是通过B的介绍，A和C也能成为好朋友，这样ABC都能在一个集合内，这如同树一般的分叉连接，并且不同的集合内不会有共同的元素<br><img src="https://img-blog.csdnimg.cn/9015ccbb7cd747d8ba16671423b99baf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aWz5Lq65Y-q5Lya5b2x5ZON5oiR5pWy5Luj56CB55qE6YCf5bqmUUFR,size_20,color_FFFFFF,t_70,g_se,x_16"><br>1、并查集的find函数</p>
-<p>对于并查集的实用，主要有两个函数，一个是find函数，用于查找该元素的头元素，对于以下途中的元素可知，A，C，D的头元素都是B，此时B元素就是该集合的老大。<br><img src="https://img-blog.csdnimg.cn/f8de6a95a3154c5ca5c0ad42c7eb2858.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aWz5Lq65Y-q5Lya5b2x5ZON5oiR5pWy5Luj56CB55qE6YCf5bqmUUFR,size_10,color_FFFFFF,t_70,g_se,x_16"></p>
-<pre><code class="cpp">int pre[100];   //对数组f，f[i]=j中表示i元素的上一层元素是j
-int find ( int n )
-&#123;
-    int head=n;
-    while(pre[head]!=head) //一直查找没有最上面一层的元素，相当于一个集合的boss吧
-        head=pre[head];
- 
-    //part 2  
-    //*路径压缩 
-    int i=n,j;
-    
-    while(i!=head)&#123;    
-        j=pre[i];      //j是i的前一元素
-        pre[i]=head;  
-        i=j;
-    &#125;
-    //压缩结束
-    *//
- 
-    return head;
-    
-&#125;
-</code></pre>
-<p>如果我们不进行路径压缩那部分的话就会发现，每次要查找一个元素的老大的话，都要一直往上一层循环找，当层数很大的时候就很费时间复杂度，这时候我们就可以用路径压缩，使得在一个元素往上找老大的过程中遇到的元素都直接指向老大，如图<br><img src="https://img-blog.csdnimg.cn/dc1a0e29ca69489a91825f43cc2b1428.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aWz5Lq65Y-q5Lya5b2x5ZON5oiR5pWy5Luj56CB55qE6YCf5bqmUUFR,size_14,color_FFFFFF,t_70,g_se,x_16"></p>
-<pre><code class="cpp">void join(int i,int j)&#123;
-    int x=pre[i],y=pre[j];  //x和y分别是i和j的老大
-    if(x!=y)  pre[x]=y ;  //如果i和j的老大不是是同一个人
-          //让j组织的老大的成为i组织老大的老大
-&#125;
-</code></pre>
-<p><img src="https://img-blog.csdnimg.cn/362b5461c2f541c396e156e975ebac10.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aWz5Lq65Y-q5Lya5b2x5ZON5oiR5pWy5Luj56CB55qE6YCf5bqmUUFR,size_20,color_FFFFFF,t_70,g_se,x_16"><br> 这时候合并的两组织层数用树来看还是比较长的，可以用find一次来压缩一下路径使得ABCEH属于同一层。</p>
-<p><strong>例题来自ACWing</strong></p>
-<p><img src="https://img-blog.csdnimg.cn/dc1bac1ba2e54292bdca747ff8a8d56b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aWz5Lq65Y-q5Lya5b2x5ZON5oiR5pWy5Luj56CB55qE6YCf5bqmUUFR,size_16,color_FFFFFF,t_70,g_se,x_16"><br>这道题用主要用贪心的思想，同时加上并查集的优化，先求出最大的保质期时间，然后对于每一天的的头元素都是改天的日期，在从利润最大的商品往最小的商品遍历的时候，如果说对保质期使i的商品，若pre [ i ] == i，那么可以说明这一天的还没有卖出东西，所以可以把目前利润最大的卖了，同时使得目前该保质期的商品的 pre [ i ] = i - 1，即使得保质期为i的头元素为 i - 1， 这样当遇到第二大利润且保质期也是 i 的时候这个商品只能在该保质期的前的第 i - 1 天卖，从前往后的头元素表示着可以卖出商品的时间，如果该时间等于0了也说明天数卖完了</p>
-<p>这题里用的并查集pre [ i ] = j 表示在第 i 天之前距 i 最近的还未出售过商品的日期是 j ，在每用完第j天后更新 j = j - 1，使得某天后面的pre [ i ]都与前面空闲的某天直接联系。</p>
+
+<p>何为分治？</p>
+<h2 id="分治："><a href="#分治：" class="headerlink" title="分治："></a>分治：</h2><blockquote>
+<p>将一个大问题用类似于二分的手法将其分成一半进行递归求解。</p>
+</blockquote>
+<p>洛谷题 ：<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1257">平面最近点对</a></p>
+<blockquote>
+<p>以该题为例: 求二维平面内n个点中的最短距离</p>
+</blockquote>
+<p>思路：<br>我们可以将该图以最中间的点的x值分为两个区域<br><img src="/picture/dfz1.png"><br>然后我们可以用分治的思想求最短距离d,其为两部分</p>
+<blockquote>
+<p>1 : 求每个部分中最短距离 d</p>
+</blockquote>
+<blockquote>
+<p>2 : 求跨越两个区域的最短距离 d</p>
+</blockquote>
+<p>第一个部分我们很好理解，分治递归之。<br>第二个部分我们可以假设从已经从每个部分中得到一个最小距离d，我们假设中间点的坐标为 $x_1$，那么我们可以枚举 $x_1 - d &lt; x &lt;x_1 + d $ 的点查找是否有小于 $d$ 的值并更新。<br>因为对于以 $x_1$ 为中心，边长为 $d$ 的两个正方形， 显然枚举的点数一直在减小。</p>
 <pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
+#define rep(i, n, m) for(int i = n; i &lt;= m; ++i)
+#define per(i, n, m) for(int i = n; i &gt;= m; --i)
 using namespace std;
-#define N 10010
-int n, pre[N];
-pair&lt;int, int&gt; good[N];  //存储每一个货物的利润和保质期
-void solve() &#123;
-    int day=0, num=0;
-    for (int i=1;i&lt;= n;i++) &#123;
-        cin&gt;&gt;good[i].first&gt;&gt;good[i].second;
-        day=max(day,good[i].second);  //取得一个最晚过期时间
-    &#125;
-    sort(good+1,good+n+1);  // 对利润从小到大排序
-    for(int i=0;i&lt;= day;i++)  pre[i] = i;//初始化每一天的头元素     
-    //    利用路径压缩, 可以快速找出从过期时间往前数第一个空闲的天数
-    for(int i=n;i&gt;0;i--)&#123;
-        int r=findd(good[i].second);  //获取利润最大的商品的过期日期
-        if(r!=0)&#123;                   //如果这个&quot;位置&quot;还没有被用掉
-            num+=good[i].first;     //更新答案        
-            pre[r]=r-1;   //合并两个集合(r与r-1)-&gt; 把这个&quot;位置&quot;指向他前一个&quot;位置&quot;
+const int N = 2e5 + 10;
+pair&lt;double, double&gt; p[N];
+double cal(pair&lt;double, double&gt; a, pair&lt;double, double&gt; b)&#123;
+    return sqrt((a.first - b.first) * (a.first - b.first) + (a.second - b.second) * (a.second - b.second));
+&#125;
+double get(int l, int r)&#123;
+    if(l == r) return INF;
+    if(l + 1 == r) return cal(p[l], p[r]);
+    int mid = l + r &gt;&gt; 1;
+    double x = p[mid].first;
+    double d = min(get(l, mid), get(mid + 1, r));
+    for(int i = mid; i &gt;= l &amp;&amp; x - p[i].first &lt; d; -- i)&#123;
+        for(int j = mid + 1; j &lt;= r &amp;&amp; p[j].first - x &lt; d; ++ j)&#123;
+            double res = cal(p[i], p[j]);
+            d = min(res, d);
         &#125;
     &#125;
-    cout&lt;&lt;num&lt;&lt;endl;
-&#125;
-int findd(int x) &#123;
-    if (x==pre[x]) return x;   
-    return pre[x]=findd(pre[x]);  //路径压缩
+    return d;
 &#125;
 int main()
 &#123;
-    while(cin&gt;&gt;n) &#123;
-        solve();
+    //ios::sync_with_stdio(0); cin.tie(0);
+    int n; cin &gt;&gt; n;
+    rep(i, 1, n)&#123;
+        cin &gt;&gt; p[i].first;
+        cin &gt;&gt; p[i].second;
     &#125;
+    sort(p + 1, p + 1 + n);
+    printf(&quot;%.4lf&quot;, get(1, n));
     return 0;
 &#125;
 </code></pre>
+<p>然后回到正事<br>洛谷题：<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3806">点分治</a></p>
+<blockquote>
+<p>题意：给定一棵 n 个节点的数，m 次询问每次问是否存在距离为 k 的点对</p>
+</blockquote>
+<p>思路：</p>
 
     </div>
     
