@@ -209,7 +209,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/分治/" style="color: #ff7d73">
+                <a href="/tags/分治/" style="color: #ffa2c4">
                     分治
                 </a>
             </span>
@@ -285,6 +285,115 @@ int main()
 <p>题意：给定一棵 n 个节点的数，m 次询问每次问是否存在距离为 k 的点对</p>
 </blockquote>
 <p>思路：</p>
+<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
+#define rep(i, n, m) for(int i = n; i &lt;= m; ++i)
+#define per(i, n, m) for(int i = n; i &gt;= m; --i)
+using namespace std;
+const int N = 2e5 + 10;
+int ne[N], w[N], e[N], head[N], cnt = 0;
+int n, m, root, ok[N], query[N], siz[N], mx[N], vis[N];
+int tol, dist[N], q[N], col[N];
+void add(int a, int b, int c)&#123;
+    e[++cnt] = b, w[cnt] = c, ne[cnt] = head[a], head[a] = cnt; 
+&#125;
+bool cmp(int a, int b)&#123;
+    return dist[a] &lt; dist[b];
+&#125;
+void get_root(int u, int pre, int sum)&#123;
+    siz[u] = 1; mx[u] = 0;
+    for(int i = head[u]; i; i = ne[i])&#123;
+        int to = e[i];
+        if(to == pre || vis[to]) continue;
+        get_root(to, u, sum);
+        siz[u] += siz[to];
+        mx[u] = max(mx[u], siz[to]);
+    &#125;
+    mx[u] = max(mx[u], sum - siz[u]);
+    if(mx[u] &lt; mx[root] || !root) root = u;
+&#125;
+void get_dist(int u, int pre, int dis, int camp)&#123;
+    q[++tol] = u;
+    dist[u] = dis;
+    col[u] = camp;
+    for(int i = head[u]; i; i = ne[i])&#123;
+        int to = e[i];
+        if(to == pre || vis[to]) continue;
+        get_dist(to, u, w[i] + dis, camp);
+    &#125;
+&#125;
+void cal(int u)&#123;
+    tol = 0;
+    q[++ tol] = u;
+    dist[u] = 0;
+    col[u] = u;
+    for(int i = head[u]; i ; i = ne[i])&#123;
+        int to = e[i];
+        if(!vis[to]) get_dist(to, u, w[i], to);
+    &#125;
+    sort(q + 1, q + 1 + tol, cmp);
+    rep(i, 1, m)&#123;
+        int l = 1, r = tol;
+        if(ok[i]) continue;
+        while(l &lt; r)&#123;
+            int x = q[l], y = q[r];
+            if(dist[x] + dist[y] &lt; query[i])&#123;
+                l ++;
+            &#125;else if(dist[x] + dist[y] &gt; query[i])&#123;
+                r --;
+            &#125;else if(col[x] == col[y])&#123;
+                if(col[y] == col[q[r - 1]]) r --;
+                else l ++;
+            &#125;else &#123;
+                ok[i] = 1;
+                break;
+            &#125;
+        &#125;
+    &#125;
+&#125;
+void solve(int u)&#123;
+    vis[u] = 1;
+    cal(u);
+    for(int i = head[u]; i; i = ne[i])&#123;
+        int to = e[i];
+        if(!vis[to])&#123;
+            root = 0;
+            get_root(to, 0, siz[to]);
+            solve(root);
+        &#125;
+    &#125;
+&#125;
+int main()
+&#123;
+    //ios::sync_with_stdio(0); cin.tie(0);
+    cin &gt;&gt; n &gt;&gt; m;
+    rep(i, 1, n - 1)&#123;
+        int u, v, w; cin &gt;&gt; u &gt;&gt; v &gt;&gt; w;
+        add(u, v, w); add(v, u, w);
+    &#125;
+    rep(i, 1, m)&#123;
+        cin &gt;&gt; query[i];
+    &#125;
+    mx[0] = n;
+    get_root(1, 0, n);
+    solve(root);
+    rep(i, 1, m)&#123;
+        if(ok[i]) cout &lt;&lt; &quot;AYE&quot; &lt;&lt; &#39;\n&#39;;
+        else cout &lt;&lt; &quot;NAY&quot; &lt;&lt; &#39;\n&#39;;
+    &#125;
+    return 0;
+&#125;
+
+/*
+4 4
+1 2 3
+2 3 2
+3 4 1
+2
+3
+1
+4
+*/
+</code></pre>
 
     </div>
     
