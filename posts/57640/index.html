@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
-        <title>codeforces792BCD | YLQQ のBLOG</title>
+        <title>字典树板子 | YLQQ のBLOG</title>
         <meta name="author" content="YLQQ">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -182,22 +182,22 @@
                         
 <div class="article">
     <div>
-        <h1>codeforces792BCD </h1>
+        <h1>字典树板子 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
             </span>
-            2022/5/20
+            2023/3/2
         </span>
         
         <span class="category">
-            <a href="/categories/codeforces/">
+            <a href="/categories/Trie/">
                 <span class="icon">
                     <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
                 </span>
-                codeforces
+                Trie
             </a>
         </span>
         
@@ -209,15 +209,8 @@
             
             <span class="tag">
                 
-                <a href="/tags/思维/" style="color: #ffa2c4">
-                    思维
-                </a>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/贪心/" style="color: #03a9f4">
-                    贪心
+                <a href="/tags/字符串/" style="color: #03a9f4">
+                    字符串
                 </a>
             </span>
             
@@ -225,116 +218,88 @@
         
     </div>
     <div class="content" v-pre>
-        <p><strong>这么好的日子宅寝室写题解</strong><br><strong>QAQ</strong></p>
+        <p>做道板子</p>
 <span id="more"></span>
-<p> B：</p>
-<p>题意：输入题目给定的a，b，c，（其中a&lt;b&lt;c）求三个值x，y，z 使得满足</p>
-<p>x mod y = a,     1</p>
-<p>y mod z = b,     2</p>
-<p>z mod x = c      3</p>
-<p>输出任何满足条件的x，y，z</p>
-<p>题解：要求任意满足条件的三个值互相取模得到输入值，我们不妨假设一个输出的值就是其对应的输入值，如y=b，此时要求得另外两解，我们可以对a和c进行调用，我们可以发现以下规律，但是这会有一个特殊情况，因为c使最大的，所以 a+b+c&lt;3*c，a+b+c 可能是  a+b 的整数倍 ，所以固定y值时可能出现第三个条件不满足的情况，所以我们应该固定最大的z对应的c值。<br><img src="https://img-blog.csdnimg.cn/257a77cfcb7f4f9aa21a14a74f519511.png"></p>
-<pre><code class="cpp">#include&lt;iostream&gt;
-using namespace std;
-void solve()
-&#123;
-    int a,b,c;cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;
-    cout&lt;&lt;a+b+c&lt;&lt;&#39; &#39;&lt;&lt;b+c&lt;&lt;&#39; &#39;&lt;&lt;c&lt;&lt;endl;
-&#125;
-int main()
-&#123;
-    int n;cin&gt;&gt;n;
-    while(n--)solve();
+
+<p>洛谷题 ：<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P8306">字典树</a></p>
+<p>我们考虑将一组字符串转化为树的形式</p>
+<p><img src="/picture/trie1.jpg"></p>
+<p>我们使得每个结点之间连接的边表示一个字符，那么对于一个结点，它可以连接有限个结点（假设字符只有a-z，那么一个结点最多连接26个亲儿子），</p>
+<p>于是我们以图示为例子，以“cd”结尾的字符串有两个，分别为 “cdf” 和 “cdh”， 所以我们可以在初始化的时候更新trie数组，</p>
+<p>我们用trie[p][x] 数组表示p结点连接的字符x是否存在，那么我们可以用Ascall来替代字符的数字，因为本题的字符有数字有字母，所以我们以ascall值最小的0来做基底</p>
+<p>以cnt来表示结点编号</p>
+<pre><code class="cpp">void in(string s)&#123;
+    int p = 0, n = s.size();
+    rep(i, 0, n - 1)&#123;
+        int x = s[i] - &#39;0&#39;;
+        if(!trie[p][x]) trie[p][x] = ++ cnt; // 如果该节点没有连接s[i]，那么新增结点编号
+        p = trie[p][x]; // 下传结点
+        ans[p] ++; //以该结点结尾的字符串个数
+    &#125;
 &#125;
 </code></pre>
-<p> C ：</p>
-<p>题意：</p>
-<p>对每组数据输入 n * m (1 ≤  n, m ≤ 2⋅10^5 )的矩阵，其中每个位置的值不超过10^9，要求对换两列元素使得矩阵每行非递增，输出对调的两列下标，若不存在满足情况的两列则输出 -1</p>
-<p>题解：</p>
-<p>先找到任一 一行的非递减的的位置下标存入数组bb，记该行不满足的下标数量为num，若num大于2则直接输出 -1，若 num==0 即矩阵本就满足情况，输出1  1，若以上情况都不存在即num==2的时候，对调矩阵中每行该下标位置的元素值，然后遍历每一行元素判断是否非递减排列，若不满足输出-1，否则最后输出 两个下标位置。</p>
+<p>于是我们便可以便捷地查询有s前缀字符串的个数</p>
+<pre><code class="cpp">int get(string s)&#123;
+    int p = 0, n = s.size();
+    rep(i, 0, n - 1)&#123;
+        int x = s[i] - &#39;0&#39;;
+        if(!trie[p][x]) return 0; //还没找完就没有了，直接 return 0
+        p = trie[p][x];
+    &#125;
+    return ans[p]; //
+&#125;
+</code></pre>
+<p>注意trie数组的大小，因为 本题一次性预处理的字符串个数有 1e5， 所以在累加结点编号的时候难免会超出 很多</p>
 <pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
-#define rep(i,n,m) for(int i=n;i&lt;=m;++i)
-#define per(i,n,m) for(int i=n;i&gt;=m;--i)
+#define rep(i, n, m) for(int i = n; i &lt;= m; ++i)
 using namespace std;
-typedef long long ll;;
+const int N = 3e6 + 10;
+int ans[N], trie[N][150], cnt;
+void in(string s)&#123;
+    int p = 0, n = s.size();
+    rep(i, 0, n - 1)&#123;
+        int x = s[i] - &#39;0&#39;;
+        if(!trie[p][x]) trie[p][x] = ++ cnt;
+        p = trie[p][x];
+        ans[p] ++;
+    &#125;
+&#125;
+int get(string s)&#123;
+    int p = 0, n = s.size();
+    rep(i, 0, n - 1)&#123;
+        int x = s[i] - &#39;0&#39;;
+        if(!trie[p][x]) return 0;
+        p = trie[p][x];
+    &#125;
+    return ans[p];
+&#125;
 void solve()
 &#123;
-    int n,m;cin&gt;&gt;n&gt;&gt;m;
-    vector&lt;vector&lt;int&gt;&gt; a(n,vector&lt;int&gt;(m));
-    vector&lt;int&gt; bb;
-    rep(i,0,n-1)
-        rep(j,0,m-1)
-            cin&gt;&gt;a[i][j];   //输入每个元素值
-        
-    for(int i=0;i&lt;n&amp;&amp;bb.empty();++i)&#123;   
-        //当下标越界或者该行发现有不满足条件的元素出现时跳出
-        vector&lt;int&gt; b=a[i];
-        sort(b.begin(),b.end());  //对数组b排序，然后对原数值进行比较
-        for(int j=0;j&lt;m;++j)&#123;
-            if(a[i][j]!=b[j])bb.push_back(j);  //加入不满足的下标
-        &#125;
+    // 初始化
+    rep(i, 0, cnt)&#123;
+        ans[i] = 0;
+        rep(j, 0, 140) trie[i][j] = 0;
+    &#125; cnt = 0;
+
+    int n, q; cin &gt;&gt; n &gt;&gt; q;
+    rep(i, 1, n)&#123;
+        string s; cin &gt;&gt; s;
+        in(s);
     &#125;
-    if(bb.size()==0)&#123;cout&lt;&lt;1&lt;&lt;&#39; &#39;&lt;&lt;1&lt;&lt;endl;return ;&#125;  //不存在不满足的情况
-    else if(bb.size()&gt;2)&#123;cout&lt;&lt;-1&lt;&lt;endl;return ;&#125;   //不满足的情况太多，&gt;2
-    rep(i,0,n-1)swap(a[i][bb[0]],a[i][bb[1]]);    //否则交换两列数值
-    rep(i,0,n-1)&#123;
-        rep(j,0,m-2)&#123;
-            if(a[i][j]&gt;a[i][j+1])&#123;       //判断是否满足条件
-                cout&lt;&lt;-1&lt;&lt;endl;
-                return ;
-            &#125;
-        &#125;
+    rep(i, 1, q)&#123;
+        string s; cin &gt;&gt; s;
+        cout &lt;&lt; get(s) &lt;&lt; &#39;\n&#39;;
     &#125;
-    cout&lt;&lt;bb[0]+1&lt;&lt;&#39; &#39;&lt;&lt;bb[1]+1&lt;&lt;endl;  //因为记的下标是从0开始的，所以记得+1
-    
 &#125;
 int main()
 &#123;
-    ios::sync_with_stdio(0);cin.tie(0);
-    int n;cin&gt;&gt;n;
-    while(n--)solve();
+    //ios::sync_with_stdio(0); cin.tie(0);
+    int n; cin &gt;&gt; n;
+    while(n--) solve();
     return 0;
 &#125;
 </code></pre>
-<p>天啦噜，昨晚开a【200001】【200001】的数组爆栈了，麻木了我一个多小时，今天学到了个新招 ，用vector 开二维，就 vector&lt;vector<int>&gt; a(n,vector<int>(m)); 这样写，是 n * m 的二维数组。</p>
-<p>D</p>
-<p>题意：每组数据给定 n 个陷阱的伤害值，k 次跳越一个陷阱的机会，每跳过一个陷阱，后面所有的陷阱伤害值都会 +1，求经过所有陷阱后所受伤害的 最小值。</p>
-<p>题解：</p>
-<p>当所有的陷阱都要跳进去时，所受伤害就是每个陷阱伤害值的和 ans，对于每一个陷阱，如果跳过当前的陷阱，对于整体所受的伤害 ans 就是 ans = ans - a [ i ] +( n - i )  = n - i - a [ i ] ，而对于当前跳的第 j 个陷阱，若跳过该陷阱 ，后面还有 k - j 次机会可以跳，即还有k - j 个陷阱的+1 不用算到ans之中去，所有对于k次机会，一共有 （k - 1）*k / 2点伤害不用承受。</p>
-<p>我们只需求出跳越每个陷阱对整体所减少的伤害值，并贪心求最大减伤即可。</p>
-<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
-#define rep(i,n,m) for(int i=n;i&lt;=m;++i)
-#define per(i,n,m) for(int i=n;i&gt;=m;--i)
-//#define INF 0x3f3f3f3f
-using namespace std;
-typedef long long ll;
-const int N=200010;
-void solve()
-&#123;
-    ll n,k,ans=0;cin&gt;&gt;n&gt;&gt;k;
-    
-    vector&lt; ll &gt;a(n);
-    
-    for(int i=0;i&lt;n;++i)&#123;
-        int x;cin&gt;&gt;x;
-        ans+=x;      //计总伤害值
-        a[i]=1LL*(n-i-1-x);   //记得取1LL，不然会超范围
-    &#125;        
-    sort(a.begin(),a.end());  
- 
-    rep(i,0,k-1)  ans+=a[i];  //贪心使伤害最小化
- 
-    cout&lt;&lt; ans - ( k * (k-1) / 2 )&lt;&lt;endl;  //减去对当前跳过的陷阱后面跳过的陷阱+1的伤害
-&#125;
-int main()
-&#123;
-    ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
-    int n;cin&gt;&gt;n;
-    while(n--)solve();
-    return 0;
-&#125;
-</code></pre>
-<p>cf分天天掉，上绿还没稳住一直拼命往下掉，<del>蒻苟本狗</del></p>
+<p>延申题下次再更新。。。。</p>
 
     </div>
     
