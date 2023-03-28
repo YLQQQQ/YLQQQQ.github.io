@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
-        <title>最大矩阵和 | YLQQ のBLOG</title>
+        <title>典题几道 | YLQQ のBLOG</title>
         <meta name="author" content="YLQQ">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -182,22 +182,22 @@
                         
 <div class="article">
     <div>
-        <h1>最大矩阵和 </h1>
+        <h1>典题几道 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
             </span>
-            2022/4/27
+            2023/3/28
         </span>
         
         <span class="category">
-            <a href="/categories/矩阵/">
+            <a href="/categories/杂题/">
                 <span class="icon">
                     <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
                 </span>
-                矩阵
+                杂题
             </a>
         </span>
         
@@ -209,8 +209,22 @@
             
             <span class="tag">
                 
-                <a href="/tags/最值/" style="color: #ffa2c4">
-                    最值
+                <a href="/tags/组合数/" style="color: #ffa2c4">
+                    组合数
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/二进制/" style="color: #ff7d73">
+                    二进制
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/LCA/" style="color: #ff7d73">
+                    LCA
                 </a>
             </span>
             
@@ -218,37 +232,170 @@
         
     </div>
     <div class="content" v-pre>
-        <p><strong>蒻苟的学习记录</strong></p>
+        <p>算是最近做的几道题里觉得值得回顾一下的吧</p>
 <span id="more"></span>
 
-<p>题目：给定一个n✖n大小的矩阵，求其中子矩阵的和最大值（来自洛谷p1719）<br><img src="https://img-blog.csdnimg.cn/a2ffc98c905d402a86b43906a549d895.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aWz5Lq65Y-q5Lya5b2x5ZON5oiR5pWy5Luj56CB55qE6YCf5bqmUUFR,size_16,color_FFFFFF,t_70,g_se,x_16"><br>求一个方向上的前缀和，该方法计算矩阵竖直方向上的前缀和 a[i][j]=a[i-1][j]+x ，然后用 i 和 j 确定子矩阵行坐标的范围，即第 j 行到第 i  行，然后再循环一个k来计算子矩阵内从第1列到第k列的和，若和为负值了就重新计算子矩阵（当然本道题的限制是答案是正数，若要突破这个限制，即把判断sum&lt;0改成sum&lt;ans就行啦）</p>
+<p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc295/tasks/abc295_d">ABC295_D</a><br>题意：给定一个由0~9组成的字符串S, 且$|S| &lt;= 5e5$，求存在多少个$l,r$满足$S_l,…S_r$中满足每个数字出现偶数次个</p>
+<p>思路：假设我们只考虑 $l$ 到 $r$ 中的一种数字，如果我们求该数字的个数前缀和，如果满足题意的话那么 $sum[r] - sum[l - 1] = 0 (mod 0) $，那么显然这俩个的奇偶性是相同的。<br>那么我们可以用map来从前往后记录每种出现的状态的个数，用pre[i][j]来记录数字i到j位置出现的个数。<br>长度为10的状态st表示每一个数字出现个数的奇偶性</p>
 <pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
-#define N 10010
-#define rep(i,a,b)  for(int i=a;i&lt;=b;++i)  
+#define rep(i, n, m) for(int i = n; i &lt;= m; ++i)
+#define per(i, n, m) for(int i = n; i &gt;= m; --i)
+#define ll long long
 using namespace std;
-typedef long long ll;
-int a[N][N],s[N][N],n,ans=-0x3f3f3f3f;
-int main()                //初始ans为极小值
-&#123;
-    cin&gt;&gt;n;
-    rep(i,1,n)&#123;
-        rep(j,1,n)&#123;
-            int x;
-            cin&gt;&gt;x;
-            a[i][j]=a[i-1][j]+x;
-        &#125;   //累加竖直方向上的前缀和
+const int N = 5e5 + 10;
+string st;
+int pre[10][N];
+ll ans;
+map&lt;string, int&gt; p;
+void cal(int u)&#123;
+    rep(i, 0, 9) st[i] = pre[i][u] % 2 + &#39;0&#39;;
+    //更新当前每个状态出现个数的奇偶性
+    if(p.count(st))ans += 1ll * p[st];
+    p[st] ++;
+&#125;
+int main()&#123;
+    string s; cin &gt;&gt; s;
+    int n = s.size(); s = &#39; &#39; + s;
+    st.resize(10); //初始化状态st
+    rep(i, 0, 9) st[i] = &#39;0&#39;;
+    p[st] ++; 
+    rep(i, 1, n)&#123;
+        rep(j, 0, 9)&#123;
+            pre[j][i] = pre[j][i - 1] + (j == s[i] - &#39;0&#39;);
+        &#125;
+        cal(i);
     &#125;
-    rep(i,1,n)&#123;
-        rep(j,0,i-1)&#123;
-            int sum=0;
-            rep(k,1,n)&#123;   //循环加j到i行之间的子矩阵和，
-                sum+=a[i][k]-a[j][k];  
-                if(sum&lt;0)sum=0;    //如果和小于0则初始化sum
-                ans=max(ans,sum);
-            &#125;
+    cout &lt;&lt; ans;
+    return 0;
+&#125;
+</code></pre>
+<p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc295/tasks/abc295_e">ABC295_E</a><br>题意：给定 $n, m, k$,<br>和一个长度为 $n$ 的数组，为$A_1,A_2…A_n$ ,<br>其中$1&lt;=k&lt;=n&lt;=2000, 1&lt;=m&lt;=2000, 0&lt;=A_i&lt;=m$<br>我们可以选择其中为0的位置，其值随机为 $1到m$ 的一个值，然后求对该数组排序后$A_k$的期望值</p>
+<p>思路：据我们所知期望值$E(x)=∑i*p_{x=i} =∑ p_{x&gt;=i} $，那么对于本题，对于每个$i∈(1,m)$,我们求排序后k位置上的$A_k &gt;= i$的概率对答案的贡献</p>
+<p>其中，我们统计原数组中比i大的数字个数tar和等于0的个数ze，我们若要第k位大于等于i，则还需要$n-k+1-tar$ 个大于等于i的数，如果我们定义此时的$tar=n-k+1-tar$，则当tar小于0时，无论怎么操作都能满足要求，此时对答案的贡献为1.<br>假设我们需要的$tar-ze&gt;0$时，说明没有足够的0来满足题目要求，所以此时对答案的贡献都是0<br>倘若以上情况都不是，我们的贡献为$C_{ze}^jp^j(1-p)^{ze-j}$,其中p为选中的都是大于i的情况，即$p=(m-i+1)/m$<br>因为这题的数值都很小，可以用地推求组合数的方法写</p>
+<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
+#define rep(i, n, m) for(int i = n; i &lt;= m; ++i)
+#define int long long
+using namespace std;
+const int N = 2e3 + 10, MOD = 998244353;
+int a[N], C[N][N];
+int qmi(int a, int b)&#123;
+    int ans = 1;
+    while(b)&#123;
+        if(b &amp; 1) ans = ans * a % MOD;
+        a = a * a % MOD;
+        b &gt;&gt;= 1;
+    &#125;
+    return ans % MOD;
+&#125;
+signed main()&#123;
+    //求组合数
+    rep(i, 0, N - 1)&#123;
+        rep(j, 0, i)&#123;
+            if(j == 0) C[i][j] = 1;
+            else C[i][j] = (C[i - 1][j] + C[i - 1][j - 1]) % MOD;
         &#125;
     &#125;
-    cout&lt;&lt;ans;
+    int n, m, k; cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;
+    rep(i, 1, n) cin &gt;&gt; a[i];
+    int ans = 0;
+    rep(i, 1, m)&#123;
+        int tar = n - k + 1, ze = 0;
+        rep(j, 1, n)&#123;
+            if(a[j] &gt;= i) tar --;
+            else if(a[j] == 0) ze ++ ;
+        &#125;
+        if(tar &lt; 0 || tar - ze &gt; 0)&#123;
+            // 如果满条件
+            if(tar &lt; 0) ans ++;
+            continue;
+        &#125;
+        int p = (m - i + 1) * qmi(m, MOD - 2) % MOD;
+        // pp = 1 - p
+        int pp = ((1 - p) % MOD + MOD) % MOD;
+        //此时必须需要选择的 0 的个数为 tar ~ ze
+        rep(j, tar, ze)&#123;
+            int x = qmi(p, j), y = qmi(pp, ze - j);
+            int num = C[ze][j] % MOD * x % MOD * y % MOD;
+            ans = (ans + num) % MOD;
+        &#125;
+    &#125;
+    cout &lt;&lt; ans;
+&#125;
+</code></pre>
+<p><a target="_blank" rel="noopener" href="https://acm.hdu.edu.cn/showproblem.php?pid=2586">How far away</a><br>一道LCA题，算板子吧</p>
+<p>题意：给定T组数据，每组数据有一棵树，给定$n,m$，分别为点数和边数，然后$n-1$行输入两个点及其边长，然后m组询问，每次查询两个结点的最近公共祖先</p>
+<p>思路：我们利用倍增的思想，用 $f[i][j]$ 记录$i$结点往上$(1 &lt;&lt; j)$ 的祖先，用 $dist[i] $记录$i$到根节点的深度,同时用一个$cost[i][j]$同样用倍增的思路记录路径长度<br>其中我们用</p>
+<pre><code>       for(int i  = 1; i &lt;= n; ++ i)&#123;
+        lg[i] = lg[i - 1] + (1 &lt;&lt; lg[i - 1] == i);
+    &#125;
+</code></pre>
+<p>来地推$lg[i]$</p>
+<pre><code class="cpp">#include &lt;iostream&gt;
+#define rep(i, n, m) for(int i = n; i &lt;= m; ++i)
+#define per(i, n, m) for(int i = n; i &gt;= m; --i)
+using namespace std;
+const int N = 8e5 + 10;
+int w[N], h[N], ne[N], e[N], cnt, lg[N], dist[N], f[N][30], cost[N][30];
+void add(int a, int b, int c)&#123;
+     e[cnt] = b, w[cnt] = c, ne[cnt] = h[a], h[a] = cnt++;
+&#125;
+void dfs(int u, int fa)&#123;
+    dist[u] = dist[fa] + 1; //u的深度+1
+    f[u][0] = fa; //u的上一个祖先时fa
+    for(int i = 1; i &lt;= lg[dist[u]]; ++ i)&#123;
+        //倍增更新祖先和路径长度
+        f[u][i] = f[f[u][i - 1]][i - 1];
+        cost[u][i] = cost[f[u][i - 1]][i - 1] + cost[u][i - 1];
+    &#125;
+    for(int i = h[u]; ~i; i = ne[i])&#123;
+        int j = e[i];
+        if(j != fa)&#123;
+            //更新上一层路径
+            cost[j][0] = w[i];
+            dfs(j, u);
+        &#125;
+    &#125;
+&#125;
+int LCA(int a, int b)&#123;
+    int ans = 0;
+    //我们默认使得a的深度大于等于b的深度
+    if(dist[a] &lt; dist[b]) swap(a, b);
+    //我们将a上升到与b同一深度的位置，同时给ans增加贡献
+    while(dist[a] &gt; dist[b]) 
+        ans += cost[a][lg[dist[a] - dist[b]] - 1],
+        a = f[a][lg[dist[a] - dist[b]] - 1];
+    if(a == b) return ans;
+    //二者仍然不相等，将a和b同时上升到公共祖先的儿子
+    for(int i = lg[dist[a]] - 1; i &gt;= 0; --i)&#123;
+        if(f[a][i] != f[b][i])&#123;
+            ans += cost[a][i];
+            ans += cost[b][i];
+            a = f[a][i], b = f[b][i];
+        &#125;
+    &#125;
+    return ans + cost[a][0] + cost[b][0];
+&#125;
+int main()
+&#123;
+    //ios::sync_with_stdio(0); cin.tie(0);
+    int T; cin &gt;&gt; T;
+    while(T--)&#123;
+           memset(h, -1, sizeof h);
+        int n, m, s; cin &gt;&gt; n &gt;&gt; m;
+            for(int i  = 1; i &lt;= n; ++ i)&#123;
+            lg[i] = lg[i - 1] + (1 &lt;&lt; lg[i - 1] == i);
+        &#125;
+        rep(i, 1, n - 1)&#123;
+            int a, b, c; cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+               add(a, b, c); add(b, a, c);
+        &#125;   
+        dfs(1, 0); //我们默认以1为根节点深搜
+        while(m --)&#123;
+            int a, b; cin &gt;&gt; a &gt;&gt; b;
+            cout &lt;&lt; LCA(a, b) &lt;&lt; &#39;\n&#39;;
+        &#125;
+    &#125;
+    return 0;
 &#125;
 </code></pre>
 
