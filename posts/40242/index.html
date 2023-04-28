@@ -210,14 +210,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/区间操作/" style="color: #ff7d73">
+                <a href="/tags/区间操作/" style="color: #00a596">
                     区间操作
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/二叉搜索树/" style="color: #ffa2c4">
+                <a href="/tags/二叉搜索树/" style="color: #00a596">
                     二叉搜索树
                 </a>
             </span>
@@ -229,11 +229,11 @@
         <p><strong>入坑又爱又恨的线段树</strong></p>
 <span id="more"></span>
 
-<p>线段树是将一段下标 1<del>n 的数组划分为一颗二叉搜索树，何为二叉搜索树呢，如下图所示<br><img src="https://img-blog.csdnimg.cn/ff86bbee0fcc482893237448f9296627.png"><br>每一个可以继续延申的节点都有两个儿子，<br>且每一个节点下标k的两个儿子节点的下标分别是k+k和k+k+1，线段是利用这个特性，将1</del>n的一个区间不断分为两个又两个区间，<br><img src="https://img-blog.csdnimg.cn/2ef28c0ebbdc4268a80b3666d2db6589.png"></p>
+<p>线段树是将一段下标 1-n 的数组划分为一颗二叉搜索树，何为二叉搜索树呢，如下图所示<br><img src="/picture/tree1.png"><br>每一个可以继续延申的节点都有两个儿子，<br>且每一个节点下标k的两个儿子节点的下标分别是k+k和k+k+1，线段是利用这个特性，将1-n的一个区间不断分为两个又两个区间，<br><img src="/picture/tree2.png"></p>
 <p><strong>线段树的操作主要分为三个部分</strong></p>
 <h3 id="建树-线段树初始化"><a href="#建树-线段树初始化" class="headerlink" title="建树(线段树初始化)"></a>建树(线段树初始化)</h3><h3 id="插入-对区间进行操作"><a href="#插入-对区间进行操作" class="headerlink" title="插入(对区间进行操作)"></a>插入(对区间进行操作)</h3><h3 id="查找-获取区间的值"><a href="#查找-获取区间的值" class="headerlink" title="查找(获取区间的值)"></a>查找(获取区间的值)</h3><p>每次的插入和查找的复杂度均为O(logn)，总复杂度O(nlogn).</p>
 <p>不难发现的是，我们可以用每一个节点表示两个儿子的和，从下网上递归得出每一个区间得和。</p>
-<pre><code>void build(int k, int l, int r) &#123;
+<pre><code class="cpp">void build(int k, int l, int r) &#123;
     if(l == r) &#123;
         //num是输入的数组值
         f[k] = num[l];
@@ -250,8 +250,8 @@
     //递归更新
 &#125;
 </code></pre>
-<p>当我们给下标为4的位置+1时，可以发现他的往上的节点都会+1,改递归操作应从上往下进行，<br>开始发现4∈(1-4)，则(1-4)+1，<br>然后发现4∈(3-4)，则(3-4)+1，<br>最后4∈(4)，则(4)+1。<br><img src="https://img-blog.csdnimg.cn/1b78fe3a2f2041ed886ae7962495edb5.png"></p>
-<pre><code>void in(int k, int l, int r, int x, int v) &#123;
+<p>当我们给下标为4的位置+1时，可以发现他的往上的节点都会+1,改递归操作应从上往下进行，<br>开始发现4∈(1-4)，则(1-4)+1，<br>然后发现4∈(3-4)，则(3-4)+1，<br>最后4∈(4)，则(4)+1。<br><img src="/picture/tree3.png"></p>
+<pre><code class="cpp">void in(int k, int l, int r, int x, int v) &#123;
     f[k]+=v;
     if(l==r) return;
     int m=(l+r)&gt;&gt;1;
@@ -264,37 +264,58 @@
         //修改的区间完全在右区间
         in(k+k+1, m + 1, r, x, val); 
 &#125;
-```cpp
-### 进行区间加值时
-我们可以对这个操作进行优化，当进行区间加值时，如对3-4区间+1
-开始发现(3-4)∈(1-4)，则(1-4)+1，
-然后发现(3)∈(1-2)，4∈(3-4),则(1-2)+1,(3-4)+1，
-最后3∈(3),4∈(4)，则(3)+1,(4)+1。
-在我们对区间进行范围性加法运算的时候，需要用个数组对节点下标进行标记，表示加法运算到该节点结束
-
-&lt;font color=red&gt;要注意的是&lt;/font&gt;
-
-我们使用标记是使得所有包含更改区间的节点都能更新值，且到完全覆盖修改区间的时候标记不下传
-刚开始我想过，能不能不用 标记，直接包含的每段区间都 f[k]+=(y-x+1)*t; 就好了，结果是不行的，
-如果不用标记，我修改了(1-4)的值+1，会在第一个节点停止，当我查询(2-3)的时候，会一直递归找到(2),(3)的值，发现并不能获取更新后的值，所以需要标记来记录更新。
-![](https://img-blog.csdnimg.cn/d06b64ddd50a4b20ba8ba0a2ab28c343.png)
 </code></pre>
-<p>void in(int k,int l,int r,int x,int y,ll t){<br>  //当前节点为k，lr为节点的区间范围，xy为所要修改的区间范围，t为要加的值<br>    if(l==x&amp;&amp;r==y){  //范围符合，v数组进行标记<br>        v[k]+=t;<br>        return ;<br>    }<br>  //继续寻找<br>    f[k]+=(y-x+1)*t;   //对属于范围内的元素进行加法运算<br>    int m=(l+r)&gt;&gt;1;<br>  //将区间一分为二<br>    if(y&lt;=m)<br>        in(k+k,l,m,x,y,t);<br>     //查询区间右边界&lt;=当前区间左儿子右边界，<br>     //查询区间∈当前区间左儿子<br>    else<br>    if(x&gt;m)<br>       in(k+k+1,m+1,r,x,y,t);<br>     //查询区间左边界&gt;=当前区间右儿子左边界，<br>     //查询区间∈当前区间右儿子<br>    else<br>        in(k+k+1,m+1,r,m+1,y,t),in(k+k,l,m,x,m,t);<br>       //否则递归两边区间<br>}</p>
-<pre><code>至此我们便可以对区间进行范围性加法操作，
-但要如何查询呢
-当我们要查询1-3的区间和时，
-发现(1-3)不完全∈(1-4)，却可以发现其儿子(1-2),(3-4)中，都包含了查询区间，于是把查询区间分为两块，分别对(1-2),(3-4)进行查询(1-2),(3)
-接着我们发现(1-2)∈(1-2),则返回答案，
-(3)不完全∈(3-4),发现其左儿子包含了3，则递归左儿子，然后查询到了(3)，便返回(3)
-![](https://img-blog.csdnimg.cn/86941dd92fb94c6fa8212ee73a1335fd.png)
+<h3 id="进行区间加值时"><a href="#进行区间加值时" class="headerlink" title="进行区间加值时"></a>进行区间加值时</h3><p>我们可以对这个操作进行优化，当进行区间加值时，如对3-4区间+1<br>开始发现(3-4)∈(1-4)，则(1-4)+1，<br>然后发现(3)∈(1-2)，4∈(3-4),则(1-2)+1,(3-4)+1，<br>最后3∈(3),4∈(4)，则(3)+1,(4)+1。<br>在我们对区间进行范围性加法运算的时候，需要用个数组对节点下标进行标记，表示加法运算到该节点结束</p>
+<p><font color=red>要注意的是</font></p>
+<p>我们使用标记是使得所有包含更改区间的节点都能更新值，且到完全覆盖修改区间的时候标记不下传<br>刚开始我想过，能不能不用 标记，直接包含的每段区间都 f[k]+=(y-x+1)*t; 就好了，结果是不行的，<br>如果不用标记，我修改了(1-4)的值+1，会在第一个节点停止，当我查询(2-3)的时候，会一直递归找到(2),(3)的值，发现并不能获取更新后的值，所以需要标记来记录更新。</p>
+<p><img src="/picture/tree4.png"></p>
+<pre><code class="cpp">void in(int k,int l,int r,int x,int y,ll t)&#123;
+  //当前节点为k，lr为节点的区间范围，xy为所要修改的区间范围，t为要加的值
+    if(l==x&amp;&amp;r==y)&#123;  //范围符合，v数组进行标记
+        v[k]+=t;    
+        return ;
+    &#125;
+  //继续寻找
+    f[k]+=(y-x+1)*t;   //对属于范围内的元素进行加法运算
+    int m=(l+r)&gt;&gt;1; 
+  //将区间一分为二
+    if(y&lt;=m)  
+        in(k+k,l,m,x,y,t);
+     //查询区间右边界&lt;=当前区间左儿子右边界，
+     //查询区间∈当前区间左儿子
+    else  
+    if(x&gt;m)
+       in(k+k+1,m+1,r,x,y,t);
+     //查询区间左边界&gt;=当前区间右儿子左边界，
+     //查询区间∈当前区间右儿子
+    else 
+        in(k+k+1,m+1,r,m+1,y,t),in(k+k,l,m,x,m,t);
+       //否则递归两边区间
+&#125;
 </code></pre>
-<p>ll cal(int k,int l,int r,int a,int b,ll ans){<br>  //ans记录当前节点接受的值<br>    ans += v[k];<br>  //累计已标记的值<br>    if(l==a&amp;&amp;r==b){<br>        return 1LL*(f[k] + ans * (b - a + 1 ));<br>    //刚好查询到范围，返回当前区间和+标记值*区间范围<br>    }<br>    int m=(l+r)&gt;&gt;1;<br>    if(b&lt;=m)return cal(k+k,l,m,a,b,ans);<br>       //查询区间右边界&lt;=当前区间左儿子右边界，<br>      //查询区间∈当前区间左儿子<br>    else if(a&gt;m)return cal(k+k+1,m+1,r,a,b,ans);<br>       //查询区间左边界&gt;=当前区间右儿子左边界，<br>      //查询区间∈当前区间右儿子<br>    else<br>    return cal(k+k,l,m,a,m,ans)+cal(k+k+1,m+1,r,m+1,b,ans);<br>         //否则递归两边区间<br>}</p>
-<pre><code>
-另外对于n个数的数组，把他递归分成一颗二叉搜索树，其的数组范围就是结点的数量，应该开到4n
-洛谷原题1[线段树加法](https://www.luogu.com.cn/problem/P3372)
-answer code:
-```cpp
-#include &lt;bits/stdc++.h&gt;
+<p>至此我们便可以对区间进行范围性加法操作，<br>但要如何查询呢<br>当我们要查询1-3的区间和时，<br>发现(1-3)不完全∈(1-4)，却可以发现其儿子(1-2),(3-4)中，都包含了查询区间，于是把查询区间分为两块，分别对(1-2),(3-4)进行查询(1-2),(3)<br>接着我们发现(1-2)∈(1-2),则返回答案，<br>(3)不完全∈(3-4),发现其左儿子包含了3，则递归左儿子，然后查询到了(3)，便返回(3)<br><img src="/picture/tree5.png"></p>
+<pre><code>ll cal(int k,int l,int r,int a,int b,ll ans)&#123;
+  //ans记录当前节点接受的值
+    ans += v[k];
+  //累计已标记的值
+    if(l==a&amp;&amp;r==b)&#123;
+        return 1LL*(f[k] + ans * (b - a + 1 ));
+    //刚好查询到范围，返回当前区间和+标记值*区间范围
+    &#125;
+    int m=(l+r)&gt;&gt;1;
+    if(b&lt;=m)return cal(k+k,l,m,a,b,ans);
+       //查询区间右边界&lt;=当前区间左儿子右边界，
+      //查询区间∈当前区间左儿子
+    else if(a&gt;m)return cal(k+k+1,m+1,r,a,b,ans);
+       //查询区间左边界&gt;=当前区间右儿子左边界，
+      //查询区间∈当前区间右儿子
+    else 
+    return cal(k+k,l,m,a,m,ans)+cal(k+k+1,m+1,r,m+1,b,ans);
+         //否则递归两边区间
+&#125;
+</code></pre>
+<p>另外对于n个数的数组，把他递归分成一颗二叉搜索树，其的数组范围就是结点的数量，应该开到4n<br>洛谷原题1<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3372">线段树加法</a><br>answer code:</p>
+<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
 #define rep(i,n,m) for(int i=n;i&lt;=m;++i)
 #define per(i,n,m) for(int i=n;i&gt;=m;--i)
 #define PII pair&lt;int,int&gt;
@@ -508,7 +529,7 @@ int main()
 &#125;
 </code></pre>
 <p>差不多吧，总觉得还是有个点不是很透彻，慢慢悟吧<br>2022-9-8   19：54</p>
-<p>微博摸张长图<br><img src="https://img-blog.csdnimg.cn/img_convert/378684743328b15d3be18abf60003ffa.jpeg"></p>
+<p>微博摸张长图<br><img src="/picture/tree50.png"></p>
 
     </div>
     

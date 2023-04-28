@@ -210,14 +210,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/区间操作/" style="color: #03a9f4">
+                <a href="/tags/区间操作/" style="color: #00bcd4">
                     区间操作
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/数组/" style="color: #03a9f4">
+                <a href="/tags/数组/" style="color: #ff7d73">
                     数组
                 </a>
             </span>
@@ -233,7 +233,7 @@
 <p>树状数组是2的次方前缀和数组，像树一样，如图所示，每个位置 i 的前缀和长度为 lowbit（i），而每层之间深度所差的区间长度也为lowbit（i），例如要对 t[4] +1，则其后面的包含 t[4] 的 t[8]也进行+1。</p>
 <p>因此当我们要求 6的前缀和，因该是6所包含的区间加上6包含区间的前面的区间，即是 t[4] + t[6]。</p>
 <p>若求 3 到 6的区间和时，便是 前缀和 6 - 前缀和 2，而 前缀和 6 = t[6] +  t[4] ，所以3 到 6 的区间和便是  t[6] +  t[4] - t[2]       </p>
-<p><img src="https://img-blog.csdnimg.cn/b490a2826e7d48b4ab5f03b54c20d2dd.png"></p>
+<p><img src="/picture/tree.png"></p>
 <p>单点加值：</p>
 <pre><code class="cpp">//包含a点的父亲位置都要加上b
 void add(int a,int b)&#123;
