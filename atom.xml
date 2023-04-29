@@ -6,7 +6,7 @@
   <link href="https://www.ylq1104.cn/atom.xml" rel="self"/>
   
   <link href="https://www.ylq1104.cn/"/>
-  <updated>2023-03-28T15:11:39.079Z</updated>
+  <updated>2023-04-29T17:14:58.702Z</updated>
   <id>https://www.ylq1104.cn/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>割点</title>
+    <link href="https://www.ylq1104.cn/posts/47101/"/>
+    <id>https://www.ylq1104.cn/posts/47101/</id>
+    <published>2023-04-29T17:05:06.000Z</published>
+    <updated>2023-04-29T17:14:58.702Z</updated>
+    
+    <content type="html"><![CDATA[<p>Hello World</p><span id="more"></span><p><a href="https://www.luogu.com.cn/problem/P3388">洛谷割点模板</a></p><p>$Y_i$</p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;Hello World&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="图论" scheme="https://www.ylq1104.cn/categories/%E5%9B%BE%E8%AE%BA/"/>
+    
+    
+    <category term="Tarjan" scheme="https://www.ylq1104.cn/tags/Tarjan/"/>
+    
+    <category term="割点" scheme="https://www.ylq1104.cn/tags/%E5%89%B2%E7%82%B9/"/>
+    
+  </entry>
   
   <entry>
     <title>典题几道</title>
