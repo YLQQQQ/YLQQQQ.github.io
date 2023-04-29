@@ -2,40 +2,62 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <meta charset="utf-8" />
         <title>YLQQ のBLOG</title>
-        <meta name="author" content="YLQQ">
-        <meta name="description" content="">
-        <meta name="keywords" content="">
-        <link rel="icon" href="/picture/head.jpg">
-        <script src="https://cdn.staticfile.org/instant.page/5.1.0/instantpage.min.js" type="module"></script>
-        <script src="https://cdn.staticfile.org/font-awesome/6.1.1/js/all.min.js"></script>
-        
-        <link rel="stylesheet" href="/css/fonts.min.css">
-        <link rel="stylesheet" href="/css/particlex.css">
-        
-        <link rel="stylesheet" href="/dist/APlayer.min.css">
-        
-        <script src="https://cdn.staticfile.org/vue/3.2.33/vue.global.prod.min.js"></script>
-        
-        <script src="/js/anime.js"></script>
+        <meta name="author" content="YLQQ" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <link rel="icon" href="/picture/head.jpg" />
+        <script src="https://cdn.staticfile.org/vue/3.2.47/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.3.0/css/all.min.css" />
+<link rel="stylesheet" href="/css/fonts.min.css" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.js"></script>
+<script src="https://cdn.staticfile.org/KaTeX/0.16.4/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+<script src="/js/lib/home.js"></script>
+
+<link rel="stylesheet" href="/css/main.css" />
+
     <meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="YLQQ のBLOG" type="application/atom+xml">
 </head>
     <body>
-        <div id="loading" style="height:100vh;width:100vw;position:fixed;display:flex;z-index:200;justify-content:space-between;background:#fff;transition:opacity 0.3s ease-out"><div style="position:fixed;height:100vh;width:100vw;display:flex;justify-content:center;align-items:center"><div id="loadcontent" style="width:50vmin;height:50vmin;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px #a3ddfb;text-align:center"><div><h2>LOADING...</h2><p style="word-break:keep-all">加载过慢请开启缓存(浏览器默认开启)</p><div><img alt="loading" src="/loading.gif"></div></div></div></div></div>
         <div id="layout">
-            <i data-fa-symbol="calendar-solid" class="fa-solid fa-calendar fa-fw"></i>
-            <i data-fa-symbol="bookmark-solid" class="fa-solid fa-bookmark fa-fw"></i>
-            <i data-fa-symbol="tags-solid" class="fa-solid fa-tags fa-fw"></i>
-            <transition name="into">
-                <div v-show="show_page" style="display: -not-none">
-                    <div id="menu_show">
-                         
-<nav id="menu">
-    <div class="desktop-menu">
-        <a href="/">
-            <span class="title">YLQQ のBLOG</span>
+            <transition name="fade">
+                <div id="loading" v-show="loading">
+                    <div id="loading-circle">
+                        <h2>LOADING</h2>
+                        <p>加载过慢请开启缓存 浏览器默认开启</p>
+                        <img src="/images/loading.gif" />
+                    </div>
+                </div>
+            </transition>
+            <nav id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <div id="desktop-menu">
+        <a class="title" href="/">
+            <span>YLQQ のBLOG</span>
         </a>
         
         <a href="/">
@@ -43,147 +65,149 @@
             <span>&ensp;HOME</span>
         </a>
         
-        <a href="/about">
+        <a href="/">
             <i class="fa-solid fa-id-card fa-fw"></i>
             <span>&ensp;ME</span>
         </a>
         
-        <a href="/archives">
+        <a href="/">
             <i class="fa-solid fa-box-archive fa-fw"></i>
             <span>&ensp;Archive</span>
         </a>
         
-        <a href="/categories">
+        <a href="/">
             <i class="fa-solid fa-bookmark fa-fw"></i>
             <span>&ensp;Classification</span>
         </a>
         
-        <a href="/tags">
+        <a href="/">
             <i class="fa-solid fa-tags fa-fw"></i>
             <span>&ensp;Tags</span>
         </a>
         
-        <a target="_blank" rel="noopener" href="https://www.acwing.com/user/myspace/index/174985/">
+        <a href="/">
             <i class="fa-solid fa-a fa-fw"></i>
             <span>&ensp;Acwing</span>
         </a>
         
-        <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/user/673830">
+        <a href="/">
             <i class="fa-solid fa-l fa-fw"></i>
             <span>&ensp;Luogu</span>
         </a>
         
-        <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_62886369?spm=1000.2115.3001.5343">
+        <a href="/">
             <i class="fa-solid fa-c fa-fw"></i>
             <span>&ensp;CSDN</span>
         </a>
         
-        <a target="_blank" rel="noopener" href="https://www.bilibili.com/">
+        <a href="/">
             <i class="fa-brands fa-bilibili fa-fw"></i>
             <span>&ensp;bilibili</span>
         </a>
         
     </div>
-    <div :class="'phone-menu ' + menu_show" id="phone-menu">
-        <div class="curtain" @click="menu_show = !menu_show" v-show="menu_show"></div>
-        <div :class="'title'" @click="menu_show = !menu_show">
+    <div id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
             <i class="fa-solid fa-bars fa-fw"></i>
             <span>&emsp;YLQQ のBLOG</span>
         </div>
         <transition name="slide">
-        <div class="items" v-show="menu_show">
-            
-            <a href="/">
-                <div class="item">
-                    <div style="min-width: 20px; max-width: 50px; width: 10%">
-                        <i class="fa-solid fa-house fa-fw"></i>
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">HOME</div>
                     </div>
-                    <div style="min-width: 100px; max-width: 150%; width: 20%">HOME</div>
-                </div>
-            </a>
-            
-            <a href="/about">
-                <div class="item">
-                    <div style="min-width: 20px; max-width: 50px; width: 10%">
-                        <i class="fa-solid fa-id-card fa-fw"></i>
+                </a>
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">ME</div>
                     </div>
-                    <div style="min-width: 100px; max-width: 150%; width: 20%">ME</div>
-                </div>
-            </a>
-            
-            <a href="/archives">
-                <div class="item">
-                    <div style="min-width: 20px; max-width: 50px; width: 10%">
-                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                </a>
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archive</div>
                     </div>
-                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archive</div>
-                </div>
-            </a>
-            
-            <a href="/categories">
-                <div class="item">
-                    <div style="min-width: 20px; max-width: 50px; width: 10%">
-                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                </a>
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Classification</div>
                     </div>
-                    <div style="min-width: 100px; max-width: 150%; width: 20%">Classification</div>
-                </div>
-            </a>
-            
-            <a href="/tags">
-                <div class="item">
-                    <div style="min-width: 20px; max-width: 50px; width: 10%">
-                        <i class="fa-solid fa-tags fa-fw"></i>
+                </a>
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
                     </div>
-                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
-                </div>
-            </a>
-            
-            <a target="_blank" rel="noopener" href="https://www.acwing.com/user/myspace/index/174985/">
-                <div class="item">
-                    <div style="min-width: 20px; max-width: 50px; width: 10%">
-                        <i class="fa-solid fa-a fa-fw"></i>
+                </a>
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-a fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Acwing</div>
                     </div>
-                    <div style="min-width: 100px; max-width: 150%; width: 20%">Acwing</div>
-                </div>
-            </a>
-            
-            <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/user/673830">
-                <div class="item">
-                    <div style="min-width: 20px; max-width: 50px; width: 10%">
-                        <i class="fa-solid fa-l fa-fw"></i>
+                </a>
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-l fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Luogu</div>
                     </div>
-                    <div style="min-width: 100px; max-width: 150%; width: 20%">Luogu</div>
-                </div>
-            </a>
-            
-            <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_62886369?spm=1000.2115.3001.5343">
-                <div class="item">
-                    <div style="min-width: 20px; max-width: 50px; width: 10%">
-                        <i class="fa-solid fa-c fa-fw"></i>
+                </a>
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-c fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">CSDN</div>
                     </div>
-                    <div style="min-width: 100px; max-width: 150%; width: 20%">CSDN</div>
-                </div>
-            </a>
-            
-            <a target="_blank" rel="noopener" href="https://www.bilibili.com/">
-                <div class="item">
-                    <div style="min-width: 20px; max-width: 50px; width: 10%">
-                        <i class="fa-brands fa-bilibili fa-fw"></i>
+                </a>
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-brands fa-bilibili fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">bilibili</div>
                     </div>
-                    <div style="min-width: 100px; max-width: 150%; width: 20%">bilibili</div>
-                </div>
-            </a>
-            
-        </div>
+                </a>
+                
+            </div>
         </transition>
     </div>
 </nav>
-                    </div>
-                    <div id="main">
-                        <div id="home-head">
-    <div id="home-background" style="background-image: url(/picture/日奈.webp)"></div>
-    
-    <div id="home-info" class="home-info" @click="home_click">
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+            <transition name="into">
+                <div id="main" v-show="!loading">
+                    <div id="home-head">
+    <div id="home-background" ref="homeBackground" data-images="/picture/%E6%97%A5%E5%A5%88.webp"></div>
+    <div id="home-info" @click="homeClick">
         <span class="loop"></span>
         <span class="loop"></span>
         <span class="loop"></span>
@@ -196,14 +220,10 @@
             </div>
         </span>
     </div>
-    
 </div>
-
-
-<div id="home-posts-wrap" class="">
+<div id="home-posts-wrap"  ref="homePostsWrap">
     <div id="home-posts">
-        <div id="posts">
-            
+        
 
 <div class="post">
     <a href="/posts/47101/">
@@ -212,9 +232,9 @@
     <div class="category-and-date">
         
         <span class="category">
-            <a href="/categories/图论/">
+            <a href="/categories/%E5%9B%BE%E8%AE%BA/">
                 <span class="icon">
-                    <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
                 图论
             </a>
@@ -222,12 +242,14 @@
         
         <span class="date">
             <span class="icon">
-                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+                <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
             2023/4/30
         </span>
+        
+        
     </div>
-    <div class="excerpt">
+    <div class="description">
         <div class="content" v-pre>
             
             <p>Hello World</p>
@@ -237,22 +259,18 @@
     <div class="post-tags">
         
         <span class="icon">
-            <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            <i class="fa-solid fa-tags fa-fw"></i>
         </span>
         
         
         <span class="tag">
             
-            <a href="/tags/Tarjan/" style="color: #ffa2c4">
-                Tarjan
-            </a>
+            <a href="/tags/Tarjan/" style="color: #00a596">Tarjan</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/割点/" style="color: #ff7d73">
-                割点
-            </a>
+            <a href="/tags/%E5%89%B2%E7%82%B9/" style="color: #00a596">割点</a>
         </span>
         
     </div>
@@ -266,9 +284,9 @@
     <div class="category-and-date">
         
         <span class="category">
-            <a href="/categories/杂题/">
+            <a href="/categories/%E6%9D%82%E9%A2%98/">
                 <span class="icon">
-                    <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
                 杂题
             </a>
@@ -276,12 +294,14 @@
         
         <span class="date">
             <span class="icon">
-                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+                <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
             2023/3/28
         </span>
+        
+        
     </div>
-    <div class="excerpt">
+    <div class="description">
         <div class="content" v-pre>
             
             <p>算是最近做的几道题里觉得值得回顾一下的吧</p>
@@ -291,29 +311,23 @@
     <div class="post-tags">
         
         <span class="icon">
-            <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            <i class="fa-solid fa-tags fa-fw"></i>
         </span>
         
         
         <span class="tag">
             
-            <a href="/tags/组合数/" style="color: #00bcd4">
-                组合数
-            </a>
+            <a href="/tags/%E7%BB%84%E5%90%88%E6%95%B0/" style="color: #00a596">组合数</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/二进制/" style="color: #00a596">
-                二进制
-            </a>
+            <a href="/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6/" style="color: #00a596">二进制</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/LCA/" style="color: #ffa2c4">
-                LCA
-            </a>
+            <a href="/tags/LCA/" style="color: #00bcd4">LCA</a>
         </span>
         
     </div>
@@ -329,7 +343,7 @@
         <span class="category">
             <a href="/categories/Trie/">
                 <span class="icon">
-                    <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
                 Trie
             </a>
@@ -337,12 +351,14 @@
         
         <span class="date">
             <span class="icon">
-                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+                <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
             2023/3/2
         </span>
+        
+        
     </div>
-    <div class="excerpt">
+    <div class="description">
         <div class="content" v-pre>
             
             <p>做道板子</p>
@@ -352,15 +368,13 @@
     <div class="post-tags">
         
         <span class="icon">
-            <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            <i class="fa-solid fa-tags fa-fw"></i>
         </span>
         
         
         <span class="tag">
             
-            <a href="/tags/字符串/" style="color: #ffa2c4">
-                字符串
-            </a>
+            <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" style="color: #ff7d73">字符串</a>
         </span>
         
     </div>
@@ -374,9 +388,9 @@
     <div class="category-and-date">
         
         <span class="category">
-            <a href="/categories/图论/">
+            <a href="/categories/%E5%9B%BE%E8%AE%BA/">
                 <span class="icon">
-                    <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
                 图论
             </a>
@@ -384,12 +398,14 @@
         
         <span class="date">
             <span class="icon">
-                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+                <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
             2023/2/16
         </span>
+        
+        
     </div>
-    <div class="excerpt">
+    <div class="description">
         <div class="content" v-pre>
             
             <p>水了一个寒假，快开学了QAQ</p>
@@ -399,22 +415,18 @@
     <div class="post-tags">
         
         <span class="icon">
-            <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            <i class="fa-solid fa-tags fa-fw"></i>
         </span>
         
         
         <span class="tag">
             
-            <a href="/tags/分治/" style="color: #03a9f4">
-                分治
-            </a>
+            <a href="/tags/%E5%88%86%E6%B2%BB/" style="color: #00bcd4">分治</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/递归/" style="color: #00bcd4">
-                递归
-            </a>
+            <a href="/tags/%E9%80%92%E5%BD%92/" style="color: #00bcd4">递归</a>
         </span>
         
     </div>
@@ -428,9 +440,9 @@
     <div class="category-and-date">
         
         <span class="category">
-            <a href="/categories/数论/">
+            <a href="/categories/%E6%95%B0%E8%AE%BA/">
                 <span class="icon">
-                    <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
                 数论
             </a>
@@ -438,12 +450,14 @@
         
         <span class="date">
             <span class="icon">
-                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+                <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
             2023/1/14
         </span>
+        
+        
     </div>
-    <div class="excerpt">
+    <div class="description">
         <div class="content" v-pre>
             
             <p>md鼻塞真难受</p>
@@ -453,22 +467,18 @@
     <div class="post-tags">
         
         <span class="icon">
-            <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            <i class="fa-solid fa-tags fa-fw"></i>
         </span>
         
         
         <span class="tag">
             
-            <a href="/tags/裴蜀定理/" style="color: #ffa2c4">
-                裴蜀定理
-            </a>
+            <a href="/tags/%E8%A3%B4%E8%9C%80%E5%AE%9A%E7%90%86/" style="color: #ff7d73">裴蜀定理</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/扩展欧几/" style="color: #00a596">
-                扩展欧几
-            </a>
+            <a href="/tags/%E6%89%A9%E5%B1%95%E6%AC%A7%E5%87%A0/" style="color: #00a596">扩展欧几</a>
         </span>
         
     </div>
@@ -482,9 +492,9 @@
     <div class="category-and-date">
         
         <span class="category">
-            <a href="/categories/数论/">
+            <a href="/categories/%E6%95%B0%E8%AE%BA/">
                 <span class="icon">
-                    <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
                 数论
             </a>
@@ -492,12 +502,14 @@
         
         <span class="date">
             <span class="icon">
-                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+                <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
             2022/11/16
         </span>
+        
+        
     </div>
-    <div class="excerpt">
+    <div class="description">
         <div class="content" v-pre>
             
             <p><strong>快速幂应用的推广</strong></p>
@@ -507,22 +519,18 @@
     <div class="post-tags">
         
         <span class="icon">
-            <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            <i class="fa-solid fa-tags fa-fw"></i>
         </span>
         
         
         <span class="tag">
             
-            <a href="/tags/逆元/" style="color: #03a9f4">
-                逆元
-            </a>
+            <a href="/tags/%E9%80%86%E5%85%83/" style="color: #00bcd4">逆元</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/矩阵运算/" style="color: #03a9f4">
-                矩阵运算
-            </a>
+            <a href="/tags/%E7%9F%A9%E9%98%B5%E8%BF%90%E7%AE%97/" style="color: #ff7d73">矩阵运算</a>
         </span>
         
     </div>
@@ -538,7 +546,7 @@
         <span class="category">
             <a href="/categories/KMP/">
                 <span class="icon">
-                    <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
                 KMP
             </a>
@@ -546,12 +554,14 @@
         
         <span class="date">
             <span class="icon">
-                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+                <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
             2022/11/1
         </span>
+        
+        
     </div>
-    <div class="excerpt">
+    <div class="description">
         <div class="content" v-pre>
             
             <p>个人感觉，Y总讲的有点抽象，于是上b站看了几个，喵喵的和几个讲的挺好的，但是因为不是c写的代码看不懂(呜呜呜)，所以看来wls的版本就就懂了，代码还是Y总的短。</p>
@@ -561,22 +571,18 @@
     <div class="post-tags">
         
         <span class="icon">
-            <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            <i class="fa-solid fa-tags fa-fw"></i>
         </span>
         
         
         <span class="tag">
             
-            <a href="/tags/字符串/" style="color: #03a9f4">
-                字符串
-            </a>
+            <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" style="color: #00bcd4">字符串</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/匹配/" style="color: #00bcd4">
-                匹配
-            </a>
+            <a href="/tags/%E5%8C%B9%E9%85%8D/" style="color: #ffa2c4">匹配</a>
         </span>
         
     </div>
@@ -585,14 +591,14 @@
 
 <div class="post">
     <a href="/posts/1588/">
-        <h2 class="post-title">Codeforces水题</h2>
+        <h2 class="post-title">codeforces水题</h2>
     </a>
     <div class="category-and-date">
         
         <span class="category">
             <a href="/categories/codeforces/">
                 <span class="icon">
-                    <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
                 codeforces
             </a>
@@ -600,12 +606,14 @@
         
         <span class="date">
             <span class="icon">
-                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+                <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
             2022/10/14
         </span>
+        
+        
     </div>
-    <div class="excerpt">
+    <div class="description">
         <div class="content" v-pre>
             
             <p>水博客</p>
@@ -615,15 +623,13 @@
     <div class="post-tags">
         
         <span class="icon">
-            <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            <i class="fa-solid fa-tags fa-fw"></i>
         </span>
         
         
         <span class="tag">
             
-            <a href="/tags/笨蛋/" style="color: #00a596">
-                笨蛋
-            </a>
+            <a href="/tags/%E7%AC%A8%E8%9B%8B/" style="color: #ffa2c4">笨蛋</a>
         </span>
         
     </div>
@@ -639,7 +645,7 @@
         <span class="category">
             <a href="/categories/codeforces/">
                 <span class="icon">
-                    <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
                 codeforces
             </a>
@@ -647,12 +653,14 @@
         
         <span class="date">
             <span class="icon">
-                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+                <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
             2022/9/30
         </span>
+        
+        
     </div>
-    <div class="excerpt">
+    <div class="description">
         <div class="content" v-pre>
             
             <p><strong>这波是划水叶师傅对逆元有感而发，觉得有必要好好学学，组合数开mod还是挺有必要的</strong></p>
@@ -664,22 +672,18 @@
     <div class="post-tags">
         
         <span class="icon">
-            <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            <i class="fa-solid fa-tags fa-fw"></i>
         </span>
         
         
         <span class="tag">
             
-            <a href="/tags/逆元/" style="color: #ffa2c4">
-                逆元
-            </a>
+            <a href="/tags/%E9%80%86%E5%85%83/" style="color: #00a596">逆元</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/组合数/" style="color: #00a596">
-                组合数
-            </a>
+            <a href="/tags/%E7%BB%84%E5%90%88%E6%95%B0/" style="color: #00bcd4">组合数</a>
         </span>
         
     </div>
@@ -695,7 +699,7 @@
         <span class="category">
             <a href="/categories/codeforces/">
                 <span class="icon">
-                    <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
                 codeforces
             </a>
@@ -703,12 +707,14 @@
         
         <span class="date">
             <span class="icon">
-                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+                <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
             2022/9/9
         </span>
+        
+        
     </div>
-    <div class="excerpt">
+    <div class="description">
         <div class="content" v-pre>
             
             <p><strong>这场我真的会谢，A题都看错意思了快20min才开出来</strong><br><strong>c做到一半以为不会就玩手机去了，结束后仔细做会儿改个bug就出来了</strong><br><strong>so，补个D吧</strong></p>
@@ -718,52 +724,40 @@
     <div class="post-tags">
         
         <span class="icon">
-            <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            <i class="fa-solid fa-tags fa-fw"></i>
         </span>
         
         
         <span class="tag">
             
-            <a href="/tags/博弈论/" style="color: #00a596">
-                博弈论
-            </a>
+            <a href="/tags/%E5%8D%9A%E5%BC%88%E8%AE%BA/" style="color: #ffa2c4">博弈论</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/动态规划/" style="color: #00a596">
-                动态规划
-            </a>
+            <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="color: #ff7d73">动态规划</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/Nim游戏/" style="color: #00bcd4">
-                Nim游戏
-            </a>
+            <a href="/tags/Nim%E6%B8%B8%E6%88%8F/" style="color: #00bcd4">Nim游戏</a>
         </span>
         
     </div>
     <a href="/posts/18514/" class="go-post">阅读全文</a>
 </div>
 
-             
-<div class="page-current">
+
+        <div class="page-current">
     <div class="prev">
         
     </div>
     <div class="page-index">
         
-        <span class="current">
-            1
-        </span>
+        <span class="current">1</span>
         
         <span>
-            <a href="/page/2/">
-                <span class="page-num">
-                    2
-                </span>
-            </a>
+            <a class="page-num" href="/page/2/">2</a>
             
             
         </span>
@@ -771,122 +765,128 @@
     </div>
     <div class="next">
         
-        <a href="/page/2/ ">
-            <span class="page-num">
-                <i class="fa-solid fa-caret-right fa-fw"></i>
-            </span>
+        <a class="page-num" href="/page/2/">
+            <i class="fa-solid fa-caret-right fa-fw"></i>
         </a>
         
     </div>
 </div>
-        </div>
+
     </div>
     
     <div id="home-card">
         <div id="card-div">
-    <div class="card-style" style="width: 300px">
+    <div class="card-style">
         <div class="avatar">
-            <img src="/picture/head.jpg " alt="avatar">
+            <img src="/picture/head.jpg" alt="avatar" />
         </div>
-        <div class="name">
-            YLQQ
+        <div class="name">YLQQ</div>
+        <div class="description">
+            <p>幸得花下与君逢，从此阡陌多暖春</p>
+
         </div>
-        <div class="descriptions">
-            
-            <div class="description">
-                幸得花下与君逢，从此阡陌多暖春
-            </div>
-            
-        </div>
+        
         <div class="icon-links">
             
             <span class="icon-link">
                 <a href="/">
-                    <i class="fa-solid fa-house fa-fw"></i>
+                    <i
+                        class="fa-solid fa-house fa-fw"
+                    ></i>
                 </a>
             </span>
             
             <span class="icon-link">
                 <a target="_blank" rel="noopener" href="https://github.com/YLQQQQ">
-                    <i class="fa-brands fa-github fa-fw"></i>
+                    <i
+                        class="fa-brands fa-github fa-fw"
+                    ></i>
                 </a>
             </span>
             
             <span class="icon-link">
                 <a target="_blank" rel="noopener" href="http://wpa.qq.com/msgrd?v=3&uin=（1632446307）&site=qq&menu=true">
-                    <i class="fa-brands fa-qq fa-fw"></i>
+                    <i
+                        class="fa-brands fa-qq fa-fw"
+                    ></i>
                 </a>
             </span>
             
             <span class="icon-link">
                 <a href="mailto:1632446307@qq.com">
-                    <i class="fa-solid fa-envelope fa-fw"></i>
+                    <i
+                        class="fa-solid fa-envelope fa-fw"
+                    ></i>
                 </a>
             </span>
             
         </div>
+        
+        
         <div class="friend-links">
             
             <div class="friend-link">
-                <a target="_blank" rel="noopener" href="http://syh521.cn/">
-                    Master Shen
-                </a>
+                <a target="_blank" rel="noopener" href="https://syh521.cn">Master Shen</a>
             </div>
             
             <div class="friend-link">
-                <a target="_blank" rel="noopener" href="http://cbing2002.gitee.io">
-                    Master Wu
-                </a>
+                <a target="_blank" rel="noopener" href="https://wcbing.top">Master Wu</a>
             </div>
             
             <div class="friend-link">
-                <a target="_blank" rel="noopener" href="http://bearyuc.cn">
-                    Master Yu
-                </a>
+                <a target="_blank" rel="noopener" href="https://bearyuc.cn">Master Yu</a>
             </div>
             
         </div>
+        
     </div>
 </div>
+
     </div>
     
 </div>
-                         
-<footer id="footer">
-    <div class="footer-wrap">
+
+                    <footer id="footer">
+    <div id="footer-wrap">
         <div>
-            © 2022 - 2023 YLQQ のBLOG
-            <span class="footer-icon">
+            &copy;
+            2022 - 2023 YLQQ のBLOG
+            <span id="footer-icon">
                 <i class="fa-solid fa-font-awesome fa-fw"></i>
             </span>
-            @YLQQ
+            &commat;YLQQ
         </div>
-        <div></div>
-        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
-                target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
         
     </div>
 </footer>
-                    </div>
+
                 </div>
             </transition>
-            <div id="img_show">
-                <img id="img_content" alt="img_show">
-            </div>
+            
+            <transition name="fade">
+                <div id="preview" ref="preview" v-show="previewShow">
+                    <img id="preview-content" ref="previewContent" />
+                </div>
+            </transition>
+            
         </div>
+        <script src="/js/main.js"></script>
         
-        <canvas id="background" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1"></canvas>
-        <canvas id="fireworks" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:2147483647"></canvas>
-       
-        <div id="aplayer"></div>
-        <script src="/js/firework.js"></script>
-        <script src="/js/background.js"></script>
-        <script src="/dist/APlayer.min.js"></script>
-        <script src="/dist/music.js"></script>
-        <script src="https://cdn.staticfile.org/highlight.js/11.5.1/highlight.min.js"></script>
-        <script src="/js/particlex.js"></script>
-        <script src="/js/showimg.js"></script>
-        
-
     </body>
+    <canvas
+        id="fireworks"
+        style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"
+    ></canvas>
+    <script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
+    <script src="/js/fireworks.min.js"></script>
+
+    <canvas
+    id="background"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"
+    ></canvas>
+    <script src="/js/background.min.js"></script>    
 </html>
