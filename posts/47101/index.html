@@ -210,14 +210,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/Tarjan/" style="color: #ff7d73">
+                <a href="/tags/Tarjan/" style="color: #ffa2c4">
                     Tarjan
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/割点/" style="color: #00a596">
+                <a href="/tags/割点/" style="color: #ffa2c4">
                     割点
                 </a>
             </span>
@@ -232,6 +232,61 @@
 
 <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3388">洛谷割点模板</a></p>
 <p>$Y_i$</p>
+<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
+#define rep(i, n, m) for(int i = n; i &lt;= m; ++i)
+using namespace std;
+const int N = 8e5 + 10;
+int def[N], low[N], st[N], ok[N], in = 0;
+int h[N], ne[N], e[N], cnt, ans = 0;
+void add(int a, int b)&#123;
+     e[cnt] = b, ne[cnt] = h[a], h[a] = cnt++;
+&#125;
+void tarjan(int u, int fa)&#123;
+    st[u] = 1;
+    def[u] = low[u] = ++ in;
+    int num = 0;
+    for(int i = h[u]; ~i; i = ne[i])&#123;
+        int v = e[i];
+        if(!st[v])&#123;
+            num ++;
+            tarjan(v, u);
+            low[u] = min(low[u], low[v]);
+            if(fa != u &amp;&amp; low[v] &gt;= def[u] &amp;&amp; !ok[u])&#123;
+                ok[u] = 1;
+                ans ++;
+            &#125;
+        &#125;else if(v != fa)&#123;
+            low[u] = min(low[u], def[v]);
+        &#125;
+    &#125;
+    if(u == fa &amp;&amp; num &gt;= 2 &amp;&amp; !ok[u])&#123;
+        ok[u] = 1;
+        ans ++;
+    &#125;
+&#125;
+int main()
+&#123;
+    //ios::sync_with_stdio(0); cin.tie(0);
+    memset(h, -1, sizeof h);
+    memset(ok, 0, sizeof ok);
+    int n, m; cin &gt;&gt; n &gt;&gt; m;
+    rep(i, 1, m)&#123;
+        int u, v; cin &gt;&gt; u &gt;&gt; v;
+        add(u, v), add(v, u);
+    &#125;
+    rep(i, 1, n)&#123;
+        if(!st[i])&#123;
+            in = 0;
+            tarjan(i, i);
+        &#125;
+    &#125;
+    cout &lt;&lt; ans &lt;&lt; &#39;\n&#39;;
+    rep(i, 1, n)&#123;
+        if(ok[i]) cout &lt;&lt; i &lt;&lt; &#39; &#39;;
+    &#125;
+    return 0;
+&#125;
+</code></pre>
 
     </div>
     
