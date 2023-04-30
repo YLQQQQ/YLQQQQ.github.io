@@ -239,12 +239,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/Tarjan/" style="color: #03a9f4">Tarjan</a>
+                <a href="/tags/Tarjan/" style="color: #ff7d73">Tarjan</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E5%89%B2%E7%82%B9/" style="color: #ffa2c4">割点</a>
+                <a href="/tags/%E5%89%B2%E7%82%B9/" style="color: #00bcd4">割点</a>
             </span>
             
         </span>
@@ -257,20 +257,38 @@
 
 
 <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3388">洛谷割点模板</a></p>
-<p>何为割点？<br>简单来说是在一个无向图中，若删除该点，则该无向图分为两部分<br><img src="/picture/tarjan1.png"><br>如上图所示，结点$D$是一个割点，但是$A、B、C、E、F$不是割点</p>
-<p>此外在这里我们引入$dfn[i],low[i]$ 两个概念<br>$dfn[i]:遍历到该结点时的时间，称之为——时间戳$<br>$low[i]:不通过父结点所能到达的最小的时间戳的值，即最小回溯值$<br>例如对上图我们从$A$结点开始遍历，标记时间戳是这样的<br><img src="/picture/tarjan2.png"><br>再之，我们求得每个结点的$low$值如下<br><img src="/picture/tarjan3.png"><br>我们可以发现，对结点$E、F$而言，他们无法回溯到比自己更小的$dfn$值，即显然他们的父节点$D$为一个割点。</p>
-<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
-#define rep(i, n, m) for(int i = n; i &lt;= m; ++i)
+<p>何为割点？<br>简单来说是在一个无向图中，若删除该点，则该无向图将会被分为两部分<br><img src="/picture/tarjan1.png"><br>如上图所示，结点$D$是一个割点，但是$A、B、C、E、F$不是割点</p>
+<p>此外在这里我们引入$dfn[i],low[i]$ 两个概念<br>$dfn[i]:遍历到该结点$$i$$时的时间，称之为——时间戳$<br>$low[i]:不通过父结点$$i$$所能到达的最小的时间戳的值，即最小回溯值$<br>例如对上图我们从$A$结点开始遍历，标记时间戳是这样的<br><img src="/picture/tarjan2.png"><br>再之，我们求得每个结点的$low$值如下<br><img src="/picture/tarjan3.png"><br>我们可以发现，对结点$E、F$而言，他们无法回溯到比自己更小的$dfn$值，即显然他们的父节点$D$为一个割点。<br>我们用$O(n)$的复杂度遍历图中的每一个结点，并对其的$dfn、low、st$进行初始化</p>
+<pre><code class="cpp">    st[u] = 1;
+    dfn[u] = low[u] = ++ in;
+    //我们以一个全局变量in来表示记录到该节点的时间
+</code></pre>
+<p>结点为割点的两种情况：<br>1、当前结点$u$为根结点，且存在两个以上的子结点<br>2、当前结点$u$不为根节点，且对于其连接的子结点$v$而言，$low[v]&gt;=dfn[u]$，说明其儿子$v$无法通过其他结点跑到$u$结点之前<br>因此，当我们遍历发现该结点为标记过时</p>
+<pre><code class="cpp">    if(!st[v])&#123;
+        num ++; //累计结点u的子结点数量
+        tarjan(v, u); //遍历v结点出发的图
+        low[u] = min(low[u], low[v]); //更新low[u]
+        if(fa != u &amp;&amp; low[v] &gt;= dfn[u] &amp;&amp; !ok[u])&#123;  //倘若该节点不是根节点，且满足割点条件
+            ok[u] = 1;
+            ans ++;
+        &#125;
+    &#125;
+</code></pre>
+<p>反之该结点标记过了，并且结点没有往回跑的话，我们如果继续用$low[u]=min(low[u],low[v])$的话，<br>以下图为例，<br><img src="/picture/tarjan4.png"><br>当我们在从$D$跑到$E$时，如果对$E$用$low[E]=min(low[E],low[C])$的话，那么$low[E]=low[C]=1$，此时不满足显然的割点条件，因此<br>我们需要对标记过的连接值取$low[u]=min(low[u],dfn[v])$<br>至此我们得出该题的解决方案.</p>
+<details><summary>代码</summary>
+<pre><code>
+#include "bits/stdc++.h"
+#define rep(i, n, m) for(int i = n; i <= m; ++i)
 using namespace std;
 const int N = 8e5 + 10;
-int def[N], low[N], st[N], ok[N], in = 0;
+int dfn[N], low[N], st[N], ok[N], in = 0;
 int h[N], ne[N], e[N], cnt, ans = 0;
 void add(int a, int b)&#123;
      e[cnt] = b, ne[cnt] = h[a], h[a] = cnt++;
 &#125;
 void tarjan(int u, int fa)&#123;
     st[u] = 1;
-    def[u] = low[u] = ++ in;
+    dfn[u] = low[u] = ++ in;
     int num = 0;
     for(int i = h[u]; ~i; i = ne[i])&#123;
         int v = e[i];
@@ -278,15 +296,15 @@ void tarjan(int u, int fa)&#123;
             num ++;
             tarjan(v, u);
             low[u] = min(low[u], low[v]);
-            if(fa != u &amp;&amp; low[v] &gt;= def[u] &amp;&amp; !ok[u])&#123;
+            if(fa != u && low[v] >= dfn[u] && !ok[u])&#123;
                 ok[u] = 1;
                 ans ++;
             &#125;
         &#125;else if(v != fa)&#123;
-            low[u] = min(low[u], def[v]);
+            low[u] = min(low[u], dfn[v]);
         &#125;
     &#125;
-    if(u == fa &amp;&amp; num &gt;= 2 &amp;&amp; !ok[u])&#123;
+    if(u == fa && num >= 2 && !ok[u])&#123;
         ok[u] = 1;
         ans ++;
     &#125;
@@ -296,9 +314,9 @@ int main()
     //ios::sync_with_stdio(0); cin.tie(0);
     memset(h, -1, sizeof h);
     memset(ok, 0, sizeof ok);
-    int n, m; cin &gt;&gt; n &gt;&gt; m;
+    int n, m; cin >> n >> m;
     rep(i, 1, m)&#123;
-        int u, v; cin &gt;&gt; u &gt;&gt; v;
+        int u, v; cin >> u >> v;
         add(u, v), add(v, u);
     &#125;
     rep(i, 1, n)&#123;
@@ -307,14 +325,14 @@ int main()
             tarjan(i, i);
         &#125;
     &#125;
-    cout &lt;&lt; ans &lt;&lt; &#39;\n&#39;;
+    cout << ans << '\n';
     rep(i, 1, n)&#123;
-        if(ok[i]) cout &lt;&lt; i &lt;&lt; &#39; &#39;;
+        if(ok[i]) cout << i << ' ';
     &#125;
     return 0;
 &#125;
 </code></pre>
-
+</details>
     </div>
     
     
@@ -380,20 +398,20 @@ int main()
 
         
     </body>
-    //鼠标点击
+    
     <canvas
         id="fireworks"
         style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"
     ></canvas>
     <script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
     <script src="/js/fireworks.min.js"></script>
-    //背景流星
+    
     <canvas
     id="background"
     style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"
     ></canvas>
     <script src="/js/background.min.js"></script>    
-    //鼠标指针
+    
     <div id="cursor"></div>
     <link rel="stylesheet" href="/css/cursor.min.css" />
     <script src="/js/cursor.min.js"></script>
