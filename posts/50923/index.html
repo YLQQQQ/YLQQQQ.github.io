@@ -70,42 +70,42 @@
             <span>&ensp;HOME</span>
         </a>
         
-        <a href="/">
+        <a href="/about">
             <i class="fa-solid fa-id-card fa-fw"></i>
             <span>&ensp;ME</span>
         </a>
         
-        <a href="/">
+        <a href="/archives">
             <i class="fa-solid fa-box-archive fa-fw"></i>
             <span>&ensp;Archive</span>
         </a>
         
-        <a href="/">
+        <a href="/categories">
             <i class="fa-solid fa-bookmark fa-fw"></i>
             <span>&ensp;Classification</span>
         </a>
         
-        <a href="/">
+        <a href="/tags">
             <i class="fa-solid fa-tags fa-fw"></i>
             <span>&ensp;Tags</span>
         </a>
         
-        <a href="/">
+        <a target="_blank" rel="noopener" href="https://www.acwing.com/user/myspace/index/174985/">
             <i class="fa-solid fa-a fa-fw"></i>
             <span>&ensp;Acwing</span>
         </a>
         
-        <a href="/">
+        <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/user/673830">
             <i class="fa-solid fa-l fa-fw"></i>
             <span>&ensp;Luogu</span>
         </a>
         
-        <a href="/">
+        <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_62886369?spm=1000.2115.3001.5343">
             <i class="fa-solid fa-c fa-fw"></i>
             <span>&ensp;CSDN</span>
         </a>
         
-        <a href="/">
+        <a target="_blank" rel="noopener" href="https://www.bilibili.com/">
             <i class="fa-brands fa-bilibili fa-fw"></i>
             <span>&ensp;bilibili</span>
         </a>
@@ -128,7 +128,7 @@
                     </div>
                 </a>
                 
-                <a href="/">
+                <a href="/about">
                     <div class="item">
                         <div style="min-width: 20px; max-width: 50px; width: 10%">
                             <i class="fa-solid fa-id-card fa-fw"></i>
@@ -137,7 +137,7 @@
                     </div>
                 </a>
                 
-                <a href="/">
+                <a href="/archives">
                     <div class="item">
                         <div style="min-width: 20px; max-width: 50px; width: 10%">
                             <i class="fa-solid fa-box-archive fa-fw"></i>
@@ -146,7 +146,7 @@
                     </div>
                 </a>
                 
-                <a href="/">
+                <a href="/categories">
                     <div class="item">
                         <div style="min-width: 20px; max-width: 50px; width: 10%">
                             <i class="fa-solid fa-bookmark fa-fw"></i>
@@ -155,7 +155,7 @@
                     </div>
                 </a>
                 
-                <a href="/">
+                <a href="/tags">
                     <div class="item">
                         <div style="min-width: 20px; max-width: 50px; width: 10%">
                             <i class="fa-solid fa-tags fa-fw"></i>
@@ -164,7 +164,7 @@
                     </div>
                 </a>
                 
-                <a href="/">
+                <a target="_blank" rel="noopener" href="https://www.acwing.com/user/myspace/index/174985/">
                     <div class="item">
                         <div style="min-width: 20px; max-width: 50px; width: 10%">
                             <i class="fa-solid fa-a fa-fw"></i>
@@ -173,7 +173,7 @@
                     </div>
                 </a>
                 
-                <a href="/">
+                <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/user/673830">
                     <div class="item">
                         <div style="min-width: 20px; max-width: 50px; width: 10%">
                             <i class="fa-solid fa-l fa-fw"></i>
@@ -182,7 +182,7 @@
                     </div>
                 </a>
                 
-                <a href="/">
+                <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_62886369?spm=1000.2115.3001.5343">
                     <div class="item">
                         <div style="min-width: 20px; max-width: 50px; width: 10%">
                             <i class="fa-solid fa-c fa-fw"></i>
@@ -191,7 +191,7 @@
                     </div>
                 </a>
                 
-                <a href="/">
+                <a target="_blank" rel="noopener" href="https://www.bilibili.com/">
                     <div class="item">
                         <div style="min-width: 20px; max-width: 50px; width: 10%">
                             <i class="fa-brands fa-bilibili fa-fw"></i>
@@ -239,12 +239,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E9%80%86%E5%85%83/" style="color: #ffa2c4">逆元</a>
+                <a href="/tags/%E9%80%86%E5%85%83/" style="color: #03a9f4">逆元</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E7%9F%A9%E9%98%B5%E8%BF%90%E7%AE%97/" style="color: #00a596">矩阵运算</a>
+                <a href="/tags/%E7%9F%A9%E9%98%B5%E8%BF%90%E7%AE%97/" style="color: #ff7d73">矩阵运算</a>
             </span>
             
         </span>
@@ -456,16 +456,21 @@ signed main()
 
         
     </body>
+    //鼠标点击
     <canvas
         id="fireworks"
         style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"
     ></canvas>
     <script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
     <script src="/js/fireworks.min.js"></script>
-
+    //背景流星
     <canvas
     id="background"
     style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"
     ></canvas>
     <script src="/js/background.min.js"></script>    
+    //鼠标指针
+    <div id="cursor"></div>
+    <link rel="stylesheet" href="/css/cursor.min.css" />
+    <script src="/js/cursor.min.js"></script>
 </html>

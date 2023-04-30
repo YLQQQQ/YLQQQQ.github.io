@@ -6,7 +6,7 @@
   <link href="https://www.ylq1104.cn/atom.xml" rel="self"/>
   
   <link href="https://www.ylq1104.cn/"/>
-  <updated>2023-04-29T17:18:39.795Z</updated>
+  <updated>2023-04-30T03:52:21.612Z</updated>
   <id>https://www.ylq1104.cn/</id>
   
   <author>
@@ -21,12 +21,12 @@
     <link href="https://www.ylq1104.cn/posts/47101/"/>
     <id>https://www.ylq1104.cn/posts/47101/</id>
     <published>2023-04-29T17:05:06.000Z</published>
-    <updated>2023-04-29T17:18:39.795Z</updated>
+    <updated>2023-04-30T03:52:21.612Z</updated>
     
-    <content type="html"><![CDATA[<p>Hello World</p><span id="more"></span><p><a href="https://www.luogu.com.cn/problem/P3388">洛谷割点模板</a></p><p>$Y_i$</p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;#define rep(i, n, m) for(int i = n; i &lt;= m; ++i)using namespace std;const int N = 8e5 + 10;int def[N], low[N], st[N], ok[N], in = 0;int h[N], ne[N], e[N], cnt, ans = 0;void add(int a, int b)&#123;     e[cnt] = b, ne[cnt] = h[a], h[a] = cnt++;&#125;void tarjan(int u, int fa)&#123;    st[u] = 1;    def[u] = low[u] = ++ in;    int num = 0;    for(int i = h[u]; ~i; i = ne[i])&#123;        int v = e[i];        if(!st[v])&#123;            num ++;            tarjan(v, u);            low[u] = min(low[u], low[v]);            if(fa != u &amp;&amp; low[v] &gt;= def[u] &amp;&amp; !ok[u])&#123;                ok[u] = 1;                ans ++;            &#125;        &#125;else if(v != fa)&#123;            low[u] = min(low[u], def[v]);        &#125;    &#125;    if(u == fa &amp;&amp; num &gt;= 2 &amp;&amp; !ok[u])&#123;        ok[u] = 1;        ans ++;    &#125;&#125;int main()&#123;    //ios::sync_with_stdio(0); cin.tie(0);    memset(h, -1, sizeof h);    memset(ok, 0, sizeof ok);    int n, m; cin &gt;&gt; n &gt;&gt; m;    rep(i, 1, m)&#123;        int u, v; cin &gt;&gt; u &gt;&gt; v;        add(u, v), add(v, u);    &#125;    rep(i, 1, n)&#123;        if(!st[i])&#123;            in = 0;            tarjan(i, i);        &#125;    &#125;    cout &lt;&lt; ans &lt;&lt; &#39;\n&#39;;    rep(i, 1, n)&#123;        if(ok[i]) cout &lt;&lt; i &lt;&lt; &#39; &#39;;    &#125;    return 0;&#125;</code></pre>]]></content>
+    <content type="html"><![CDATA[<p>$Y_{lq}$</p><span id="more"></span><p><a href="https://www.luogu.com.cn/problem/P3388">洛谷割点模板</a></p><p>何为割点？<br>简单来说是在一个无向图中，若删除该点，则该无向图分为两部分<br><img src="/picture/tarjan1.png"><br>如上图所示，结点$D$是一个割点，但是$A、B、C、E、F$不是割点</p><p>此外在这里我们引入$dfn[i],low[i]$ 两个概念<br>$dfn[i]:遍历到该结点时的时间，称之为——时间戳$<br>$low[i]:不通过父结点所能到达的最小的时间戳的值，即最小回溯值$<br>例如对上图我们从$A$结点开始遍历，标记时间戳是这样的<br><img src="/picture/tarjan2.png"><br>再之，我们求得每个结点的$low$值如下<br><img src="/picture/tarjan3.png"><br>我们可以发现，对结点$E、F$而言，他们无法回溯到比自己更小的$dfn$值，即显然他们的父节点$D$为一个割点。</p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;#define rep(i, n, m) for(int i = n; i &lt;= m; ++i)using namespace std;const int N = 8e5 + 10;int def[N], low[N], st[N], ok[N], in = 0;int h[N], ne[N], e[N], cnt, ans = 0;void add(int a, int b)&#123;     e[cnt] = b, ne[cnt] = h[a], h[a] = cnt++;&#125;void tarjan(int u, int fa)&#123;    st[u] = 1;    def[u] = low[u] = ++ in;    int num = 0;    for(int i = h[u]; ~i; i = ne[i])&#123;        int v = e[i];        if(!st[v])&#123;            num ++;            tarjan(v, u);            low[u] = min(low[u], low[v]);            if(fa != u &amp;&amp; low[v] &gt;= def[u] &amp;&amp; !ok[u])&#123;                ok[u] = 1;                ans ++;            &#125;        &#125;else if(v != fa)&#123;            low[u] = min(low[u], def[v]);        &#125;    &#125;    if(u == fa &amp;&amp; num &gt;= 2 &amp;&amp; !ok[u])&#123;        ok[u] = 1;        ans ++;    &#125;&#125;int main()&#123;    //ios::sync_with_stdio(0); cin.tie(0);    memset(h, -1, sizeof h);    memset(ok, 0, sizeof ok);    int n, m; cin &gt;&gt; n &gt;&gt; m;    rep(i, 1, m)&#123;        int u, v; cin &gt;&gt; u &gt;&gt; v;        add(u, v), add(v, u);    &#125;    rep(i, 1, n)&#123;        if(!st[i])&#123;            in = 0;            tarjan(i, i);        &#125;    &#125;    cout &lt;&lt; ans &lt;&lt; &#39;\n&#39;;    rep(i, 1, n)&#123;        if(ok[i]) cout &lt;&lt; i &lt;&lt; &#39; &#39;;    &#125;    return 0;&#125;</code></pre>]]></content>
     
     
-    <summary type="html">&lt;p&gt;Hello World&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;$Y_{lq}$&lt;/p&gt;</summary>
     
     
     
