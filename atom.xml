@@ -6,7 +6,7 @@
   <link href="https://www.ylq1104.cn/atom.xml" rel="self"/>
   
   <link href="https://www.ylq1104.cn/"/>
-  <updated>2023-05-04T16:38:34.443Z</updated>
+  <updated>2023-07-25T08:17:30.774Z</updated>
   <id>https://www.ylq1104.cn/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>牛客暑期多校训练营1</title>
+    <link href="https://www.ylq1104.cn/posts/32711/"/>
+    <id>https://www.ylq1104.cn/posts/32711/</id>
+    <published>2023-07-25T08:01:43.000Z</published>
+    <updated>2023-07-25T08:17:30.774Z</updated>
+    
+    <content type="html"><![CDATA[<p>摆了好久，开始准备自己的棺材本</p><span id="more"></span><p>签到D</p><p>题意：在一个 $n*m$ 且布满巧克力的二维平面上, $A 和 B$ 两个人轮流操作，每次操作选择一个坐标 $<br>（x, y）$,这时他能将 $(1&lt;=i&lt;=x,1&lt;=j&lt;=y)$ 上的巧克力都吃了，每个人操作时至少吃一个巧克力，谁吃最后一个巧克力则输。<br>解：当且仅当 $（n == m || n == 1）$ 时$K$吃最后一块</p><pre><code class="cpp">#include&lt;bits/stdc++.h&gt;using namespace std;typedef long long ll;const int N = 2e5 + 10;#define A puts(&quot;Walk Alone&quot;)#define K puts(&quot;Kelin&quot;)int main()&#123;    int n, m; cin &gt;&gt; n &gt;&gt; m;    if(n == m &amp;&amp; n == 1) A;    else K;&#125;</code></pre>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;摆了好久，开始准备自己的棺材本&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="分类" scheme="https://www.ylq1104.cn/categories/%E5%88%86%E7%B1%BB/"/>
+    
+    
+    <category term="标签2" scheme="https://www.ylq1104.cn/tags/%E6%A0%87%E7%AD%BE2/"/>
+    
+    <category term="模拟" scheme="https://www.ylq1104.cn/tags/%E6%A8%A1%E6%8B%9F/"/>
+    
+  </entry>
   
   <entry>
     <title>傅里叶变换</title>
@@ -451,27 +474,6 @@
     <category term="区间操作" scheme="https://www.ylq1104.cn/tags/%E5%8C%BA%E9%97%B4%E6%93%8D%E4%BD%9C/"/>
     
     <category term="二分" scheme="https://www.ylq1104.cn/tags/%E4%BA%8C%E5%88%86/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>最大矩阵和</title>
-    <link href="https://www.ylq1104.cn/posts/18136/"/>
-    <id>https://www.ylq1104.cn/posts/18136/</id>
-    <published>2022-04-26T18:43:34.000Z</published>
-    <updated>2022-11-02T03:07:26.922Z</updated>
-    
-    <content type="html"><![CDATA[<p><strong>蒻苟的学习记录</strong></p><span id="more"></span><p>题目：给定一个n✖n大小的矩阵，求其中子矩阵的和最大值（来自洛谷p1719）<br><img src="https://img-blog.csdnimg.cn/a2ffc98c905d402a86b43906a549d895.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aWz5Lq65Y-q5Lya5b2x5ZON5oiR5pWy5Luj56CB55qE6YCf5bqmUUFR,size_16,color_FFFFFF,t_70,g_se,x_16"><br>求一个方向上的前缀和，该方法计算矩阵竖直方向上的前缀和 a[i][j]=a[i-1][j]+x ，然后用 i 和 j 确定子矩阵行坐标的范围，即第 j 行到第 i  行，然后再循环一个k来计算子矩阵内从第1列到第k列的和，若和为负值了就重新计算子矩阵（当然本道题的限制是答案是正数，若要突破这个限制，即把判断sum&lt;0改成sum&lt;ans就行啦）</p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;#define N 10010#define rep(i,a,b)  for(int i=a;i&lt;=b;++i)  using namespace std;typedef long long ll;int a[N][N],s[N][N],n,ans=-0x3f3f3f3f;int main()                //初始ans为极小值&#123;    cin&gt;&gt;n;    rep(i,1,n)&#123;        rep(j,1,n)&#123;            int x;            cin&gt;&gt;x;            a[i][j]=a[i-1][j]+x;        &#125;   //累加竖直方向上的前缀和    &#125;    rep(i,1,n)&#123;        rep(j,0,i-1)&#123;            int sum=0;            rep(k,1,n)&#123;   //循环加j到i行之间的子矩阵和，                sum+=a[i][k]-a[j][k];                  if(sum&lt;0)sum=0;    //如果和小于0则初始化sum                ans=max(ans,sum);            &#125;        &#125;    &#125;    cout&lt;&lt;ans;&#125;</code></pre>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;strong&gt;蒻苟的学习记录&lt;/strong&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="矩阵" scheme="https://www.ylq1104.cn/categories/%E7%9F%A9%E9%98%B5/"/>
-    
-    
-    <category term="最值" scheme="https://www.ylq1104.cn/tags/%E6%9C%80%E5%80%BC/"/>
     
   </entry>
   
