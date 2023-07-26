@@ -6,7 +6,7 @@
   <link href="https://www.ylq1104.cn/atom.xml" rel="self"/>
   
   <link href="https://www.ylq1104.cn/"/>
-  <updated>2023-07-26T04:40:44.215Z</updated>
+  <updated>2023-07-26T17:10:44.169Z</updated>
   <id>https://www.ylq1104.cn/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>牛客暑期多校训练营2</title>
+    <link href="https://www.ylq1104.cn/posts/32391/"/>
+    <id>https://www.ylq1104.cn/posts/32391/</id>
+    <published>2023-07-26T15:47:35.000Z</published>
+    <updated>2023-07-26T17:10:44.169Z</updated>
+    
+    <content type="html"><![CDATA[<p>水水水%%%</p><span id="more"></span><h3 id="题E"><a href="#题E" class="headerlink" title="题E"></a>题E</h3><p>题意：题目给定一个 $x$, 要求我们找出一个 $y$ 要求满足 $\frac{y^2}{10^k} = x$， 其中 $k$ 可以为任意数，例如 $y = 123, x = 1512$, (其中 $\frac{y^2}{10^k} = \frac{15129}{10^1}=1512= x$。其中 $1&lt;=x,y&lt;=1e9$)。</p><p>解：由于要求 $y^2$ 的前几位数有 $x$， 那么显然我们可以对 $x$ 后面加若干个 $0$，使得其 $sqrt()$ 满足 $y$ 的平方并逼近答案。枚举加 $0$  的个数即可。<br>(tips :  这里注意 $sqrt()$ 的精度问题， 需要同时判断 $sqrt()$ 和 $sqrt() + 1$, 我多加了个$sqrt() - 1$ 就一直wawawa。)</p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;#define all(x) x.begin(),x.end()#define pb(x) push_back(x)#define PII pair&lt;int, int&gt;#define int long long#define ll long longusing namespace std;const int N = 2e5 + 10, MOD = 1e9 + 7;string get(ll x)&#123;    string s = &quot;&quot;;    while(x)&#123;        char c = x % 10 + &#39;0&#39;;        s = c + s;        x /= 10;    &#125;    return s;&#125;bool ok(int k, int n)&#123;    string s = get(k * k);    int ans = 0;    string ss = get(n); int len = ss.size();    for(int i = 0; i &lt; len; ++ i)&#123;        ans = ans * 10 + (s[i] - &#39;0&#39;);    &#125;    if(ans == n) return 1;    return 0;&#125;void solve()&#123;    ll n; cin &gt;&gt; n;    ll m = n;    while(n &lt;= 1e18)&#123;        ll k = sqrt(n);        if(ok(k, m)) &#123;cout &lt;&lt; k &lt;&lt; &#39;\n&#39;; return ;&#125;        if(ok(k + 1, m)) &#123;cout &lt;&lt; k + 1&lt;&lt; &#39;\n&#39;; return ;&#125;        n *= 10;    &#125;    cout &lt;&lt; -1 &lt;&lt; &#39;\n&#39;;&#125;signed main()&#123;    //ios::sync_with_stdio(0); cin.tie(0);    int n; cin &gt;&gt; n;    while(n--) solve();    return 0;&#125;</code></pre><h3 id="题I"><a href="#题I" class="headerlink" title="题I"></a>题I</h3><p>题意：两人轮流玩棋盘大小为 $n * m$ 的五子棋，要求构造一个平局的情况，其中先手为 $’x’$, 另一个人为 $’o’$ ，（$1 &lt;= n, m &lt;= 1000$）。</p><p>解：首先可以构造这样的局面</p><pre><code>xoxoxoxoxo...oxoxoxoxox...xoxoxoxoxo...oxoxoxoxox...xoxoxoxoxo...oxoxoxoxox...</code></pre><p>此时只会出现斜对角五着连线， 这时将每三行的二三行对换，形成如下局面</p><pre><code>xoxoxoxoxo...xoxoxoxoxo...oxoxoxoxox...oxoxoxoxox...oxoxoxoxox...xoxoxoxoxo...</code></pre><p>这时候如果我们直接输出 $n * m$, $’x’$ 和 $’o’$ 的差值会有 $0$、$1$ 和 $2$ 两种情况， 由于 $’x’$ 是先手，所以多一个无妨，除此以外，对于其他不相等的情况修改一步棋即可。</p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;#define all(x) x.begin(),x.end()#define pb(x) push_back(x)#define PII pair&lt;int, int&gt;#define ll long longusing namespace std;const int N = 2e3 + 10;char s[N][N];void solve()&#123;    int n, m; cin &gt;&gt; n &gt;&gt; m;    int a = 0, b = 0;    for(int i = 1; i &lt;= n; ++ i)&#123;        for(int j = 1; j &lt;= m; ++ j)&#123;            if(s[i][j] == &#39;x&#39;) a ++;            else b ++;        &#125;    &#125;    if(b &gt; a) s[3][1] = &#39;x&#39;;    else if(a &gt; b + 1) s[1][1] = &#39;o&#39;;    for(int i = 1; i &lt;= n; ++ i)&#123;        for(int j = 1; j &lt;= m; ++ j)&#123;            cout &lt;&lt; s[i][j];        &#125;        cout &lt;&lt; &#39;\n&#39;;    &#125;    if(b &gt; a) s[3][1] = &#39;o&#39;;    else if(a &gt; b + 1) s[1][1] = &#39;x&#39;;&#125;int main()&#123;    //ios::sync_with_stdio(0); cin.tie(0);    for(int i = 1; i &lt;= N - 10; ++ i)&#123;        for(int j = 1; j &lt;= N - 10; ++ j)&#123;            if((i + j) &amp; 1) s[i][j] = &#39;o&#39;;            else s[i][j] = &#39;x&#39;;        &#125;    &#125;    for(int i = 3; i &lt;= N - 10; i += 3) swap(s[i], s[i - 1]);    int n; cin &gt;&gt; n;    while(n--) solve();    return 0;&#125;</code></pre><h3 id="题K"><a href="#题K" class="headerlink" title="题K"></a>题K</h3><p>题意：有长度 $n$ 的数组  $a$ 和  $b$, 其中 $a_i$ 表示一个盒子里的分数，  $b_i$ 表示盒子有没有盖子，这里 $b_i$用 $0$ 和  $1$ 表示有没有盖子。 对于每一个盖子，我们可以将其左移或右移一个单位，也可以不移动。求我们可以获得的最大分数是多少（$0 &lt;= a_i 1e9$ , $0 &lt;= b_i &lt;= 1$）。</p><p>解：</p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;水水水%%%&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="模拟" scheme="https://www.ylq1104.cn/categories/%E6%A8%A1%E6%8B%9F/"/>
+    
+    
+    <category term="思维" scheme="https://www.ylq1104.cn/tags/%E6%80%9D%E7%BB%B4/"/>
+    
+    <category term="模拟" scheme="https://www.ylq1104.cn/tags/%E6%A8%A1%E6%8B%9F/"/>
+    
+  </entry>
   
   <entry>
     <title>牛客暑期多校训练营1</title>
@@ -451,29 +474,6 @@
     <category term="思维" scheme="https://www.ylq1104.cn/tags/%E6%80%9D%E7%BB%B4/"/>
     
     <category term="贪心" scheme="https://www.ylq1104.cn/tags/%E8%B4%AA%E5%BF%83/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>区间数据离散化</title>
-    <link href="https://www.ylq1104.cn/posts/33421/"/>
-    <id>https://www.ylq1104.cn/posts/33421/</id>
-    <published>2022-04-27T14:38:55.000Z</published>
-    <updated>2022-11-02T03:11:00.671Z</updated>
-    
-    <content type="html"><![CDATA[<p><strong>区间区间又是区间…</strong></p><span id="more"></span><p> 对于一类范围很大，而实际用到的范围又很小的题目，如下题，数轴上的范围2*10^9次，而实际上有操作过的个数最多有n个，如果用前缀和计算该题的话在数据小的情况下是可以做的，但是本题范围若有前缀和的话遍历加每一个值也必然会tle，这时候我们就用到了离散化这个方法</p><p>**AcWing 802. 区间和 **  </p><p>假定有一个无限长的数轴，数轴上每个坐标上的数都是 0。</p><p>现在，我们首先进行 n 次操作，每次操作将某一位置 x 上的数加 c。</p><p>接下来，进行 m 次询问，每个询问包含两个整数 l 和 r，你需要求出在区间 [l,r] 之间的所有数的和。</p><p>输入格式</p><p>第一行包含两个整数 n 和 m。</p><p>接下来 n 行，每行包含两个整数 x 和 c。</p><p>再接下来 m 行，每行包含两个整数 l 和 r。</p><p>输出格式</p><p>共 m 行，每行输出一个询问中所求的区间内数字和。</p><p>数据范围</p><p>−10^9≤x≤10^9<br>1≤n,m≤10^5<br>−10^9≤l≤r≤10^9<br>−10000≤c≤10000</p><p>输入样例：</p><pre><code>3 31 23 67 51 34 67 8</code></pre><p>输出样例：</p><pre><code>805</code></pre><p>题解： </p><p>把需要操作的位置都放到 all 数组里，对于操作的数据我们放在 add 内，对于要查询的区间我们放在 query 内，此外我们定义一个 find（x） 函数来查找数值为x的值在 all 数组内的下标，在放完所有数据之后，我们要对 all 数组内的值整理一次，先用sort使数据有序排列，这样才能保证在用find查找下标的时候有效进行，然后还得对 all 数组内相同的数据进行清除，然后遍历 add 内的值，给a数组进行赋值，再对all遍历计算有效前缀和，最后遍历query输出答案</p><pre><code>例如: 在最以下数据进行操作之后   1 2   3 6   7 5    1 3   4 6   7 8 读取数据之后各vector的内容    add&#123;&#123;1,2&#125;,&#123;3,6&#125;,&#123;7,5&#125;&#125;    query&#123;&#123;1,3&#125;,&#123;4,6&#125;,&#123;7,8&#125;&#125;    all&#123;1,3,7,1,3,4,6,7,8&#125; 对all排序去重之后为      all&#123;1,3,4,6,7,8&#125;   //即在数轴上就用到了这些位置      先遍历add对a数组进行操作后     a &#123;2， 6 ，0， 0 ， 5 ，0 &#125;      然后用sum计算a内的前缀和      sum&#123;2 , 8 , 8 , 8 , 13, 13 &#125;         然后遍历query内的值，对sum中的范围进行求差（得用find查找all中下标）      而对应的sum下标和值即为         0   1   2   3   4   5   sum &#123;2 , 8 , 8 , 8 , 13, 13 &#125;     all&#123;1,  3,  4,  6,   7,  8 &#125;     所以对以下三个区间      1 3      4 6      7 8   三个用find查找的下标区间为      0 1      2 3      4 5   计算得出答案</code></pre><p>   代码呈上😉😉😉😉 </p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;#define repp(i,n,m) for(int i=n;i&lt;=m;++i)#define reps(i,n,m) for(int i=n;i&gt;=m;--i)#define INF 0x3f3f3f3fusing namespace std;typedef long long ll;typedef pair&lt;int,int&gt; PII;const int N=300010;int a[N],sum[N];vector&lt;PII&gt; add,query;vector&lt;int&gt;all;int find(int x)&#123;    //离散化查找下标 int l=0,r=all.size()-1; while(l&lt;r)&#123;     int mid=l+r&gt;&gt;1;     if(all[mid]&gt;=x)r=mid;     else l=mid+1; &#125; return r+1;&#125;int main()&#123; ios::sync_with_stdio(0);cin.tie(0); int n,m;cin&gt;&gt;n&gt;&gt;m; repp(i,1,n)&#123;        //数据读入     int x,y;cin&gt;&gt;x&gt;&gt;y;     add.push_back(&#123;x,y&#125;);     all.push_back(x); &#125; repp(i,1,m)&#123;     int x,y;cin&gt;&gt;x&gt;&gt;y;     query.push_back(&#123;x,y&#125;);     all.push_back(x);     all.push_back(y); &#125;  sort(all.begin(),all.end());        //排序+去重 all.erase(unique(all.begin(),all.end()),all.end());  for(auto it:add)&#123;        //赋值操作     int x=find(it.first);     a[x]+=it.second; &#125;   repp(i,1,all.size()) sum[i]=sum[i-1]+a[i];   //前缀和计算  for(auto it : query) &#123;                       //区间和     int l=find(it.first),r=find(it.second);     cout&lt;&lt;sum[r]-sum[l-1]&lt;&lt;endl; &#125; return 0;&#125;</code></pre>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;strong&gt;区间区间又是区间…&lt;/strong&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="数据离散化" scheme="https://www.ylq1104.cn/categories/%E6%95%B0%E6%8D%AE%E7%A6%BB%E6%95%A3%E5%8C%96/"/>
-    
-    
-    <category term="区间操作" scheme="https://www.ylq1104.cn/tags/%E5%8C%BA%E9%97%B4%E6%93%8D%E4%BD%9C/"/>
-    
-    <category term="二分" scheme="https://www.ylq1104.cn/tags/%E4%BA%8C%E5%88%86/"/>
     
   </entry>
   
