@@ -239,12 +239,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E6%80%9D%E7%BB%B4/" style="color: #ff7d73">思维</a>
+                <a href="/tags/%E6%80%9D%E7%BB%B4/" style="color: #00a596">思维</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E6%A8%A1%E6%8B%9F/" style="color: #00bcd4">模拟</a>
+                <a href="/tags/%E6%A8%A1%E6%8B%9F/" style="color: #00a596">模拟</a>
             </span>
             
         </span>
@@ -252,8 +252,7 @@
     </div>
     
     <div class="content" v-pre>
-        <p>呃呃这场签到一时半会没写出来就去睡觉了，睡醒已经结束，然后一题没开</p>
-<p>更新至L,F,A…</p>
+        <p>呃呃这场签到一时半会没写出来就去睡觉了，睡醒已经结束，然后一题没开<br>更新至L,F,A,J…<br>(好无聊好无聊好无聊呜呜呜7.30)</p>
 <span id="more"></span>
 
 <h3 id="题L"><a href="#题L" class="headerlink" title="题L"></a>题L</h3><p>题意：给定一个 $n * m$ 排布的灯，有 $q$ 次操作，每次操作可以  $打开/关闭$ 某具体  $行/列$ , 问最后有多少灯是打开的（$1&lt;=n,m,q&lt;=1e6$）。</p>
@@ -331,6 +330,28 @@ void solve()&#123;
 int main()&#123;
     int T; cin &gt;&gt; T;
     while(T --) solve();
+&#125;
+</code></pre>
+<h3 id="题J"><a href="#题J" class="headerlink" title="题J"></a>题J</h3><p>题意：给定整数 $n$ 和 $m$，要求构造长度为 $n$ 的数组 $a$，其中 $-m&lt;=a_i&lt;=m$, 对任意 $2&lt;=k&lt;=n$，满足连续 $k$ 个元素和 $&gt;=0$，问存在多少种构造情况$(1&lt;=n,m&lt;=5000, 答案模998244252)$</p>
+<p>解：用 $dp[i][j]$ 表示前 $i$ 个元素种包含第 $i$ 个元素最小和为 $j$ 的情况数。我们再用一个 $sum[i][j]$ 表示包含第 $i$ 个元素和为 $j$ 的情况数，这样我们对和从大到小枚举，就 $O(n*m)$ 跑过。</p>
+<pre><code class="cpp">#include&lt;iostream&gt;
+using namespace std;
+const int N = 5010, MOD = 998244353;
+int dp[N][N + N], sum[N][N + N];
+int main()&#123;
+    int n, m; cin &gt;&gt; n &gt;&gt; m;
+    for(int i = m; i &gt;= -m; -- i) &#123;
+        sum[1][i + N] = 1;
+        dp[1][i + N] = dp[1][i + N + 1] + sum[1][i + N];
+    &#125;
+    for(int i = 2; i &lt;= n; ++ i)&#123;
+        for(int j = m; j &gt;= -m; -- j)&#123;
+            if(j &gt;= 0) sum[i][j + N] = dp[i - 1][j + N - m];
+            else sum[i][j + N] = dp[i - 1][N - j];
+            dp[i][j + N] = (dp[i][j + N + 1] + sum[i][j + N]) % MOD;
+        &#125;
+    &#125;
+    cout &lt;&lt; dp[n][N - m];
 &#125;
 </code></pre>
 
