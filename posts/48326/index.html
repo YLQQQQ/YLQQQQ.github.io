@@ -239,7 +239,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E4%BA%8C%E5%88%86%E5%9B%BE/" style="color: #00a596">二分图</a>
+                <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="color: #ffa2c4">动态规划</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E4%BA%8C%E5%88%86%E5%9B%BE/" style="color: #03a9f4">二分图</a>
             </span>
             
             <span class="tag">
@@ -252,7 +257,7 @@
     </div>
     
     <div class="content" v-pre>
-        <p>更新至G,D,C…</p>
+        <p>更新至G,D,C,H…</p>
 <span id="more"></span>
 
 <h3 id="题G"><a href="#题G" class="headerlink" title="题G"></a>题G</h3><p>题意：给定一个只包含 $1,2,3,4$ 的长度为 $n$ 的数组 $a$ 和整数 $k$， 求包含 $1,2,3,4$ 且有  $k$ 个 $4$ 的最短连续区间长度。</p>
@@ -334,6 +339,36 @@ int main()&#123;
         &#125;
     &#125;
     cout &lt;&lt; n;
+&#125;
+</code></pre>
+<h3 id="题H"><a href="#题H" class="headerlink" title="题H"></a>题H</h3><p>题意：由 $n$ 个奶酪，体积分别为 $a_i$，价值为 $b_i$，只能按从前往后的顺序拿，当且仅当第 $i$ 个奶酪被损坏或者拿走才能对第 $i+1$ 奶酪操作。一共由 $m$ 个背包，每个背包体积为 $w_i$，每次拿一个背包从第一个奶酪出发，问最多拿走多少价值的奶酪$(1&lt;=n&lt;=200,1&lt;=m&lt;=1e5,1&lt;=a_i&lt;=200,1&lt;=b_i&lt;=1e5,1&lt;=w_i&lt;=200)$。</p>
+<p>解：我们用 $dp[i][j]$ 表示用到第 $i$ 个背包花费  $j$ 空间的最大价值。因为背包是连续使用的，并且题目给的背包容积是从小到大，所以我们取最大的 $min(n, m)$ 个背包就好。然后我们第一维枚举每一块奶酪，对这么些个背包而言取不取这块奶酪，这里就是 $01$ 背包，判断完之后，更新一下下一位背包，下一个背包如果不取当前奶酪的话，那么 $dp[j + 1][0] = max(dp[j + 1][0], dp[j][k])$, 就可以更新下一个背包不取当前奶酪的情况。最后对第 $dp[m][i]$ 寻找最大价值方案。</p>
+<pre><code class="cpp">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int N = 210;
+int a[N], b[N], w[100010];
+int dp[N][N];
+int main()&#123;
+    //ios::sync_with_stdio(0); cin.tie(0);
+    int n, m, mx = 0; cin &gt;&gt; n &gt;&gt; m;
+    for(int i = 1; i &lt;= n; ++ i) cin &gt;&gt; a[i] &gt;&gt; b[i];
+    for(int i = 1; i &lt;= m; ++ i) cin &gt;&gt; w[i];
+    if(m &gt; n) &#123;for(int i = 1; i &lt;= n; ++ i) w[i] = w[i + m - n]; m = n;&#125;
+    for(int i = 1; i &lt;= n; ++ i)&#123;
+        for(int j = 1; j &lt;= m; ++ j)&#123;
+            for(int k = w[j]; k &gt;= a[i]; -- k)&#123;
+                dp[j][k] = max(dp[j][k], dp[j][k - a[i]] + b[i]);
+            &#125;
+        &#125;
+        for(int j = 1; j &lt; m; ++ j)&#123;
+            for(int k = 0; k &lt;= w[j]; ++ k)&#123;
+                dp[j + 1][0] = max(dp[j + 1][0], dp[j][k]);
+            &#125;
+        &#125;
+    &#125;
+    
+    for(auto &amp;x: dp[m]) mx = max(mx, x);
+    cout &lt;&lt; mx;
 &#125;
 </code></pre>
 
