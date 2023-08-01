@@ -6,7 +6,7 @@
   <link href="https://www.ylq1104.cn/atom.xml" rel="self"/>
   
   <link href="https://www.ylq1104.cn/"/>
-  <updated>2023-07-30T14:48:49.032Z</updated>
+  <updated>2023-08-01T07:01:46.688Z</updated>
   <id>https://www.ylq1104.cn/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>牛客暑期多校训练营5</title>
+    <link href="https://www.ylq1104.cn/posts/48326/"/>
+    <id>https://www.ylq1104.cn/posts/48326/</id>
+    <published>2023-08-01T05:55:15.000Z</published>
+    <updated>2023-08-01T07:01:46.688Z</updated>
+    
+    <content type="html"><![CDATA[<p>更新至G,D,C…</p><span id="more"></span><h3 id="题G"><a href="#题G" class="headerlink" title="题G"></a>题G</h3><p>题意：给定一个只包含 $1,2,3,4$ 的长度为 $n$ 的数组 $a$ 和整数 $k$， 求包含 $1,2,3,4$ 且有  $k$ 个 $4$ 的最短连续区间长度。</p><p>解：双指针。</p><pre><code class="cpp">#include&lt;bits/stdc++.h&gt;using namespace std;typedef long long ll;const int N = 2e5 + 10;int a[N], p[5];int main()&#123;    int n, k, num = 0; cin &gt;&gt; n &gt;&gt; k;    for(int i = 1; i &lt;= n; ++ i) cin &gt;&gt; a[i];    int ans = n;    for(int l = 1, r = 1; r &lt;= n; ++ r)&#123;        p[a[r]] ++;        while(p[1] &gt;= 1 &amp;&amp; p[2] &gt;= 1 &amp;&amp; p[3] &gt;= 1 &amp;&amp; p[4] &gt;= k &amp;&amp; l &lt;= r)&#123;            ans = min(ans, r - l + 1);            p[a[l]] --;            l ++;        &#125;    &#125;    cout &lt;&lt; ans;&#125;</code></pre><p>用map wa了一发，奇奇怪怪。</p><h3 id="题D"><a href="#题D" class="headerlink" title="题D"></a>题D</h3><p>题意：给定 $k,c,n$ $(1&lt;=k,c,n&lt;=1e9)$, 求有多少对正整数 $a，b$ 满足 $ka+b=c$ 其中 $c=xb，x&gt;=1,gcd(a,b)&gt;=n$。</p><p>解：由题意可得方程 $a=(c-b)/k$, 我们由 $c=xb, x&gt;=1$ 可以枚举 $b$，复杂度为 $O(sqrt(c))$, 然后欧几里得判断。</p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;using namespace std;const int N = 2e5 + 10, MOD = 1e9 + 7;vector&lt;int&gt; prime;void cal(int x)&#123;    for(int i = 1; i &lt;= x / i; ++ i)&#123;        if(x % i == 0)&#123;            prime.push_back(i);            if(x / i != i) prime.push_back(x / i);        &#125;    &#125;&#125;void solve()&#123;    prime.clear();    int k, c, n, ans = 0; cin &gt;&gt; k &gt;&gt; c &gt;&gt; n;    cal(c);    for(auto &amp;b: prime)&#123;        if((c - b) % k == 0)&#123;            int a = (c - b) / k;            if(a &gt; 0 &amp;&amp; __gcd(a, b) &gt;= n) ans ++;        &#125;    &#125;    cout &lt;&lt; ans &lt;&lt; &#39;\n&#39;;&#125;int main()&#123;    //ios::sync_with_stdio(0); cin.tie(0);    int n; cin &gt;&gt; n;    while(n--) solve();    return 0;&#125;</code></pre><h3 id="题C"><a href="#题C" class="headerlink" title="题C"></a>题C</h3><p>题意：给定一个二分图，图左右两边都有 $n$ 个点，且点的编号是 $1-n$ 和  $n + 1-2n$，若 $(i,j + n)$之间存在边，则 $(j,i +n)$之间不存在边。邻接矩阵给出该图的 $n(n-1)/2$条边。问该图的最大匹配 $(1&lt;=n&lt;=3000)$</p><p>解：根据题目性质，可以将 $(i,j+n)$ 转换为 $(i,j)$，此时该图变成了一个竞赛图，当且仅当一个强连通分量只有两个点的时候答案为 $n-1$,反之为 $n$。</p><pre><code class="cpp">#include&lt;bits/stdc++.h&gt;using namespace std;int d[3010];int main()&#123;    ios::sync_with_stdio(0); cin.tie(0);    int n, x = 0, y = 0; cin &gt;&gt; n;    for(int i = 1; i &lt;= n; ++ i)&#123;        for(int j = 1; j &lt;= n; ++ j)&#123;            int x; cin &gt;&gt; x;            if(x) d[i] ++;        &#125;    &#125;    sort(d + 1, d + 1 + n);    for(int i = 1, j = 0, s = 0; i &lt;= n; ++ i)&#123;        s += d[i];        if(s == i * (i - 1) / 2)&#123;            if(i - j &lt;= 2)&#123;cout &lt;&lt; n - 1; return 0;&#125;            j = i;        &#125;    &#125;    cout &lt;&lt; n;&#125;</code></pre>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;更新至G,D,C…&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="思维" scheme="https://www.ylq1104.cn/categories/%E6%80%9D%E7%BB%B4/"/>
+    
+    
+    <category term="二分图" scheme="https://www.ylq1104.cn/tags/%E4%BA%8C%E5%88%86%E5%9B%BE/"/>
+    
+    <category term="模拟" scheme="https://www.ylq1104.cn/tags/%E6%A8%A1%E6%8B%9F/"/>
+    
+  </entry>
   
   <entry>
     <title>牛客暑期多校训练营4</title>
@@ -457,27 +480,6 @@
     <category term="染色问题" scheme="https://www.ylq1104.cn/tags/%E6%9F%93%E8%89%B2%E9%97%AE%E9%A2%98/"/>
     
     <category term="匈牙利算法" scheme="https://www.ylq1104.cn/tags/%E5%8C%88%E7%89%99%E5%88%A9%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>codeforces804C</title>
-    <link href="https://www.ylq1104.cn/posts/34529/"/>
-    <id>https://www.ylq1104.cn/posts/34529/</id>
-    <published>2022-07-05T14:23:47.000Z</published>
-    <updated>2022-11-02T03:07:26.921Z</updated>
-    
-    <content type="html"><![CDATA[<p><strong>赛后补的题</strong></p><span id="more"></span><p>题目描述：</p><p>给定一个长度为n的数组a，其中每个a[i]的范围在0~n-1 且每个数仅出现一次 ，其中b数组满足对a和b数组任意的任意区间1&lt;=l&lt;=r&lt;=n，其中mex{a[l],a[l+1]…a[r]}==mex{b[l],b[l+1]…b[r]}，mex是求该区间内未出现的最小非负整数，如mex{1，2，3}=0，mex{0，1，2，3}=4，输出满足的b数组的个数</p><p>题解：</p><p>我们可以用p来存每个数字在a数组里的位置，初始l=r=p[0]，</p><p>然后遍历i从0~n-1，每次查看p[i]的位置是否在区间l到r内，</p><p>如果不在l到r内，更行区间，且说明这个位置的数放上去后是区间的边界，mex值在区间改变后也会发生改变，改位置就是固定的，ans不做处理</p><p>如果在l到r内，因为i之前的数组的位置都已经找过了，而l和r的位置也存的是i之前的数，那么在这个区间内，除了已经找过的数，其他任意位置是可以随意放的，这时候的任意位置个数就是r-l+1-i，（注意这里的i意思是已经确定了i个数，如果减去，就意味着还有这么些个位置没有放），所以ans*=（这些位置个数）</p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;#define rep(i,n,m) for(int i=n;i&lt;=m;++i)#define per(i,n,m) for(int i=n;i&gt;=m;--i)#define INF 0x3f3f3f3fusing namespace std;typedef long long ll;const int N=100050;const ll MOD=1e9+7;ll a[N];map&lt;ll,ll&gt;p;void solve()&#123;    int n;cin&gt;&gt;n;    p.clear();    rep(i,1,n)&#123;        cin&gt;&gt;a[i];        p[a[i]]=i;   //记录每个数在数组a的位置    &#125;    ll l=p[0],r=p[0]，ans=1;   //初始化区间和答案    rep(i,1,n-1)&#123;        if(p[i]&gt;l&amp;&amp;p[i]&lt;r)&#123;             ans*=1LL*(r-l+1-i);  //ans*(区间内未出现过数的位置)             ans%=MOD;        &#125;        l=min(l,p[i]);        r=max(r,p[i]);    &#125;    cout&lt;&lt;ans&lt;&lt;endl;&#125;int main()&#123;    ios::sync_with_stdio(0);cin.tie(0);    int n;cin&gt;&gt;n;    while(n--)solve();    return 0;&#125;</code></pre>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;strong&gt;赛后补的题&lt;/strong&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="codeforces" scheme="https://www.ylq1104.cn/categories/codeforces/"/>
-    
-    
-    <category term="思维" scheme="https://www.ylq1104.cn/tags/%E6%80%9D%E7%BB%B4/"/>
     
   </entry>
   
