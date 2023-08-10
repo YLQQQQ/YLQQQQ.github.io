@@ -6,7 +6,7 @@
   <link href="https://www.ylq1104.cn/atom.xml" rel="self"/>
   
   <link href="https://www.ylq1104.cn/"/>
-  <updated>2023-08-01T08:21:12.757Z</updated>
+  <updated>2023-08-10T07:45:23.545Z</updated>
   <id>https://www.ylq1104.cn/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>牛客暑期多校训练营7</title>
+    <link href="https://www.ylq1104.cn/posts/32071/"/>
+    <id>https://www.ylq1104.cn/posts/32071/</id>
+    <published>2023-08-09T13:00:00.000Z</published>
+    <updated>2023-08-10T07:45:23.545Z</updated>
+    
+    <content type="html"><![CDATA[<p>更新至M,C…<br>这家呆不下去了，想去学校了</p><span id="more"></span><h3 id="题M"><a href="#题M" class="headerlink" title="题M"></a>题M</h3><p>题意：给定一个数字 $n$，问从 $1$ 到 $n$， $n$ 个数中一共有多少单个数，如 $123$ 由 $1，2，3$ 三个单个数字构成。</p><p>解：我们可以枚举一个数由几个单个数构成，当 $n=1234$ 时, 可以将其拆解为 $0-9$， $10-99$ ， $100-999$， $1000-1234$，那么答案就是 $1*(9-0)+2*(99-10+1)+3*(999-100+1)+4*(1234-1000+1)$。</p><pre><code class="cpp">#include&lt;bits/stdc++.h&gt;using namespace std;typedef long long ll;const int N = 2e5 + 10;int get(int x)&#123;    int k = 0; x /= 10;    while(x)&#123;        k = k * 10 + 9;        x /= 10;    &#125;    return k;&#125;int main()&#123;    int n; cin &gt;&gt; n;    while(n --)&#123;        int x; cin &gt;&gt; x;        ll ans = 0;        for(int i = 1, j = 9; i &lt;= 10; ++ i, j = j * 10 + 9)&#123;            int mx = min(j, x);            ans = ans + 1ll * (mx - get(mx)) * i;            if(mx == x) break;        &#125;        cout &lt;&lt; ans &lt;&lt; &#39;\n&#39;;    &#125;&#125;</code></pre><h3 id="题C"><a href="#题C" class="headerlink" title="题C"></a>题C</h3><p>题意：给定 $n,k$，并且有长为 $n$ 的数组 $A$ 和长为 $n-1$ 的数组 $B$，其中 $A_i\oplus A_{i+1} =B_i$,<br>同时对于数组 $A$，满足 $A_1\le A_2\le \dots\le A_n,0\le A_i,B_i \le 2^{30}$,<br>对于满足的数组 $A$, 求排列第 $k$ 小的数组 $A$</p><p>解：由于 $A_i\oplus A_{i+1} =B_i$，一个 $A_1$ 即可得出所有 $A_i$, 我们求 $B$ 的前缀异或和 $Pre$，那么我们就可以得到 $Pre_i=A_1\oplus A_{i+1}$。<br><img src="/picture/niuke71.png"></p><p>由 $Pre_i=A_1\oplus A_{i+1}$ 得 $A_{i+1} = A_1 \oplus Pre_i$,  即 $A_{i} = A_1 \oplus Pre_{i-1}$。<br>我们由 $A_1\le A_2\le \dots\le A_n$, 得 $(A_1\oplus Pre_0) \le (A_1\oplus Pre_1)\le \dots\le (A_1 \oplus Pre_{n-1})$。<br>问题就转成了求第 $k$ 小的 $A_1$。<br>于是，我们便可以枚举 $A_1$ 的每个二进制位，假设 $A_1$ 某个二进制位为 $x$, 如果要满足上面不递减情况的话结果如下。<br><img src="/picture/niuke72.jpg"><br>即当且仅当 $Pre_i$ 和 $Pre_{i+1}$ 的同一二进制位上两数一样，否则这个 $A_1$ 的这个二进制位就是固定的。最终我们可以知道 $A_1$ 有多少个不固定的二进制位，将其转化为十进制，在满足 $\ge k$ 的条件下，将二进制位补齐乃便是第 $k$ 小的 $A_1$。</p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;#define all(x) x.begin(),x.end()#define pb(x) push_back(x)#define PII pair&lt;int, int&gt;#define INF 1ll &lt;&lt; 30#define ll long longusing namespace std;const int N = 2e6 + 10, MOD = 1e9 + 7;int b[N], a[35], pre[N];void solve()&#123;    ll n, k, num = 1 &lt;&lt; 30, a1 = 0; cin &gt;&gt; n &gt;&gt; k;    for(int i = 1; i &lt; n; ++ i) cin &gt;&gt; b[i]; pre[0] = 0;    for(int i = 1; i &lt; n; ++ i) pre[i] = pre[i - 1] ^ b[i];    for(int i = 0; i &lt;= 30; ++ i) a[i] = -1;    for(int i = 1; i &lt; n; ++ i)&#123;        for(int j = 29; j &gt;= 0; -- j)&#123;            int x = (pre[i - 1] &gt;&gt; j) &amp; 1;            int y = (pre[i] &gt;&gt; j) &amp; 1;            if(x + y == 1)&#123;                if(a[j] == -1) a[j] = x, num /= 2;                else if(a[j] != x)&#123;                    cout &lt;&lt; &quot;-1\n&quot;;                    return ;                &#125;                break;            &#125;        &#125;    &#125;    if(k &gt; num) &#123;cout &lt;&lt; &quot;-1\n&quot;; return ;&#125;     else k --;    for(int i = 0; k; k &gt;&gt;= 1)&#123;        while(a[i] != -1) i ++;        a[i] = k &amp; 1;    &#125;    for(int i = 0; i &lt; 30; ++ i) if(a[i] == 1) a1 += (1 &lt;&lt; i);    for(int i = 1; i &lt;= n; ++ i)&#123;        a1 ^= b[i - 1];        cout &lt;&lt; a1 &lt;&lt; &quot; \n&quot;[i == n];    &#125;&#125;int main()&#123;    //ios::sync_with_stdio(0); cin.tie(0);    int n; cin &gt;&gt; n;    while(n--) solve();    return 0;&#125;</code></pre>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;更新至M,C…&lt;br&gt;这家呆不下去了，想去学校了&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="思维" scheme="https://www.ylq1104.cn/categories/%E6%80%9D%E7%BB%B4/"/>
+    
+    
+    <category term="二进制" scheme="https://www.ylq1104.cn/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6/"/>
+    
+    <category term="模拟" scheme="https://www.ylq1104.cn/tags/%E6%A8%A1%E6%8B%9F/"/>
+    
+  </entry>
   
   <entry>
     <title>牛客暑期多校训练营5</title>
@@ -457,31 +480,6 @@
     <category term="倍增" scheme="https://www.ylq1104.cn/tags/%E5%80%8D%E5%A2%9E/"/>
     
     <category term="区间最值" scheme="https://www.ylq1104.cn/tags/%E5%8C%BA%E9%97%B4%E6%9C%80%E5%80%BC/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>二分图最大匹配</title>
-    <link href="https://www.ylq1104.cn/posts/30282/"/>
-    <id>https://www.ylq1104.cn/posts/30282/</id>
-    <published>2022-08-15T14:09:14.000Z</published>
-    <updated>2023-04-30T10:46:26.298Z</updated>
-    
-    <content type="html"><![CDATA[<p><strong>判断二分图</strong><br><strong>寻找最大匹配</strong></p><span id="more"></span><p>最近学点图论，总不能暑假啥都没学。</p><p>所谓二分图，就是对于左右两个集合，每个集合内的任意两点不连边，边只连接两个不同集合内的分别一点，如图（A集合有{1，2，3，4}，B集合{1，2，3，4}，两个集合的数量和元素都不需要相同）</p><p> <img src="/picture/mid1.png"><br> 以上的边练成的路径为A（1）→B（2），A（2）→B（1），这是二分图的一种成立条件，即单边无环，但还存在有环的情况，如下<br> <img src="/picture/mid2.png"><br> 此时的环为A（1）→B（2）→A（3）→B（3）→A（1），此时环内一共有四个元素，可以可以证明的是，若当环内元素为奇数个时，该图必然不为二分图，<br> <img src="/picture/mid3.png"></p><p>若环内元素有奇数个时，？的位置必然为A，此时A→A与二分图定义矛盾，所以二分图内的环必为偶数环。</p><p>对于给定的一个带连边的图，可以用染色法判定二分图，</p><p>思路：我们可以把两个不同的集合中的元素染色为1和2。</p><p>遍历A中的每一个点，若该点未被染色，则染为1，然后顺着与该点相连的点，将其染为相反的颜色，若过程中发现有下一个点的颜色与当前点的颜色相同，则该图不是二分图。</p><pre><code class="cpp">#include&lt;bits/stdc++.h&gt;using namespace std;int const N=2e5+10;int h[N],ne[N],w[N],cnt=0;int color[N];void add(int a,int b)&#123;  //数组存连接点 ，和最短路存路径的方法相同    w[++cnt]=b,ne[cnt]=h[a],h[a]=cnt;&#125;bool dfs(int x,int u)&#123;    color[x]=u;    for(int i=h[x];i!=-1;i=ne[i])&#123;  //查找与该点相连的一条路到底        int j=w[i];        if(!color[j])&#123;   //用3-u来表示相反的颜色           if(!dfs(j,3-u))return false;        &#125;        else if(color[j]==u)return false;           //邻接点的颜色与当前点颜色相同，跳出    &#125;    return true;&#125;int main()&#123;    int n,m,k=1;cin&gt;&gt;n&gt;&gt;m;    memset(h,-1,sizeof h);    while (m -- )&#123;        int a,b;cin&gt;&gt;a&gt;&gt;b;        add(a,b);add(b,a);  //因为dfs的时候一条路到底，所以相反的路径也要加    &#125;    for(int i=1;i&lt;=n;++i)&#123;        if(!color[i])&#123;  //该点已经被染色            if(!dfs(i,1))&#123;  //染色失败，不为二分图                k=0;                break;            &#125;        &#125;    &#125;    if(k)cout&lt;&lt;&quot;Yes&quot;&lt;&lt;endl;    else cout&lt;&lt;&quot;No&quot;&lt;&lt;endl;&#125;</code></pre><p>ok，二分图判断完毕，开始匹配问题</p><p>上题：</p><p><a href="https://www.luogu.com.cn/problem/P3386">P3386 【模板】二分图最大匹配 - 洛谷 | 计算机科学教育新生态</a></p><p>所谓的匹配：就是在二分图中每个集合的元素只能连一条边，这两个元素的连接就是匹配。</p><p>最大匹配：在一个二分图中存在最多的匹配数量</p><p>完全匹配：两个集合中的全部元素都能匹配上</p><p> <img src="/picture/mid4.png"><br>匈牙利算法可以帮助解决这个问题</p><p>如图绿线表示两点有连接，按遍历A集合的顺序来，我们先看A中点1，发现A（1）可以与B（2）连，就连这俩<br> <img src="/picture/mid5.png"><br> 然后看A2的时候发现A2可以和B2连，也就连接他们<br>  <img src="/picture/mid6.png"><br> 然后到A3的时候，发现A3的第一个连接点B1已经被连了，这就是所谓的增广路了，一点被多个点所连接，这时候我们需要查看B1所连接的点有没有另外的连接点，发现A1还连接着B2，但B2被A2连接了，我们又看A2还另外连B3，而B3没有被连，那么我们就将A2连B3，于是A1就可以连B2，A3可以连B1了，知识点很少，挺容易看懂的</p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;#define rep(i,n,m) for(int i=n;i&lt;=m;++i)#define per(i,n,m) for(int i=n;i&gt;=m;--i)#define PII pair&lt;int,int&gt;#define INF 1&lt;&lt;30using namespace std;typedef long long ll;const int N=2e3+10;bool link[N][N];int p[N],st[N],n,m,e,ans=0;//p【i】=j  表示第二个集合中的i点和第一个集合中的j点匹配bool dfs(int x)&#123;    rep(i,1,m)&#123;        if(link[x][i]&amp;&amp;!st[i])&#123;   //如果该点和x点有连接，并且此时i点还没被用过           st[i]=1;           if(p[i]==0||dfs(p[i]))&#123;  //i点没有匹配的边，或者i点所匹配的边还有另外的匹配               p[i]=x;   //更新i的匹配点是x               return 1;           &#125;        &#125;    &#125;    return 0;&#125; int main()&#123;    ios::sync_with_stdio(0);cin.tie(0);    cin&gt;&gt;n&gt;&gt;m&gt;&gt;e;    while(e--)&#123;        int x,y;cin&gt;&gt;x&gt;&gt;y;        link[x][y]=1;   //x点和y点有连接    &#125;    rep(i,1,n)&#123;  //遍历第一个集合        memset(st,0,sizeof st);        if(dfs(i))ans++;  //如果该点匹配成功    &#125;    cout&lt;&lt;ans;    return 0;&#125;</code></pre>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;strong&gt;判断二分图&lt;/strong&gt;&lt;br&gt;&lt;strong&gt;寻找最大匹配&lt;/strong&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="图论" scheme="https://www.ylq1104.cn/categories/%E5%9B%BE%E8%AE%BA/"/>
-    
-    
-    <category term="二分图" scheme="https://www.ylq1104.cn/tags/%E4%BA%8C%E5%88%86%E5%9B%BE/"/>
-    
-    <category term="染色问题" scheme="https://www.ylq1104.cn/tags/%E6%9F%93%E8%89%B2%E9%97%AE%E9%A2%98/"/>
-    
-    <category term="匈牙利算法" scheme="https://www.ylq1104.cn/tags/%E5%8C%88%E7%89%99%E5%88%A9%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   

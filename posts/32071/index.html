@@ -3,7 +3,7 @@
 <html lang="zh-CN">
     <head>
         <meta charset="utf-8" />
-        <title>最大矩阵和 | YLQQ のBLOG</title>
+        <title>牛客暑期多校训练营7 | YLQQ のBLOG</title>
         <meta name="author" content="YLQQ" />
         <meta name="description" content="" />
         <meta name="keywords" content="" />
@@ -212,22 +212,22 @@
                 <div id="main" v-show="!loading">
                     <div class="article">
     <div>
-        <h1>最大矩阵和</h1>
+        <h1>牛客暑期多校训练营7</h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2022/4/27
+            2023/8/9
         </span>
         
         <span class="category">
-            <a href="/categories/%E7%9F%A9%E9%98%B5/">
+            <a href="/categories/%E6%80%9D%E7%BB%B4/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
-                矩阵
+                思维
             </a>
         </span>
         
@@ -239,7 +239,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E6%9C%80%E5%80%BC/" style="color: #03a9f4">最值</a>
+                <a href="/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6/" style="color: #03a9f4">二进制</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E6%A8%A1%E6%8B%9F/" style="color: #ff7d73">模拟</a>
             </span>
             
         </span>
@@ -247,37 +252,85 @@
     </div>
     
     <div class="content" v-pre>
-        <p><strong>蒻苟的学习记录</strong></p>
+        <p>更新至M,C…<br>这家呆不下去了，想去学校了</p>
 <span id="more"></span>
 
-<p>题目：给定一个n✖n大小的矩阵，求其中子矩阵的和最大值（来自洛谷p1719）<br><img src="https://img-blog.csdnimg.cn/a2ffc98c905d402a86b43906a549d895.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aWz5Lq65Y-q5Lya5b2x5ZON5oiR5pWy5Luj56CB55qE6YCf5bqmUUFR,size_16,color_FFFFFF,t_70,g_se,x_16"><br>求一个方向上的前缀和，该方法计算矩阵竖直方向上的前缀和 a[i][j]=a[i-1][j]+x ，然后用 i 和 j 确定子矩阵行坐标的范围，即第 j 行到第 i  行，然后再循环一个k来计算子矩阵内从第1列到第k列的和，若和为负值了就重新计算子矩阵（当然本道题的限制是答案是正数，若要突破这个限制，即把判断sum&lt;0改成sum&lt;ans就行啦）</p>
-<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
-#define N 10010
-#define rep(i,a,b)  for(int i=a;i&lt;=b;++i)  
+<h3 id="题M"><a href="#题M" class="headerlink" title="题M"></a>题M</h3><p>题意：给定一个数字 $n$，问从 $1$ 到 $n$， $n$ 个数中一共有多少单个数，如 $123$ 由 $1，2，3$ 三个单个数字构成。</p>
+<p>解：我们可以枚举一个数由几个单个数构成，当 $n=1234$ 时, 可以将其拆解为 $0-9$， $10-99$ ， $100-999$， $1000-1234$，那么答案就是 $1*(9-0)+2*(99-10+1)+3*(999-100+1)+4*(1234-1000+1)$。</p>
+<pre><code class="cpp">#include&lt;bits/stdc++.h&gt;
 using namespace std;
 typedef long long ll;
-int a[N][N],s[N][N],n,ans=-0x3f3f3f3f;
-int main()                //初始ans为极小值
-&#123;
-    cin&gt;&gt;n;
-    rep(i,1,n)&#123;
-        rep(j,1,n)&#123;
-            int x;
-            cin&gt;&gt;x;
-            a[i][j]=a[i-1][j]+x;
-        &#125;   //累加竖直方向上的前缀和
+const int N = 2e5 + 10;
+int get(int x)&#123;
+    int k = 0; x /= 10;
+    while(x)&#123;
+        k = k * 10 + 9;
+        x /= 10;
     &#125;
-    rep(i,1,n)&#123;
-        rep(j,0,i-1)&#123;
-            int sum=0;
-            rep(k,1,n)&#123;   //循环加j到i行之间的子矩阵和，
-                sum+=a[i][k]-a[j][k];  
-                if(sum&lt;0)sum=0;    //如果和小于0则初始化sum
-                ans=max(ans,sum);
+    return k;
+&#125;
+int main()&#123;
+    int n; cin &gt;&gt; n;
+    while(n --)&#123;
+        int x; cin &gt;&gt; x;
+        ll ans = 0;
+        for(int i = 1, j = 9; i &lt;= 10; ++ i, j = j * 10 + 9)&#123;
+            int mx = min(j, x);
+            ans = ans + 1ll * (mx - get(mx)) * i;
+            if(mx == x) break;
+        &#125;
+        cout &lt;&lt; ans &lt;&lt; &#39;\n&#39;;
+    &#125;
+&#125;
+</code></pre>
+<h3 id="题C"><a href="#题C" class="headerlink" title="题C"></a>题C</h3><p>题意：给定 $n,k$，并且有长为 $n$ 的数组 $A$ 和长为 $n-1$ 的数组 $B$，其中 $A_i\oplus A_{i+1} =B_i$,<br>同时对于数组 $A$，满足 $A_1\le A_2\le \dots\le A_n,0\le A_i,B_i \le 2^{30}$,<br>对于满足的数组 $A$, 求排列第 $k$ 小的数组 $A$</p>
+<p>解：由于 $A_i\oplus A_{i+1} =B_i$，一个 $A_1$ 即可得出所有 $A_i$, 我们求 $B$ 的前缀异或和 $Pre$，那么我们就可以得到 $Pre_i=A_1\oplus A_{i+1}$。<br><img src="/picture/niuke71.png"></p>
+<p>由 $Pre_i=A_1\oplus A_{i+1}$ 得 $A_{i+1} = A_1 \oplus Pre_i$,  即 $A_{i} = A_1 \oplus Pre_{i-1}$。<br>我们由 $A_1\le A_2\le \dots\le A_n$, 得 $(A_1\oplus Pre_0) \le (A_1\oplus Pre_1)\le \dots\le (A_1 \oplus Pre_{n-1})$。<br>问题就转成了求第 $k$ 小的 $A_1$。<br>于是，我们便可以枚举 $A_1$ 的每个二进制位，假设 $A_1$ 某个二进制位为 $x$, 如果要满足上面不递减情况的话结果如下。<br><img src="/picture/niuke72.jpg"><br>即当且仅当 $Pre_i$ 和 $Pre_{i+1}$ 的同一二进制位上两数一样，否则这个 $A_1$ 的这个二进制位就是固定的。最终我们可以知道 $A_1$ 有多少个不固定的二进制位，将其转化为十进制，在满足 $\ge k$ 的条件下，将二进制位补齐乃便是第 $k$ 小的 $A_1$。</p>
+<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
+#define all(x) x.begin(),x.end()
+#define pb(x) push_back(x)
+#define PII pair&lt;int, int&gt;
+#define INF 1ll &lt;&lt; 30
+#define ll long long
+using namespace std;
+const int N = 2e6 + 10, MOD = 1e9 + 7;
+int b[N], a[35], pre[N];
+void solve()&#123;
+    ll n, k, num = 1 &lt;&lt; 30, a1 = 0; cin &gt;&gt; n &gt;&gt; k;
+    for(int i = 1; i &lt; n; ++ i) cin &gt;&gt; b[i]; pre[0] = 0;
+    for(int i = 1; i &lt; n; ++ i) pre[i] = pre[i - 1] ^ b[i];
+    for(int i = 0; i &lt;= 30; ++ i) a[i] = -1;
+    for(int i = 1; i &lt; n; ++ i)&#123;
+        for(int j = 29; j &gt;= 0; -- j)&#123;
+            int x = (pre[i - 1] &gt;&gt; j) &amp; 1;
+            int y = (pre[i] &gt;&gt; j) &amp; 1;
+            if(x + y == 1)&#123;
+                if(a[j] == -1) a[j] = x, num /= 2;
+                else if(a[j] != x)&#123;
+                    cout &lt;&lt; &quot;-1\n&quot;;
+                    return ;
+                &#125;
+                break;
             &#125;
         &#125;
     &#125;
-    cout&lt;&lt;ans;
+    if(k &gt; num) &#123;cout &lt;&lt; &quot;-1\n&quot;; return ;&#125; 
+    else k --;
+    for(int i = 0; k; k &gt;&gt;= 1)&#123;
+        while(a[i] != -1) i ++;
+        a[i] = k &amp; 1;
+    &#125;
+    for(int i = 0; i &lt; 30; ++ i) if(a[i] == 1) a1 += (1 &lt;&lt; i);
+    for(int i = 1; i &lt;= n; ++ i)&#123;
+        a1 ^= b[i - 1];
+        cout &lt;&lt; a1 &lt;&lt; &quot; \n&quot;[i == n];
+    &#125;
+&#125;
+int main()&#123;
+    //ios::sync_with_stdio(0); cin.tie(0);
+    int n; cin &gt;&gt; n;
+    while(n--) solve();
+    return 0;
 &#125;
 </code></pre>
 
