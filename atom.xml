@@ -6,7 +6,7 @@
   <link href="https://www.ylq1104.cn/atom.xml" rel="self"/>
   
   <link href="https://www.ylq1104.cn/"/>
-  <updated>2023-08-14T11:36:09.334Z</updated>
+  <updated>2023-08-14T12:05:41.620Z</updated>
   <id>https://www.ylq1104.cn/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>牛客暑期多校训练营8</title>
+    <link href="https://www.ylq1104.cn/posts/30983/"/>
+    <id>https://www.ylq1104.cn/posts/30983/</id>
+    <published>2023-08-14T12:02:41.000Z</published>
+    <updated>2023-08-14T12:05:41.620Z</updated>
+    
+    <content type="html"><![CDATA[<p>更新至A…</p><span id="more"></span><h3 id="题A"><a href="#题A" class="headerlink" title="题A"></a>题A</h3><p>题意：$n$ 组camp，每组若干个人，问多少人参加了全部camp<br>解：略</p><pre><code class="cpp">#include&lt;bits/stdc++.h&gt;using namespace std;map&lt;string,int&gt; p, q;int main()&#123;    int n; cin &gt;&gt; n;    set&lt;string&gt; s;    for(int j = 1; j &lt;= n; ++ j)&#123;        int c; cin &gt;&gt; c;        for(int i = 1; i &lt;= c; ++ i) &#123;            string x; cin &gt;&gt; x;            p[x] ++;            s.insert(x);        &#125;    &#125;    for(auto [x, y]: p) if(y == n) q[x] ++;        cout &lt;&lt; q.size() &lt;&lt; &#39;\n&#39;;    for(auto [x, y]: q) cout &lt;&lt; x &lt;&lt; &#39;\n&#39;;    &#125;</code></pre>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;更新至A…&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="思维" scheme="https://www.ylq1104.cn/categories/%E6%80%9D%E7%BB%B4/"/>
+    
+    
+    <category term="模拟" scheme="https://www.ylq1104.cn/tags/%E6%A8%A1%E6%8B%9F/"/>
+    
+    <category term="分块" scheme="https://www.ylq1104.cn/tags/%E5%88%86%E5%9D%97/"/>
+    
+  </entry>
   
   <entry>
     <title>牛客暑期多校训练营6</title>
@@ -456,29 +479,6 @@
     <category term="区间操作" scheme="https://www.ylq1104.cn/tags/%E5%8C%BA%E9%97%B4%E6%93%8D%E4%BD%9C/"/>
     
     <category term="二叉搜索树" scheme="https://www.ylq1104.cn/tags/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>树状数组入门</title>
-    <link href="https://www.ylq1104.cn/posts/8158/"/>
-    <id>https://www.ylq1104.cn/posts/8158/</id>
-    <published>2022-08-17T08:14:06.000Z</published>
-    <updated>2023-04-28T13:59:45.319Z</updated>
-    
-    <content type="html"><![CDATA[<p>​<strong>树状数组处理区间问题</strong></p><span id="more"></span><p>树状数组是解决动态前缀和问题的数据结构，大佬们总是把ST表，树状数组，线段树三个东西联系在一起，都是用于解决动态区间问题的方法。</p><p>树状数组是2的次方前缀和数组，像树一样，如图所示，每个位置 i 的前缀和长度为 lowbit（i），而每层之间深度所差的区间长度也为lowbit（i），例如要对 t[4] +1，则其后面的包含 t[4] 的 t[8]也进行+1。</p><p>因此当我们要求 6的前缀和，因该是6所包含的区间加上6包含区间的前面的区间，即是 t[4] + t[6]。</p><p>若求 3 到 6的区间和时，便是 前缀和 6 - 前缀和 2，而 前缀和 6 = t[6] +  t[4] ，所以3 到 6 的区间和便是  t[6] +  t[4] - t[2]       </p><p><img src="/picture/tree.png"></p><p>单点加值：</p><pre><code class="cpp">//包含a点的父亲位置都要加上bvoid add(int a,int b)&#123;    for(int i=a;i&lt;=n;i+=lowbit(i))        t[i]+=b;&#125;</code></pre><p> 前缀和：</p><pre><code class="cpp">//x所包含的区间和 + x区间前面所包含的区间和//x区间的长度为lowbit(x)int sum(int x)&#123;    int ans=0;    for(int i=x;i&gt;0;i-=lowbit(i))        ans+=t[i];    return ans;&#125;</code></pre><p>下面就是单点改值和区间和查询的问题</p><p><a href="https://www.luogu.com.cn/problem/P3374">P3374 【模板】树状数组 1 - 洛谷 | 计算机科学教育新生态 </a></p><p>题目描述<br>如题，已知一个数列，你需要进行下面两种操作：</p><p>输入格式<br>第一行包含两个正整数 n,m，分别表示该数列数字的个数和操作的总个数。</p><p>第二行包含 n 个用空格分隔的整数，其中第 i 个数字表示数列第 i 项的初始值。</p><p>接下来 m 行每行包含 3 个整数，表示一个操作，具体如下：</p><p>这样子这道题就变得显而易见了</p><p>lowbit(x) 的返回值是x二进制最小位1，所以返回的是x&amp;-x，这里我用宏定义<br>对于lowbit(x), 我们从已学的计算机理论知识中得知计算机对两个数进行计算时,是将其转换为补码进行运算,而正数的补码又是其本身.</p><p>假设我们有一个整数 $x = (0 1 0 1 0)_B$, 我们有以下操作<br>$ x = (0 1 0 1 0)_B$   // x 的原码表示<br>$-x = (1 1 0 1 0)_B$   //-x 的原码表示<br>$-x = (1 0 1 1 0)_B$   //-x 的补码表示<br>$ x $&amp;$ (x) = $        //x 与 -x 按位与<br>$     (0 1 0 1 0)_B$   //x  的补码<br>&amp;    $(1 0 1 1 0)_B$   //-x 的补码<br>$=$  $(0 0 0 1 0)_B$   //按位与后的补码(同时也是原码)<br>于是我们便可以得出x在二进制位下最小1所表示的数值</p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;#define rep(i,n,m) for(int i=n;i&lt;=m;++i)#define per(i,n,m) for(int i=n;i&gt;=m;--i)#define PII pair&lt;int,int&gt;#define lowbit(x) x&amp;-x#define INF 1&lt;&lt;30using namespace std;typedef long long ll;const int N=5e5+10;int t[N],n,q;void add(int a,int b)&#123;    //父亲节点都 +b    for(int i=a;i&lt;=n;i+=lowbit(i))t[i]+=b;&#125;int sum(int x)&#123;    int ans=0;    前面每一段区间和    for(int i=x;i&gt;0;i-=lowbit(i))ans+=t[i];    return ans;&#125;int main()&#123;    ios::sync_with_stdio(0);cin.tie(0);    cin&gt;&gt;n&gt;&gt;q;    rep(i,1,n)&#123;        int x;cin&gt;&gt;x;        add(i,x);    &#125;    while(q--)&#123;        int a,b,c;cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;        if(a==1)            add(b,c);        else             cout&lt;&lt;sum(c)-sum(b-1)&lt;&lt;endl;            //前缀和差    &#125;    return 0;&#125;</code></pre><p>还有区间改值和单点查询的问题，</p><p><a href="https://www.luogu.com.cn/problem/P3368">P3368 【模板】树状数组 2 - 洛谷 | 计算机科学教育新生态 </a></p><p>题目描述<br>如题，已知一个数列，你需要进行下面两种操作：</p><p>输入格式<br>第一行包含两个整数 N、M，分别表示该数列数字的个数和操作的总个数。</p><p>第二行包含 N 个用空格分隔的整数，其中第 i 个数字表示数列第 i 项的初始值。</p><p>接下来 M 行每行包含 2 或 4 个整数，表示一个操作，具体如下：</p><p>操作 1： 格式：1 x y k 含义：将区间 [x,y] 内每个数加上 k；</p><p>操作 2： 格式：2 x 含义：输出第 x 个数的值。</p><pre><code>下标i    0  1  2  3  4  5  6  7    原数值a  0  1  2  1 -2  4  9  0差分值b  0  1  1 -1 -3  6  5 -9</code></pre><p>对于区间改值后的区间和，我们知道可以用差分做，那差分是什么呢，</p><p>差分 b[i] 就是 a[i] - a[i-1]  ，而 a[n] 可以用 表示（哈哈哈，公式好大个），当区间 [l，r] 内+x时，只需 b[l] +x，b[r+1] -x，即可保证只有区间内值增加</p><p>对于该题，我们不妨初始化差分数组为0，然后使次区间改值时对差分数组边界进行两次操作 </p><p>最后的单点查询就是改变的差分值加上原数值，即 sum(x) + a[x] </p><p>（以下用t数组代表差分数组，q数组表示原数值数组）</p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;#define rep(i,n,m) for(int i=n;i&lt;=m;++i)#define per(i,n,m) for(int i=n;i&gt;=m;--i)#define PII pair&lt;int,int&gt;#define lowbit(x)  x&amp;-x#define INF 1&lt;&lt;30using namespace std;typedef long long ll;const int N=5e5+10;int q[N],t[N],n,T;void add(int a,int b)&#123;    for(int i=a;i&lt;=n;i+=lowbit(i))t[i]+=b;&#125;int sum(int x)&#123;    int ans=0;    for(int i=x;i&gt;0;i-=lowbit(i))ans+=t[i];    return ans;&#125;int main()&#123;    ios::sync_with_stdio(0);cin.tie(0);    cin&gt;&gt;n&gt;&gt;T;    rep(i,1,n)cin&gt;&gt;q[i];    while(T--)&#123;        int x,a,b,c;cin&gt;&gt;x;        if(x==1)&#123;            cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;            //差分边界进行操作            add(a,c);            add(b+1,-c);        &#125;else &#123;            cin&gt;&gt;a;            //单点查询值=差分数组前缀和+原数值            cout&lt;&lt;sum(a)+q[a]&lt;&lt;endl;           &#125;    &#125;    return 0;&#125;</code></pre><p>对于某些会越界的样例，必要时要int改long long。</p><p>今天刚学，有点囫囵吞枣，描述的不太清楚。</p>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;​&lt;strong&gt;树状数组处理区间问题&lt;/strong&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="图论" scheme="https://www.ylq1104.cn/categories/%E5%9B%BE%E8%AE%BA/"/>
-    
-    
-    <category term="区间操作" scheme="https://www.ylq1104.cn/tags/%E5%8C%BA%E9%97%B4%E6%93%8D%E4%BD%9C/"/>
-    
-    <category term="数组" scheme="https://www.ylq1104.cn/tags/%E6%95%B0%E7%BB%84/"/>
     
   </entry>
   

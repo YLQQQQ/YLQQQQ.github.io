@@ -3,7 +3,7 @@
 <html lang="zh-CN">
     <head>
         <meta charset="utf-8" />
-        <title>牛客暑期多校训练营2 | YLQQ のBLOG</title>
+        <title>牛客暑期多校训练营8 | YLQQ のBLOG</title>
         <meta name="author" content="YLQQ" />
         <meta name="description" content="" />
         <meta name="keywords" content="" />
@@ -212,14 +212,14 @@
                 <div id="main" v-show="!loading">
                     <div class="article">
     <div>
-        <h1>牛客暑期多校训练营2</h1>
+        <h1>牛客暑期多校训练营8</h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/7/26
+            2023/8/14
         </span>
         
         <span class="category">
@@ -239,22 +239,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="color: #ffa2c4">动态规划</a>
+                <a href="/tags/%E6%A8%A1%E6%8B%9F/" style="color: #03a9f4">模拟</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/Nim%E6%B8%B8%E6%88%8F/" style="color: #03a9f4">Nim游戏</a>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/%E6%A8%A1%E6%8B%9F/" style="color: #ffa2c4">模拟</a>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/%E9%A9%AC%E6%8B%89%E8%BD%A6/" style="color: #00a596">马拉车</a>
+                <a href="/tags/%E5%88%86%E5%9D%97/" style="color: #ff7d73">分块</a>
             </span>
             
         </span>
@@ -262,201 +252,30 @@
     </div>
     
     <div class="content" v-pre>
-        <p>更新至E,I,K,F,D…</p>
+        <p>更新至A…</p>
 <span id="more"></span>
-
-<h3 id="题E"><a href="#题E" class="headerlink" title="题E"></a>题E</h3><p>题意：题目给定一个 $x$, 要求我们找出一个 $y$ 要求满足 $\frac{y^2}{10^k} = x$， 其中 $k$ 可以为任意数，例如 $y = 123, x = 1512$, (其中 $\frac{y^2}{10^k} = \frac{15129}{10^1}=1512= x$。其中 $1&lt;=x,y&lt;=1e9$)。</p>
-<p>解：由于要求 $y^2$ 的前几位数有 $x$， 那么显然我们可以对 $x$ 后面加若干个 $0$，使得其 $sqrt()$ 满足 $y$ 的平方并逼近答案。枚举加 $0$  的个数即可。<br>(tips :  这里注意 $sqrt()$ 的精度问题， 需要同时判断 $sqrt()$ 和 $sqrt() + 1$, 我多加了个$sqrt() - 1$ 就一直wawawa。)</p>
-<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
-#define all(x) x.begin(),x.end()
-#define pb(x) push_back(x)
-#define PII pair&lt;int, int&gt;
-#define int long long
-#define ll long long
-using namespace std;
-const int N = 2e5 + 10, MOD = 1e9 + 7;
-string get(ll x)&#123;
-    string s = &quot;&quot;;
-    while(x)&#123;
-        char c = x % 10 + &#39;0&#39;;
-        s = c + s;
-        x /= 10;
-    &#125;
-    return s;
-&#125;
-bool ok(int k, int n)&#123;
-    string s = get(k * k);
-    int ans = 0;
-    string ss = get(n); int len = ss.size();
-    for(int i = 0; i &lt; len; ++ i)&#123;
-        ans = ans * 10 + (s[i] - &#39;0&#39;);
-    &#125;
-    if(ans == n) return 1;
-    return 0;
-&#125;
-void solve()&#123;
-    ll n; cin &gt;&gt; n;
-    ll m = n;
-    while(n &lt;= 1e18)&#123;
-        ll k = sqrt(n);
-        if(ok(k, m)) &#123;cout &lt;&lt; k &lt;&lt; &#39;\n&#39;; return ;&#125;
-        if(ok(k + 1, m)) &#123;cout &lt;&lt; k + 1&lt;&lt; &#39;\n&#39;; return ;&#125;
-        n *= 10;
-    &#125;
-    cout &lt;&lt; -1 &lt;&lt; &#39;\n&#39;;
-&#125;
-signed main()&#123;
-    //ios::sync_with_stdio(0); cin.tie(0);
-    int n; cin &gt;&gt; n;
-    while(n--) solve();
-    return 0;
-&#125;
-</code></pre>
-<h3 id="题I"><a href="#题I" class="headerlink" title="题I"></a>题I</h3><p>题意：两人轮流玩棋盘大小为 $n * m$ 的五子棋，要求构造一个平局的情况，其中先手为 $’x’$, 另一个人为 $’o’$ ，（$1 &lt;= n, m &lt;= 1000$）。</p>
-<p>解：首先可以构造这样的局面</p>
-<pre><code>xoxoxoxoxo...
-oxoxoxoxox...
-xoxoxoxoxo...
-oxoxoxoxox...
-xoxoxoxoxo...
-oxoxoxoxox...
-</code></pre>
-<p>此时只会出现斜对角五着连线， 这时将每三行的二三行对换，形成如下局面</p>
-<pre><code>xoxoxoxoxo...
-xoxoxoxoxo...
-oxoxoxoxox...
-oxoxoxoxox...
-oxoxoxoxox...
-xoxoxoxoxo...
-</code></pre>
-<p>这时候如果我们直接输出 $n * m$, $’x’$ 和 $’o’$ 的差值会有 $0$、$1$ 和 $2$ 两种情况， 由于 $’x’$ 是先手，所以多一个无妨，除此以外，对于其他不相等的情况修改一步棋即可。</p>
-<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
-#define all(x) x.begin(),x.end()
-#define pb(x) push_back(x)
-#define PII pair&lt;int, int&gt;
-#define ll long long
-using namespace std;
-const int N = 2e3 + 10;
-char s[N][N];
-void solve()&#123;
-    int n, m; cin &gt;&gt; n &gt;&gt; m;
-    int a = 0, b = 0;
-    for(int i = 1; i &lt;= n; ++ i)&#123;
-        for(int j = 1; j &lt;= m; ++ j)&#123;
-            if(s[i][j] == &#39;x&#39;) a ++;
-            else b ++;
-        &#125;
-    &#125;
-    if(b &gt; a) s[3][1] = &#39;x&#39;;
-    else if(a &gt; b + 1) s[1][1] = &#39;o&#39;;
-    for(int i = 1; i &lt;= n; ++ i)&#123;
-        for(int j = 1; j &lt;= m; ++ j)&#123;
-            cout &lt;&lt; s[i][j];
-        &#125;
-        cout &lt;&lt; &#39;\n&#39;;
-    &#125;
-    if(b &gt; a) s[3][1] = &#39;o&#39;;
-    else if(a &gt; b + 1) s[1][1] = &#39;x&#39;;
-&#125;
-int main()&#123;
-    //ios::sync_with_stdio(0); cin.tie(0);
-    for(int i = 1; i &lt;= N - 10; ++ i)&#123;
-        for(int j = 1; j &lt;= N - 10; ++ j)&#123;
-            if((i + j) &amp; 1) s[i][j] = &#39;o&#39;;
-            else s[i][j] = &#39;x&#39;;
-        &#125;
-    &#125;
-    for(int i = 3; i &lt;= N - 10; i += 3) swap(s[i], s[i - 1]);
-    int n; cin &gt;&gt; n;
-    while(n--) solve();
-    return 0;
-&#125;
-</code></pre>
-<h3 id="题K"><a href="#题K" class="headerlink" title="题K"></a>题K</h3><p>题意：有长度 $n$ 的数组  $a$ 和  $b$, 其中 $a_i$ 表示一个盒子里的分数，  $b_i$ 表示盒子有没有盖子，这里 $b_i$用 $0$ 和  $1$ 表示有没有盖子。 对于每一个盖子，我们可以将其左移或右移一个单位，也可以不移动。求我们可以获得的最大分数是多少（$0 &lt;= a_i 1e9$ , $0 &lt;= b_i &lt;= 1$）。</p>
-<p>解：我们用 $dp[i][1/2/3]$ 分别表示前 $i$ 个 $box$ 及当前盖子的 $左移/不动/右移$ 三种状态。</p>
-<p>可以理解当前 $i$ 位置有盖子时，如果我们将其左移，那么左边那个位置原本就是没有盖子的，也就是对前面的 $dp[i - 1][1]$ 进行状态转移$dp[i][1] = dp[i - 1][1] + a[i - 1];$ ，另外两种状态依此类推。<br>当此位置没有盖子时，我们考虑将空盖子左移时是对前一个没有影响的情况，即 $dp[i - 1][1]$ 和 $dp[i - 1][2]$； 当前盖子不动时则是对前一状态的三种状态进行转移。</p>
-<p>代码如下</p>
+<h3 id="题A"><a href="#题A" class="headerlink" title="题A"></a>题A</h3><p>题意：$n$ 组camp，每组若干个人，问多少人参加了全部camp<br>解：略</p>
 <pre><code class="cpp">#include&lt;bits/stdc++.h&gt;
 using namespace std;
-typedef long long ll;
-#define INF 1 &lt;&lt; 30
-const int N = 1e6 + 10;
-int a[N], b[N];
-ll dp[N][4];
+map&lt;string,int&gt; p, q;
 int main()&#123;
     int n; cin &gt;&gt; n;
-    for(int i = 1; i &lt;= n; ++ i) cin &gt;&gt; a[i];
-    for(int i = 1; i &lt;= n; ++ i) cin &gt;&gt; b[i];
-    for(int i = 1; i &lt;= n; ++ i)&#123;
-        if(b[i])&#123;
-            dp[i][1] = dp[i - 1][1] + a[i - 1];
-            dp[i][2] = max(dp[i - 1][1], dp[i - 1][2]) + a[i];
-            dp[i][3] = max(&#123;dp[i - 1][1], dp[i - 1][2], dp[i - 1][3]&#125;) + a[i + 1];
-        &#125;else &#123;
-            dp[i][1] = max(dp[i - 1][1], dp[i - 1][2]);
-            dp[i][2] = max(&#123;dp[i - 1][1], dp[i - 1][2], dp[i - 1][3]&#125;);
+    set&lt;string&gt; s;
+    for(int j = 1; j &lt;= n; ++ j)&#123;
+        int c; cin &gt;&gt; c;
+        for(int i = 1; i &lt;= c; ++ i) &#123;
+            string x; cin &gt;&gt; x;
+            p[x] ++;
+            s.insert(x);
         &#125;
     &#125;
-    cout &lt;&lt; max(&#123;dp[n][1], dp[n][2], dp[n][3]&#125;);
+    for(auto [x, y]: p) if(y == n) q[x] ++;
+    
+    cout &lt;&lt; q.size() &lt;&lt; &#39;\n&#39;;
+    for(auto [x, y]: q) cout &lt;&lt; x &lt;&lt; &#39;\n&#39;;
+    
 &#125;
 </code></pre>
-<p>(擦擦擦擦，我开始将连续盖子分块，然后取最小的$1/2/3$个罐子扔了，然后模拟了两个小时还是通过$0.27$，心态整崩了、、、)</p>
-<h3 id="题F"><a href="#题F" class="headerlink" title="题F"></a>题F</h3><p>题意：给定一个 $n$，表示有一个长度为 $n$ 的链，其中结点下标为 $1&lt;=i&lt;=n$，且每个相邻的结点差值为 $1$，题目给定 $R、G、B$ 三种颜色的初始位置下标， $A$ 和 $B$ 二人轮流操作，每次移动一个颜色到一个相邻的结点，当一个人移动后三种颜色的坐标 $(R,G,B)$ 重复出现时 $lose$。</p>
-<p>解：因为每次操作仅能使得一个颜色的 $+1$ 或  $-1$， 我们可以构造一个边长为 $n$ 的正方体，当且仅当棋子走到走过的位置点时 $lose$，这里联系到二分图博弈模型：当且仅当起始点位于最大匹配上时先手必胜。<br>当 $n$ 为偶数时，任何起始点开始走完所有点时都是先手必胜。<br>当 $n$ 为奇数时，当 $(R,G,B)$ 三点坐标和为奇数时，无法走完全部的点，此时先手必败。 反之坐标和为偶数时能在奇数步内走完全部点， 先手必胜。</p>
-<pre><code class="cpp">#include&lt;iostream&gt;
-using namespace std;
-int main()&#123;
-    int T; cin &gt;&gt; T;
-    while(T --)&#123;
-        int n, a, b, c; cin &gt;&gt; n &gt;&gt; a &gt;&gt; b &gt;&gt; c;
-        if(n &amp; 1)&#123;
-            if((a + b + c) &amp; 1) cout &lt;&lt; &quot;Bob\n&quot;;
-            else cout &lt;&lt; &quot;Alice\n&quot;;
-        &#125;else cout &lt;&lt; &quot;Alice\n&quot;;
-    &#125;
-&#125;
-</code></pre>
-<h3 id="题D"><a href="#题D" class="headerlink" title="题D"></a>题D</h3><p>题意：共有 $n$ 个人，$m$ 道菜，$n$ 个人要轮流共点 $k$ 道菜。每个人对每道菜的满意度不同，给定 $n*m$ 个满意度，如何选菜使得总满意度最大<br>（$1&lt;=n&lt;=2000$,$1&lt;=k&lt;=m&lt;=2000$,$1&lt;=A_{i,j}(满意度)&lt;=1e9$，每个菜最多点一次，升序输出答案）。</p>
-<p>解：如果从前往后贪心，对当前的人来说后面的人可能选择自己最喜欢的菜，所以他应该选择后面的人没选过的菜中自己最喜欢的。因此我们倒着选菜，每个人选择自己最喜欢的菜，这样对于正序的某个人 $i$ 来说，自己应该选择除去 $k-(i+1)$ 个菜之后自己最喜欢的菜，$n,m$ 的范围不超过 $2000$, $O(n * m)$ 暴力即可。</p>
-<pre><code class="cpp">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-typedef long long ll;
-#define INF 1 &lt;&lt; 30
-const int N = 2e3 + 10;
-int a[N][N], st[N];
-void solve()&#123;
-    int n, m, k; cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;
-    for(int i = 1; i &lt;= n; ++ i)&#123;
-        for(int j = 1; j &lt;= m; ++ j)&#123;
-            cin &gt;&gt; a[i][j];
-        &#125;
-    &#125;
-    for(int i = 1; i &lt;= m; ++ i) st[i] = 0;
-    vector&lt;int&gt; ans;
-    for(int i = k - 1; i &gt;= 0; -- i)&#123;
-        int x = i % n + 1, k = -1;
-        for(int j = 1; j &lt;= m; ++ j)&#123;
-            if(st[j]) continue;
-            if(k == -1 || a[x][j] &gt; a[x][k]) k = j;
-        &#125;
-        st[k] = 1; ans.push_back(k);
-    &#125;
-    sort(ans.begin(), ans.end());
-    for(auto i: ans) cout &lt;&lt; i &lt;&lt; &#39; &#39;;
-    cout &lt;&lt; &#39;\n&#39;;
-&#125;
-int main()&#123;
-    int T; cin &gt;&gt; T;
-    while(T --) solve();
-&#125;
-</code></pre>
-<h3 id="题G"><a href="#题G" class="headerlink" title="题G"></a>题G</h3><p>题意：给定一个字符串 $s$， 判断其是否为对称字符串 $S$， 其中 $S$ 的定义如下</p>
-<pre><code>1、S是空字符串。
-2、S由&#39;o&#39;,&#39;s&#39;,&#39;x&#39;,&#39;z&#39;等若干个组成。
-3、S由若干个形如bSq,dSp,qSb,nSu,uSn,oSo...组成
-</code></pre>
-<p>若干个 $S$ 直接拼接在一起也为 $S$。</p>
-<p>解：马拉车，会了再写。</p>
 
     </div>
     
