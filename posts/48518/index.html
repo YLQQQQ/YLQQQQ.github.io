@@ -3,7 +3,7 @@
 <html lang="zh-CN">
     <head>
         <meta charset="utf-8" />
-        <title>codeforces135D | YLQQ のBLOG</title>
+        <title>牛客暑期多校训练营6 | YLQQ のBLOG</title>
         <meta name="author" content="YLQQ" />
         <meta name="description" content="" />
         <meta name="keywords" content="" />
@@ -212,22 +212,22 @@
                 <div id="main" v-show="!loading">
                     <div class="article">
     <div>
-        <h1>codeforces135D</h1>
+        <h1>牛客暑期多校训练营6</h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2022/9/9
+            2023/8/14
         </span>
         
         <span class="category">
-            <a href="/categories/codeforces/">
+            <a href="/categories/%E6%80%9D%E7%BB%B4/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
-                codeforces
+                思维
             </a>
         </span>
         
@@ -239,17 +239,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E5%8D%9A%E5%BC%88%E8%AE%BA/" style="color: #03a9f4">博弈论</a>
+                <a href="/tags/%E6%A8%A1%E6%8B%9F/" style="color: #ff7d73">模拟</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="color: #ffa2c4">动态规划</a>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/Nim%E6%B8%B8%E6%88%8F/" style="color: #ff7d73">Nim游戏</a>
+                <a href="/tags/%E5%89%8D%E7%BC%80%E5%92%8C/" style="color: #00a596">前缀和</a>
             </span>
             
         </span>
@@ -257,51 +252,63 @@
     </div>
     
     <div class="content" v-pre>
-        <p><strong>这场我真的会谢，A题都看错意思了快20min才开出来</strong><br><strong>c做到一半以为不会就玩手机去了，结束后仔细做会儿改个bug就出来了</strong><br><strong>so，补个D吧</strong></p>
+        <p>更新至G,E…<br>有点多愁善感了</p>
 <span id="more"></span>
 
-<p>题目给t(1&lt;=t&lt;=1000)个操作，每个操作输入一个源字符串(长度为偶，且len&lt;=2000)，同时Alice和Bob各有一个字符串且初始都为空，即””。<br>每次操作每个人可以从源字符串的头或尾选择一个字符剪切到自己字符串的头部。<br>当源字符串为空时，两个人的字符串按字典序比较，小的人获胜。<br>问是Alice或BOb胜还是平局。</p>
-<p>字符区间为[l,r]时，每一轮二人都可选择一个字符,显然有以下选择</p>
-<pre><code>Alice Bob
-s[l]  s[l+1]
-s[l]  s[r]
-s[r]  s[l]
-s[r]  s[r-1]
+<h3 id="题G"><a href="#题G" class="headerlink" title="题G"></a>题G</h3><p>题意：给定一个初始集合其中仅有 $x,y(x!=y)$, 可以执行任意次以下两种操作</p>
+<pre><code>1、选择a,b(a!=b),往集合中添加a-b
+2、选择a,b(a!=b),往集合中添加gcd(|a|,|b|)
 </code></pre>
-<p>对于一轮操作中的两个字符，要么s[i]==s[j],要么s[i]!=[j]，可知Alice先手，则先手必然选择最优结果<br>以此类推当两个字符不同时，Alice是必胜状态，此外Bob不存在胜利情况。</p>
-<p>我们可以用一个二维dp[i][j] 表示下标 i 到 j 之间Alice是否处于必胜状态，否则就是平局</p>
-<p>由题目数据可知我们要查询区每段区间，有（n*n）/2 的复杂度，因为数据量比较小，还是可以过的</p>
-<pre><code class="cpp">int dp[3000][3000];
-int dfs(int l,int r)&#123;
-    //已经查询过了
-    if(dp[l][r]!=-1)return dp[l][r];
-    //仅剩最后两个字符，不相等则Alice必胜，反之平局
-    if(l+1==r)return s[l]!=s[r];
-    int flag=0;
-    //查询四种情况，要么选择的使得Alice必胜，要么剩下的字符串使得Alice必胜
-
-    //当Alice选择s[l]时，不论Bob选择s[l+1]ors[r]都赢
-    if((dfs(l+2,r)||s[l]&lt;s[l+1])&amp;&amp;(dfs(l+1,r-1)||s[l]&lt;s[r]))flag=1;
-    //当Alice选择s[r]时，不论Bob选择s[r-1]ors[l]都赢
-    if((dfs(l,r-2)||s[r]&lt;s[r-1])&amp;&amp;(dfs(l+1,r-1)||s[r]&lt;s[l]))flag=1;
-    return dp[l][r] = flag;
-&#125;
-void solve()
-&#123;
-    cin&gt;&gt;s;
-    int len=s.size();s=&#39; &#39;+s;
-    //初始化
-    rep(i,1,len)&#123;
-        rep(j,1,len)&#123;
-            dp[i][j]=-1;
+<p>问最终能否得到$z$</p>
+<p>解:当 $z=0$ 时，仅有 $a=0或b=0$时，可以直接得到目标值，否则无法通过相减不同值得到 $0$<br>当 $z!=0$ 时，我们通过 $gcd(a,b)$ 可以得到一系列 $gcd(a,b)$ 的倍数，如果能整除就存在.</p>
+<pre><code class="cpp">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+int main()&#123;
+    int T; cin &gt;&gt; T;
+    while(T --)&#123;
+        int a, b, c; cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+        if(c == 0)&#123;
+            if(a == 0 || b == 0) cout &lt;&lt; &quot;YES\n&quot;;
+            else cout &lt;&lt; &quot;NO\n&quot;;
         &#125;
+        else if(c % __gcd(a, b) == 0) cout &lt;&lt; &quot;YES\n&quot;;
+        else cout &lt;&lt; &quot;NO\n&quot;;
     &#125;
-    if(dfs(1,len))cout&lt;&lt;&quot;Alice&quot;&lt;&lt;endl;
-    else cout&lt;&lt;&quot;Draw&quot;&lt;&lt;endl;
 &#125;
 </code></pre>
-<p>害。</p>
-<p><img src="/picture/headbig.png"></p>
+<h3 id="题E"><a href="#题E" class="headerlink" title="题E"></a>题E</h3><p>题意：给定一个长为 $n$ 的数组 $a$，每次询问给定 $l,r,k$，问能否将 $l-r$ 的区间划分为 $k$ 个部分，且每个部分的和都是偶数 $(1\le n,q \le 10^5, 0\le a_i \le 10^{10}, 1\le l \le r \le n, 1 \le k \le 10^5)$。</p>
+<p>解：因为要满足划分后的每个部分和都是偶数，那么我们可以直接从左到右扫描前缀和，统计到当前的前缀和的偶数和个数和奇数和个数，当且仅当一个区间内的和为偶数且两个奇偶性前缀差 $\ge k$。</p>
+<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
+#define all(x) x.begin(),x.end()
+#define pb(x) push_back(x)
+#define PII pair&lt;int, int&gt;
+#define INF 1ll &lt;&lt; 30
+#define ll long long
+using namespace std;
+const int N = 2e5 + 10, MOD = 1e9 + 7;
+int st[N], s[N];
+void solve()&#123;
+    int n, q, t = 0; cin &gt;&gt; n &gt;&gt; q;
+    for(int i = 1, a = 0, b = 0; i &lt;= n; ++ i)&#123;
+        int x; cin &gt;&gt; x; 
+        s[i] = s[i - 1] + x;
+        if(s[i] &amp; 1) st[i] = ++ a;
+        else st[i] = ++ b;
+    &#125;
+    while(q --)&#123;
+        int l, r, k; cin &gt;&gt; l &gt;&gt; r &gt;&gt; k;
+        if((s[r] - s[l - 1]) % 2 == 0 &amp;&amp; (st[r] - st[l - 1]) &gt;= k) 
+            cout &lt;&lt; &quot;YES\n&quot;; 
+        else cout &lt;&lt; &quot;NO\n&quot;;
+    &#125;
+&#125;
+int main()&#123;
+    //ios::sync_with_stdio(0); cin.tie(0);
+    int n; cin &gt;&gt; n;
+    while(n--) solve();
+    return 0;
+&#125;
+</code></pre>
 
     </div>
     

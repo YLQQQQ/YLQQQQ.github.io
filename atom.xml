@@ -6,7 +6,7 @@
   <link href="https://www.ylq1104.cn/atom.xml" rel="self"/>
   
   <link href="https://www.ylq1104.cn/"/>
-  <updated>2023-08-10T07:45:23.545Z</updated>
+  <updated>2023-08-14T11:36:09.334Z</updated>
   <id>https://www.ylq1104.cn/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>牛客暑期多校训练营6</title>
+    <link href="https://www.ylq1104.cn/posts/48518/"/>
+    <id>https://www.ylq1104.cn/posts/48518/</id>
+    <published>2023-08-14T10:33:48.000Z</published>
+    <updated>2023-08-14T11:36:09.334Z</updated>
+    
+    <content type="html"><![CDATA[<p>更新至G,E…<br>有点多愁善感了</p><span id="more"></span><h3 id="题G"><a href="#题G" class="headerlink" title="题G"></a>题G</h3><p>题意：给定一个初始集合其中仅有 $x,y(x!=y)$, 可以执行任意次以下两种操作</p><pre><code>1、选择a,b(a!=b),往集合中添加a-b2、选择a,b(a!=b),往集合中添加gcd(|a|,|b|)</code></pre><p>问最终能否得到$z$</p><p>解:当 $z=0$ 时，仅有 $a=0或b=0$时，可以直接得到目标值，否则无法通过相减不同值得到 $0$<br>当 $z!=0$ 时，我们通过 $gcd(a,b)$ 可以得到一系列 $gcd(a,b)$ 的倍数，如果能整除就存在.</p><pre><code class="cpp">#include&lt;bits/stdc++.h&gt;using namespace std;int main()&#123;    int T; cin &gt;&gt; T;    while(T --)&#123;        int a, b, c; cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;        if(c == 0)&#123;            if(a == 0 || b == 0) cout &lt;&lt; &quot;YES\n&quot;;            else cout &lt;&lt; &quot;NO\n&quot;;        &#125;        else if(c % __gcd(a, b) == 0) cout &lt;&lt; &quot;YES\n&quot;;        else cout &lt;&lt; &quot;NO\n&quot;;    &#125;&#125;</code></pre><h3 id="题E"><a href="#题E" class="headerlink" title="题E"></a>题E</h3><p>题意：给定一个长为 $n$ 的数组 $a$，每次询问给定 $l,r,k$，问能否将 $l-r$ 的区间划分为 $k$ 个部分，且每个部分的和都是偶数 $(1\le n,q \le 10^5, 0\le a_i \le 10^{10}, 1\le l \le r \le n, 1 \le k \le 10^5)$。</p><p>解：因为要满足划分后的每个部分和都是偶数，那么我们可以直接从左到右扫描前缀和，统计到当前的前缀和的偶数和个数和奇数和个数，当且仅当一个区间内的和为偶数且两个奇偶性前缀差 $\ge k$。</p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;#define all(x) x.begin(),x.end()#define pb(x) push_back(x)#define PII pair&lt;int, int&gt;#define INF 1ll &lt;&lt; 30#define ll long longusing namespace std;const int N = 2e5 + 10, MOD = 1e9 + 7;int st[N], s[N];void solve()&#123;    int n, q, t = 0; cin &gt;&gt; n &gt;&gt; q;    for(int i = 1, a = 0, b = 0; i &lt;= n; ++ i)&#123;        int x; cin &gt;&gt; x;         s[i] = s[i - 1] + x;        if(s[i] &amp; 1) st[i] = ++ a;        else st[i] = ++ b;    &#125;    while(q --)&#123;        int l, r, k; cin &gt;&gt; l &gt;&gt; r &gt;&gt; k;        if((s[r] - s[l - 1]) % 2 == 0 &amp;&amp; (st[r] - st[l - 1]) &gt;= k)             cout &lt;&lt; &quot;YES\n&quot;;         else cout &lt;&lt; &quot;NO\n&quot;;    &#125;&#125;int main()&#123;    //ios::sync_with_stdio(0); cin.tie(0);    int n; cin &gt;&gt; n;    while(n--) solve();    return 0;&#125;</code></pre>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;更新至G,E…&lt;br&gt;有点多愁善感了&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="思维" scheme="https://www.ylq1104.cn/categories/%E6%80%9D%E7%BB%B4/"/>
+    
+    
+    <category term="模拟" scheme="https://www.ylq1104.cn/tags/%E6%A8%A1%E6%8B%9F/"/>
+    
+    <category term="前缀和" scheme="https://www.ylq1104.cn/tags/%E5%89%8D%E7%BC%80%E5%92%8C/"/>
+    
+  </entry>
   
   <entry>
     <title>牛客暑期多校训练营7</title>
@@ -456,30 +479,6 @@
     <category term="区间操作" scheme="https://www.ylq1104.cn/tags/%E5%8C%BA%E9%97%B4%E6%93%8D%E4%BD%9C/"/>
     
     <category term="数组" scheme="https://www.ylq1104.cn/tags/%E6%95%B0%E7%BB%84/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ST表</title>
-    <link href="https://www.ylq1104.cn/posts/9836/"/>
-    <id>https://www.ylq1104.cn/posts/9836/</id>
-    <published>2022-08-15T14:20:14.000Z</published>
-    <updated>2023-04-30T10:43:13.295Z</updated>
-    
-    <content type="html"><![CDATA[<p><strong>预处理区间最值O(nlogn)</strong></p><p><strong>查询O(1)</strong></p><span id="more"></span><p>对于一组长度为N的队列，进行M次询问，每次询问一个区间，查找该区间内的最大数值</p><p>如果用暴力枚举的话，时间复杂度最坏能到O(N<em>N</em>M)，当数据量大时肯定会TLE</p><p>ST表是一种预处理复杂度为O(logn)，查询复杂度为O(1)的一种查区间最值的方法，但是这种方法有缺陷，仅限于数据元素不变的静态表，当数据元素会实时发生变化时并不适用（用线段树解决动态区间最值问题，蒻苟还没学线段树，不会这个）</p><p>ST表，预处理二维数组 st [ i ][ j ]，其中表示数组中第 i 位置开始 2^j 个位置内的最值，所以对于int类型，j的范围就在30以下，该预处理二维数组的大小还是挺小的。<br><img src="/picture/st1.png"></p><p>有点类似倍增，我们发现 st [ 3 ][ 2 ] 可以将2分成两个1，就是把2^2分成了2^1的两个部分，用 max ( st [ 3 ][ 1 ]，st [ 5 ][ 1 ] ) 两个部分来表示 st [ 3 ][ 2 ] 的区间最大值。</p><p>查询的时候先计算出查询区间的长度(我们需要找到一个最大的k满足2^k&lt;=len)，因为不能保证区间长度是2的次方，所以我们需要在区间内找到一个x值，使得 x + 2^k -1= r，因此</p><p>x=r-2^k+1 ，我们只需要查询 max ( st [ l ][ m ] ，st [ r - ( 1&lt;&lt;m ) + 1 ][ m ] ))即可</p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;#define rep(i,n,m) for(int i=n;i&lt;=m;++i)#define per(i,n,m) for(int i=n;i&gt;=m;--i)using namespace std;const int N=2e6+10;int st[N][30];//这个区间是左闭右开 是[N,N+2^30)int main()&#123;    ios::sync_with_stdio(0);cin.tie(0);    int n,q;cin&gt;&gt;n&gt;&gt;q;    rep(i,1,n)cin&gt;&gt;st[i][0]; 第i个位置到i+2^0位置的最值，[i,i+2^0)，左闭右开     rep(j,1,30)&#123;  //枚举区间的长度，从 2^0 → 2^30        for(int i=1;i+(1&lt;&lt;j)-1&lt;=n;++i)&#123;   //           //防止数组值越界，因此区间右值不能超过数组右端点 i+(1&lt;&lt;j)-1            st[i][j]=max(st[i][j-1],st[i+(1&lt;&lt;j-1)][j-1]);        &#125;    &#125;    while (q--) &#123;        int l,r;cin&gt;&gt;l&gt;&gt;r;        int m=log(r-l+1)/log(2);        //l到r之间的长度大小（2的次方）        cout&lt;&lt;max(st[l][m],st[r-(1&lt;&lt;m)+1][m]))&lt;&lt;&#39;\n&#39;;    &#125;    return 0;&#125;</code></pre><p>当然，也可以用ST表查询最小值，静态区间最值问题都可以解决，要抓紧时间学学线段树了，马上就大二了。。。</p><p>附上洛谷 题目：<br><a href="https://www.luogu.com.cn/problem/P3865">P3865 【模板】ST 表 - 洛谷 | 计算机科学教育新生态 </a></p>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;strong&gt;预处理区间最值O(nlogn)&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;查询O(1)&lt;/strong&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="ST表" scheme="https://www.ylq1104.cn/categories/ST%E8%A1%A8/"/>
-    
-    
-    <category term="倍增" scheme="https://www.ylq1104.cn/tags/%E5%80%8D%E5%A2%9E/"/>
-    
-    <category term="区间最值" scheme="https://www.ylq1104.cn/tags/%E5%8C%BA%E9%97%B4%E6%9C%80%E5%80%BC/"/>
     
   </entry>
   
