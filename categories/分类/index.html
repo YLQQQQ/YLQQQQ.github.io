@@ -3,7 +3,7 @@
 <html lang="zh-CN">
     <head>
         <meta charset="utf-8" />
-        <title>最大矩阵和 | YLQQ のBLOG</title>
+        <title>Categories: 分类 | YLQQ のBLOG</title>
         <meta name="author" content="YLQQ" />
         <meta name="description" content="" />
         <meta name="keywords" content="" />
@@ -32,13 +32,6 @@
 
 
 <script src="/js/lib/preview.js"></script>
-
-
-
-
-
-<script src="https://cdn.staticfile.org/gitalk/1.8.0/gitalk.min.js"></script>
-<link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.8.0/gitalk.min.css" />
 
 
 
@@ -210,20 +203,68 @@
 
             <transition name="into">
                 <div id="main" v-show="!loading">
-                    <div class="article">
-    <div>
-        <h1>最大矩阵和</h1>
-    </div>
-    <div class="info">
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2022/4/27
+                    <div id="archives">
+    
+    <div class="categories-tags">
+        
+        
+        <span>
+            <a href="/categories/Dijkstra/" style="background: #00bcd4">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                Dijkstra
+            </a>
         </span>
         
-        <span class="category">
-            <a href="/categories/%E7%9F%A9%E9%98%B5/">
+        
+        
+        <span>
+            <a href="/categories/ST%E8%A1%A8/" style="background: #00a596">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                ST表
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/categories/codeforces/" style="background: #ff7d73">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                codeforces
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/categories/%E6%95%B0%E6%8D%AE%E7%A6%BB%E6%95%A3%E5%8C%96/" style="background: #ff7d73">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                数据离散化
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/categories/%E5%9B%BE%E8%AE%BA/" style="background: #ffa2c4">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                图论
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/categories/%E7%9F%A9%E9%98%B5/" style="background: #00bcd4">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
@@ -232,66 +273,126 @@
         </span>
         
         
-        <span class="tags">
-            <span class="icon">
-                <i class="fa-solid fa-tags fa-fw"></i>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/%E6%9C%80%E5%80%BC/" style="color: #ffa2c4">最值</a>
-            </span>
-            
+        
+        <span>
+            <a href="/categories/%E5%88%86%E7%B1%BB/" style="background: linear-gradient(120deg, #9abbf7 0%, #ffbbf4 100%)">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                分类
+            </a>
         </span>
+        
+        
+        
+        
+        
+        <span>
+            <a href="/categories/KMP/" style="background: #03a9f4">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                KMP
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/categories/%E6%95%B0%E8%AE%BA/" style="background: #ff7d73">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                数论
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/categories/Trie/" style="background: #00a596">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                Trie
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/categories/%E6%9D%82%E9%A2%98/" style="background: #ffa2c4">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                杂题
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/categories/%E4%BF%A1%E5%8F%B7%E4%B8%8E%E7%BA%BF%E6%80%A7%E7%B3%BB%E7%BB%9F/" style="background: #ffa2c4">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                信号与线性系统
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/categories/%E6%80%9D%E7%BB%B4/" style="background: #03a9f4">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                思维
+            </a>
+        </span>
+        
         
     </div>
     
-    <div class="content" v-pre>
-        <p><strong>蒻苟的学习记录</strong></p>
-<span id="more"></span>
-
-<p>题目：给定一个n✖n大小的矩阵，求其中子矩阵的和最大值（来自洛谷p1719）<br><img src="https://img-blog.csdnimg.cn/a2ffc98c905d402a86b43906a549d895.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aWz5Lq65Y-q5Lya5b2x5ZON5oiR5pWy5Luj56CB55qE6YCf5bqmUUFR,size_16,color_FFFFFF,t_70,g_se,x_16"><br>求一个方向上的前缀和，该方法计算矩阵竖直方向上的前缀和 a[i][j]=a[i-1][j]+x ，然后用 i 和 j 确定子矩阵行坐标的范围，即第 j 行到第 i  行，然后再循环一个k来计算子矩阵内从第1列到第k列的和，若和为负值了就重新计算子矩阵（当然本道题的限制是答案是正数，若要突破这个限制，即把判断sum&lt;0改成sum&lt;ans就行啦）</p>
-<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
-#define N 10010
-#define rep(i,a,b)  for(int i=a;i&lt;=b;++i)  
-using namespace std;
-typedef long long ll;
-int a[N][N],s[N][N],n,ans=-0x3f3f3f3f;
-int main()                //初始ans为极小值
-&#123;
-    cin&gt;&gt;n;
-    rep(i,1,n)&#123;
-        rep(j,1,n)&#123;
-            int x;
-            cin&gt;&gt;x;
-            a[i][j]=a[i-1][j]+x;
-        &#125;   //累加竖直方向上的前缀和
-    &#125;
-    rep(i,1,n)&#123;
-        rep(j,0,i-1)&#123;
-            int sum=0;
-            rep(k,1,n)&#123;   //循环加j到i行之间的子矩阵和，
-                sum+=a[i][k]-a[j][k];  
-                if(sum&lt;0)sum=0;    //如果和小于0则初始化sum
-                ans=max(ans,sum);
-            &#125;
-        &#125;
-    &#125;
-    cout&lt;&lt;ans;
-&#125;
-</code></pre>
-
+    <div class="timeline">
+        <div class="timeline-tail"></div>
+        <div class="timeline-content">
+            <div class="item-time">2023/8/19</div>
+            <a href="/posts/34366/">
+                <h3>牛客暑期多校训练营10</h3>
+            </a>
+            <div class="info">
+                
+                <span class="category">
+                    <a href="/categories/%E5%88%86%E7%B1%BB/">
+                        <span class="icon">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </span>
+                        分类
+                    </a>
+                </span>
+                
+                
+                <span class="tags">
+                    <span class="icon">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </span>
+                    
+                    <span class="tag">
+                        
+                        <a href="/tags/%E6%A0%87%E7%AD%BE1/" style="color: #00bcd4">标签1</a>
+                    </span>
+                    
+                    <span class="tag">
+                        
+                        <a href="/tags/%E6%A0%87%E7%AD%BE2/" style="color: #ff7d73">标签2</a>
+                    </span>
+                    
+                </span>
+                
+            </div>
+        </div>
     </div>
-    
-    
-    
-    <div id="comment">
-        <div id="gitalk-container"></div>
-    </div>
-    
-    
-    
-    
     
 </div>
 
@@ -324,26 +425,6 @@ int main()                //初始ans为极小值
             
         </div>
         <script src="/js/main.js"></script>
-        
-        
-
-<script>
-    const gitalk = new Gitalk({
-        clientID: "5db84a53ccf04fabb2fb",
-        clientSecret: "967c62d354b6a82d711d387692d392e43d616894",
-        repo: "YLQQQQ.github.io",
-        owner: "YLQQQQ",
-        admin: "YLQQQQ".split(","),
-        language: "zh-CN",
-        id: location.pathname,
-        
-    })
-    gitalk.render("gitalk-container");
-</script>
-
-
-
-
         
     </body>
     

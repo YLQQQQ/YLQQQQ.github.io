@@ -3,7 +3,7 @@
 <html lang="zh-CN">
     <head>
         <meta charset="utf-8" />
-        <title>最大矩阵和 | YLQQ のBLOG</title>
+        <title>牛客暑期多校训练营10 | YLQQ のBLOG</title>
         <meta name="author" content="YLQQ" />
         <meta name="description" content="" />
         <meta name="keywords" content="" />
@@ -212,22 +212,22 @@
                 <div id="main" v-show="!loading">
                     <div class="article">
     <div>
-        <h1>最大矩阵和</h1>
+        <h1>牛客暑期多校训练营10</h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2022/4/27
+            2023/8/19
         </span>
         
         <span class="category">
-            <a href="/categories/%E7%9F%A9%E9%98%B5/">
+            <a href="/categories/%E5%88%86%E7%B1%BB/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
-                矩阵
+                分类
             </a>
         </span>
         
@@ -239,7 +239,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E6%9C%80%E5%80%BC/" style="color: #ffa2c4">最值</a>
+                <a href="/tags/%E6%A0%87%E7%AD%BE1/" style="color: #ff7d73">标签1</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E6%A0%87%E7%AD%BE2/" style="color: #00a596">标签2</a>
             </span>
             
         </span>
@@ -247,37 +252,71 @@
     </div>
     
     <div class="content" v-pre>
-        <p><strong>蒻苟的学习记录</strong></p>
+        <p>更新至K,M…<br>robocom只做了个签到，烂！开摆！</p>
 <span id="more"></span>
-
-<p>题目：给定一个n✖n大小的矩阵，求其中子矩阵的和最大值（来自洛谷p1719）<br><img src="https://img-blog.csdnimg.cn/a2ffc98c905d402a86b43906a549d895.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aWz5Lq65Y-q5Lya5b2x5ZON5oiR5pWy5Luj56CB55qE6YCf5bqmUUFR,size_16,color_FFFFFF,t_70,g_se,x_16"><br>求一个方向上的前缀和，该方法计算矩阵竖直方向上的前缀和 a[i][j]=a[i-1][j]+x ，然后用 i 和 j 确定子矩阵行坐标的范围，即第 j 行到第 i  行，然后再循环一个k来计算子矩阵内从第1列到第k列的和，若和为负值了就重新计算子矩阵（当然本道题的限制是答案是正数，若要突破这个限制，即把判断sum&lt;0改成sum&lt;ans就行啦）</p>
-<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
-#define N 10010
-#define rep(i,a,b)  for(int i=a;i&lt;=b;++i)  
+<h3 id="题K"><a href="#题K" class="headerlink" title="题K"></a>题K</h3><p>题意：没看懂， 给定 $n, m(1\le n,m \le 20)$</p>
+<p>解：直接求 $(2/n)^m$</p>
+<pre><code class="cpp">#include&lt;bits/stdc++.h&gt;
 using namespace std;
 typedef long long ll;
-int a[N][N],s[N][N],n,ans=-0x3f3f3f3f;
-int main()                //初始ans为极小值
-&#123;
-    cin&gt;&gt;n;
-    rep(i,1,n)&#123;
-        rep(j,1,n)&#123;
-            int x;
-            cin&gt;&gt;x;
-            a[i][j]=a[i-1][j]+x;
-        &#125;   //累加竖直方向上的前缀和
+const int N = 2e5 + 10;
+int main()&#123;
+    int n, m; cin &gt;&gt; n &gt;&gt; m;
+    double x = 2.0 / n, ans = 1;
+    if(n != 1) 
+        for(int i = 1; i &lt;= m; ++ i) ans *= x;
+
+    printf(&quot;%.15lf&quot;, ans);
+&#125;
+</code></pre>
+<h3 id="题M"><a href="#题M" class="headerlink" title="题M"></a>题M</h3><p>题意：给定一个式子 $a+b=c$,不知道这个式子是否成立，问是否能插入一个 $digit$ 使得等式成立。</p>
+<p>解：因为 $1\le a,b,c \le 1e6$, 每个数模拟插入 $0-9$。</p>
+<pre><code class="cpp">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long ll;
+const int N = 2e5 + 10;
+int get(string s)&#123;
+    int ans = 0;
+    for(int i = 0; i &lt; s.size(); ++ i)&#123;
+        int x = s[i] - &#39;0&#39;;
+        ans = ans * 10 + x;
     &#125;
-    rep(i,1,n)&#123;
-        rep(j,0,i-1)&#123;
-            int sum=0;
-            rep(k,1,n)&#123;   //循环加j到i行之间的子矩阵和，
-                sum+=a[i][k]-a[j][k];  
-                if(sum&lt;0)sum=0;    //如果和小于0则初始化sum
-                ans=max(ans,sum);
+    return ans;
+&#125;
+int main()&#123;
+    string a, b, c, x1, x2; cin &gt;&gt; a &gt;&gt; x1 &gt;&gt; b &gt;&gt; x2 &gt;&gt; c;
+    int aa = get(a), bb = get(b), cc = get(c);
+    for(int i = 0; i &lt;= a.size(); ++ i)&#123;
+        for(char j = &#39;0&#39;; j &lt;= &#39;9&#39;; ++ j)&#123;
+            string s = a.substr(0, i) + j + a.substr(i);
+            int k = get(s);
+            if(k + bb == cc)&#123;
+                cout &lt;&lt; &quot;Yes\n&quot; &lt;&lt; k &lt;&lt; &quot; + &quot; &lt;&lt; bb &lt;&lt; &quot; = &quot; &lt;&lt; cc &lt;&lt; &#39;\n&#39;;
+                return 0;
             &#125;
         &#125;
     &#125;
-    cout&lt;&lt;ans;
+    for(int i = 0; i &lt;= b.size(); ++ i)&#123;
+        for(char j = &#39;0&#39;; j &lt;= &#39;9&#39;; ++ j)&#123;
+            string s = b.substr(0, i) + j + b.substr(i);
+            int k = get(s);
+            if(k + aa == cc)&#123;
+                cout &lt;&lt; &quot;Yes\n&quot; &lt;&lt; aa &lt;&lt; &quot; + &quot; &lt;&lt; k &lt;&lt; &quot; = &quot; &lt;&lt; cc &lt;&lt; &#39;\n&#39;;
+                return 0;
+            &#125;
+        &#125;
+    &#125;
+    for(int i = 0; i &lt;= c.size(); ++ i)&#123;
+        for(char j = &#39;0&#39;; j &lt;= &#39;9&#39;; ++ j)&#123;
+            string s = c.substr(0, i) + j + c.substr(i);
+            int k = get(s);
+            if(aa + bb == k)&#123;
+                cout &lt;&lt; &quot;Yes\n&quot; &lt;&lt; aa &lt;&lt; &quot; + &quot; &lt;&lt; bb &lt;&lt; &quot; = &quot; &lt;&lt; k &lt;&lt; &#39;\n&#39;;
+                return 0;
+            &#125;
+        &#125;
+    &#125;
+    cout &lt;&lt; &quot;No&quot;;
 &#125;
 </code></pre>
 
