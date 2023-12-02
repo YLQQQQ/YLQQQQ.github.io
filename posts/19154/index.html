@@ -239,12 +239,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E5%8D%B7%E7%A7%AF/" style="color: #ffa2c4">卷积</a>
+                <a href="/tags/%E5%8D%B7%E7%A7%AF/" style="color: #ff7d73">卷积</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2/" style="color: #00bcd4">傅里叶变换</a>
+                <a href="/tags/%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2/" style="color: #ffa2c4">傅里叶变换</a>
             </span>
             
         </span>
@@ -258,7 +258,7 @@
 <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3803">洛谷：多项式乘法</a></p>
 <h3 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h3><p>对于朴素的 $O(n^2)$ 的乘法求多项式显然过不了  $1e6$ 的高时间复杂度， $此时引入离散傅里叶变换(DFT)$ 和 $逆离散傅里叶变换$。<br>我们可以通过简单模拟知道多项式的乘法就是其系数的卷积运算，然后时间域的卷积等于其频域的乘法，即 $f[t] * g[t] = F(jw) .* G(jw) (这里区分 .* 和 * 分别为普通乘法和卷积运算)$。 这里的等式是连续函数的，离散条件下该等式也成立。<br>这里我们过程就是<br> $A和B的多项式系数→(DFT)→A和B的频域形式相乘→(IDFT)→ANSWER的多项式系数$</p>
 <p> 这个过程中，我们 $DFT$ 采用 $FFT$ 进行正转换和逆转换，其中的复杂度为  $O(nlogn)$, 频域相乘的复杂度为  $O(n)$。</p>
-<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>$FFT$ 实际上就是将一整个序列平均分成两个序列进行 $DFT$，发现这俩个部分存在重复的值，便可以递归不断实现 $O(logn)$ 的划分，最终实现递归。</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>$FFT$ 实际上就是将一整个序列平均分成两个序列进行 $DFT$，发现这俩个部分存在重复的值，便可以不断实现 $O(logn)$ 的划分，最终实现递归。</p>
 <pre><code class="cpp">#include&lt;bits/stdc++.h&gt;
 using namespace std;
 typedef long long ll;
@@ -289,7 +289,7 @@ void fft(com *x, int type)&#123;
         // 幂次方
         for(int R = mid &lt;&lt; 1, j = 0; j &lt; lim; j += R)&#123;
             com w(1, 0); 
-            // 幂次方的基地
+            // 幂次方的基底
             for(int i = 0; i &lt; mid; ++ i, w = w * k)&#123;
                 com aa = x[j + i], bb = w * x[j + i + mid];
 

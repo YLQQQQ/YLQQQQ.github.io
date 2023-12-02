@@ -6,7 +6,7 @@
   <link href="https://www.ylq1104.cn/atom.xml" rel="self"/>
   
   <link href="https://www.ylq1104.cn/"/>
-  <updated>2023-10-12T08:02:02.436Z</updated>
+  <updated>2023-12-02T02:25:47.823Z</updated>
   <id>https://www.ylq1104.cn/</id>
   
   <author>
@@ -17,13 +17,34 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>划水</title>
+    <link href="https://www.ylq1104.cn/posts/53838/"/>
+    <id>https://www.ylq1104.cn/posts/53838/</id>
+    <published>2023-12-02T02:13:54.000Z</published>
+    <updated>2023-12-02T02:25:47.823Z</updated>
+    
+    <content type="html"><![CDATA[<p>看通信原理去咯~</p><span id="more"></span><p>构造包含 $A$ 个字串 $s$ 的总长度为 $n$ 的字符串的方案数。<br>空间复杂度 $O(2 * A * size(s))$，时间复杂度 $O(n * A * size(s))$<br>这题我们的 $s$ 长度为 $3$， $A$ 为 $3$，那么时间复杂度就简化为了 $O(n)$</p><p><img src="/picture/dpy.png"></p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;#define all(x) x.begin(),x.end()#define pb(x) push_back(x)#define PII pair&lt;int, int&gt;#define INF 1ll &lt;&lt; 30#define ll long longusing namespace std;const int N = 2e5 + 10, MOD = 1e9 + 7;ll dp[2][4][3], ans = 0;int main()&#123;    //ios::sync_with_stdio(0); cin.tie(0);    int n; cin &gt;&gt; n;    dp[0][1][0] = 1;    for(int i = 1; i &lt;= n; ++ i)&#123;        for(int j = 1; j &lt;= 3; ++ j)&#123;            dp[i &amp; 1][j][0] = (dp[!(i &amp; 1)][j - 1][2] + dp[!(i &amp; 1)][j][0] * 25 + dp[!(i &amp; 1)][j][1] * 24 + dp[!(i &amp; 1)][j][2] * 25) % MOD;            dp[i &amp; 1][j][1] = (dp[!(i &amp; 1)][j][1] + dp[!(i &amp; 1)][j][0]) % MOD;            dp[i &amp; 1][j][2] = dp[!(i &amp; 1)][j][1];        &#125;        ans = (ans * 26 + dp[!(i &amp; 1)][3][2]) % MOD;    &#125;    cout &lt;&lt; ans;&#125;</code></pre>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;看通信原理去咯~&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="动态规划" scheme="https://www.ylq1104.cn/categories/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
+    
+    
+    <category term="状压dp" scheme="https://www.ylq1104.cn/tags/%E7%8A%B6%E5%8E%8Bdp/"/>
+    
+  </entry>
+  
+  <entry>
     <title>快速傅里叶变换</title>
     <link href="https://www.ylq1104.cn/posts/19154/"/>
     <id>https://www.ylq1104.cn/posts/19154/</id>
     <published>2023-10-12T07:31:35.000Z</published>
-    <updated>2023-10-12T08:02:02.436Z</updated>
+    <updated>2023-10-12T08:04:59.873Z</updated>
     
-    <content type="html"><![CDATA[<p>学了数字信号处理 里的FFT于是上洛谷看了许久的cpp</p><span id="more"></span><p><a href="https://www.luogu.com.cn/problem/P3803">洛谷：多项式乘法</a></p><h3 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h3><p>对于朴素的 $O(n^2)$ 的乘法求多项式显然过不了  $1e6$ 的高时间复杂度， $此时引入离散傅里叶变换(DFT)$ 和 $逆离散傅里叶变换$。<br>我们可以通过简单模拟知道多项式的乘法就是其系数的卷积运算，然后时间域的卷积等于其频域的乘法，即 $f[t] * g[t] = F(jw) .* G(jw) (这里区分 .* 和 * 分别为普通乘法和卷积运算)$。 这里的等式是连续函数的，离散条件下该等式也成立。<br>这里我们过程就是<br> $A和B的多项式系数→(DFT)→A和B的频域形式相乘→(IDFT)→ANSWER的多项式系数$</p><p> 这个过程中，我们 $DFT$ 采用 $FFT$ 进行正转换和逆转换，其中的复杂度为  $O(nlogn)$, 频域相乘的复杂度为  $O(n)$。</p><h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>$FFT$ 实际上就是将一整个序列平均分成两个序列进行 $DFT$，发现这俩个部分存在重复的值，便可以递归不断实现 $O(logn)$ 的划分，最终实现递归。</p><pre><code class="cpp">#include&lt;bits/stdc++.h&gt;using namespace std;typedef long long ll;const int N = 2e6 + 10;const double pi = acos(-1.0);int n, m, r[N], lim = 1, l;struct com&#123;  //结构体实现虚数坐标轴    double x, y;    com(double xx = 0, double yy = 0)&#123;        x = xx; y = yy;    &#125;&#125;a[N], b[N];// 虚数加减乘法的实现com operator + (com a, com b) &#123;return com(a.x + b.x, a.y + b.y);&#125;com operator - (com a, com b) &#123;return com(a.x - b.x, a.y - b.y);&#125;com operator * (com a, com b) &#123;return com(a.x * b.x - a.y * b.y, a.x * b.y + a.y * b.x);&#125;void fft(com *x, int type)&#123;    // 由蝶形运算的下标位置对应关系    for(int i = 0; i &lt; lim; ++ i)&#123;        if(r[i] &gt; i) swap(x[i], x[r[i]]);    &#125;    // 枚举每次折中下标    for(int mid = 1; mid &lt; lim; mid &lt;&lt;= 1)&#123;        com k(cos(pi / mid), type * sin(pi  / mid)) ;        // 幂次方        for(int R = mid &lt;&lt; 1, j = 0; j &lt; lim; j += R)&#123;            com w(1, 0);             // 幂次方的基地            for(int i = 0; i &lt; mid; ++ i, w = w * k)&#123;                com aa = x[j + i], bb = w * x[j + i + mid];                // 反向递推                x[i + j] = aa + bb;                x[i + j + mid] = aa - bb;            &#125;        &#125;    &#125;&#125;int main()&#123;    cin &gt;&gt; n &gt;&gt; m;    for(int i = 0; i &lt;= n; ++ i) cin &gt;&gt; a[i].x;    for(int i = 0; i &lt;= m; ++ i) cin &gt;&gt; b[i].x;        //由基2的FFT原理，我们构造一个最小2的幂次    while(lim &lt;= n + m) lim &lt;&lt;= 1, l ++;        // 由蝶形运算法，我们求出每个下标序列二进制的倒序    // 该序列位置的时间域可以求出其二进制倒序位置的频域元素值，IDFT同理也可求出    for(int i = 0; i &lt; lim; ++ i)         r[i] = (r[i &gt;&gt; 1] &gt;&gt; 1 | (i &amp; 1) &lt;&lt; (l - 1));    fft(a, 1);  // 求出 A 多项式的DFT    fft(b, 1);  // 求出 B 多项式的DFT        // 求出 A B 多项式在频域的相乘    for(int i = 0; i &lt;= lim; ++ i) a[i] = a[i] * b[i];    // 求出 A 多项式的IDFT    fft(a, -1);    for(int i = 0; i &lt;= n + m; ++ i) &#123;        int xx = a[i].x / lim + 0.5;        cout &lt;&lt; xx &lt;&lt; &#39; &#39;;    &#125;&#125;</code></pre>]]></content>
+    <content type="html"><![CDATA[<p>学了数字信号处理 里的FFT于是上洛谷看了许久的cpp</p><span id="more"></span><p><a href="https://www.luogu.com.cn/problem/P3803">洛谷：多项式乘法</a></p><h3 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h3><p>对于朴素的 $O(n^2)$ 的乘法求多项式显然过不了  $1e6$ 的高时间复杂度， $此时引入离散傅里叶变换(DFT)$ 和 $逆离散傅里叶变换$。<br>我们可以通过简单模拟知道多项式的乘法就是其系数的卷积运算，然后时间域的卷积等于其频域的乘法，即 $f[t] * g[t] = F(jw) .* G(jw) (这里区分 .* 和 * 分别为普通乘法和卷积运算)$。 这里的等式是连续函数的，离散条件下该等式也成立。<br>这里我们过程就是<br> $A和B的多项式系数→(DFT)→A和B的频域形式相乘→(IDFT)→ANSWER的多项式系数$</p><p> 这个过程中，我们 $DFT$ 采用 $FFT$ 进行正转换和逆转换，其中的复杂度为  $O(nlogn)$, 频域相乘的复杂度为  $O(n)$。</p><h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>$FFT$ 实际上就是将一整个序列平均分成两个序列进行 $DFT$，发现这俩个部分存在重复的值，便可以不断实现 $O(logn)$ 的划分，最终实现递归。</p><pre><code class="cpp">#include&lt;bits/stdc++.h&gt;using namespace std;typedef long long ll;const int N = 2e6 + 10;const double pi = acos(-1.0);int n, m, r[N], lim = 1, l;struct com&#123;  //结构体实现虚数坐标轴    double x, y;    com(double xx = 0, double yy = 0)&#123;        x = xx; y = yy;    &#125;&#125;a[N], b[N];// 虚数加减乘法的实现com operator + (com a, com b) &#123;return com(a.x + b.x, a.y + b.y);&#125;com operator - (com a, com b) &#123;return com(a.x - b.x, a.y - b.y);&#125;com operator * (com a, com b) &#123;return com(a.x * b.x - a.y * b.y, a.x * b.y + a.y * b.x);&#125;void fft(com *x, int type)&#123;    // 由蝶形运算的下标位置对应关系    for(int i = 0; i &lt; lim; ++ i)&#123;        if(r[i] &gt; i) swap(x[i], x[r[i]]);    &#125;    // 枚举每次折中下标    for(int mid = 1; mid &lt; lim; mid &lt;&lt;= 1)&#123;        com k(cos(pi / mid), type * sin(pi  / mid)) ;        // 幂次方        for(int R = mid &lt;&lt; 1, j = 0; j &lt; lim; j += R)&#123;            com w(1, 0);             // 幂次方的基底            for(int i = 0; i &lt; mid; ++ i, w = w * k)&#123;                com aa = x[j + i], bb = w * x[j + i + mid];                // 反向递推                x[i + j] = aa + bb;                x[i + j + mid] = aa - bb;            &#125;        &#125;    &#125;&#125;int main()&#123;    cin &gt;&gt; n &gt;&gt; m;    for(int i = 0; i &lt;= n; ++ i) cin &gt;&gt; a[i].x;    for(int i = 0; i &lt;= m; ++ i) cin &gt;&gt; b[i].x;        //由基2的FFT原理，我们构造一个最小2的幂次    while(lim &lt;= n + m) lim &lt;&lt;= 1, l ++;        // 由蝶形运算法，我们求出每个下标序列二进制的倒序    // 该序列位置的时间域可以求出其二进制倒序位置的频域元素值，IDFT同理也可求出    for(int i = 0; i &lt; lim; ++ i)         r[i] = (r[i &gt;&gt; 1] &gt;&gt; 1 | (i &amp; 1) &lt;&lt; (l - 1));    fft(a, 1);  // 求出 A 多项式的DFT    fft(b, 1);  // 求出 B 多项式的DFT        // 求出 A B 多项式在频域的相乘    for(int i = 0; i &lt;= lim; ++ i) a[i] = a[i] * b[i];    // 求出 A 多项式的IDFT    fft(a, -1);    for(int i = 0; i &lt;= n + m; ++ i) &#123;        int xx = a[i].x / lim + 0.5;        cout &lt;&lt; xx &lt;&lt; &#39; &#39;;    &#125;&#125;</code></pre>]]></content>
     
     
     <summary type="html">&lt;p&gt;学了数字信号处理 里的FFT于是上洛谷看了许久的cpp&lt;/p&gt;</summary>
@@ -452,27 +473,6 @@
     <category term="字符串" scheme="https://www.ylq1104.cn/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
     
     <category term="匹配" scheme="https://www.ylq1104.cn/tags/%E5%8C%B9%E9%85%8D/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>codeforces水题</title>
-    <link href="https://www.ylq1104.cn/posts/1588/"/>
-    <id>https://www.ylq1104.cn/posts/1588/</id>
-    <published>2022-10-14T02:49:48.000Z</published>
-    <updated>2022-11-02T03:12:44.052Z</updated>
-    
-    <content type="html"><![CDATA[<p>水博客</p><span id="more"></span><p><strong>反省为什么练了这么久还这么拉</strong><br><strong>可能真是sb</strong><br>zhihu偷图<br><img src="https://pic1.zhimg.com/v2-0373e544ff1bdb66b979bbc8c7a144e0_b.jpg"><br><strong>round#826</strong><br>D:<br>题意：一颗二叉树的所有最小儿子上分布着1-n的不同数，问时候可以交换任意个结点的左右儿子，使得最后最小儿子从左到右递增排序，输出ans值</p><p>dfs跑一下</p><pre><code class="cpp">int a[N],ans=0;void dfs(int l,int r)&#123;    if(l&gt;=r)return ;    if(l+1==r)&#123;        if(a[l]&gt;a[r])&#123;            swap(a[l],a[r]);            ans++;        &#125;else return ;    &#125;    dfs(l,(l+r)/2);    dfs((l+r)/2+1,r);    if(a[l]&gt;a[(l+r)/2+1])&#123;        ans++;        int k=(r-l)/2+1;        rep(i,l,(l+r)/2)&#123;            swap(a[i],a[i+k]);        &#125;    &#125;&#125;void solve()&#123;    int n;cin&gt;&gt;n;    ans=0;    rep(i,1,n)cin&gt;&gt;a[i];    dfs(1,n);    // rep(i,1,n)cout&lt;&lt;a[i]&lt;&lt;&#39; &#39;;    // cout&lt;&lt;endl;    rep(i,1,n)    if(a[i]&lt;a[i-1])&#123;        cout&lt;&lt;-1&lt;&lt;endl;        return ;    &#125;    cout&lt;&lt;ans&lt;&lt;endl;&#125;</code></pre><p>F ：<br>题意：给定一个数组，问是否可以将其分为若干连续段，使得每一段的最左或最右值表示该段中其他元素的个数</p><p>左右dp一下</p><pre><code class="cpp">const int N=3e5+10;int dp[N],a[N];void solve()&#123;    int n;cin&gt;&gt;n;     rep(i,1,n)cin&gt;&gt;a[i];     memset(dp,0,sizeof dp);     dp[0]=1;     rep(i,1,n)&#123;        if(i&gt;=a[i]+1)dp[i]|=dp[i-a[i]-1];         if(a[i]+i&lt;=n)dp[a[i]+i]|=dp[i-1];    &#125;    if(dp[n])cout&lt;&lt;&quot;YES&quot;&lt;&lt;endl;    else cout&lt;&lt;&quot;NO&quot;&lt;&lt;endl;&#125;</code></pre><p><strong>round#827</strong><br>这道题卡了好久。。。<br>D:一个数组是否使得其中gcd(a[i],a[j])==1，求i+j的最大值</p><p>因为a[i]&lt;=1000，所以map存一下暴力，我他妈脑子有坑,还用暴力tle了两发</p><pre><code class="cpp">map&lt;int,int&gt;p;void solve()&#123;    int n,ans=-1;cin&gt;&gt;n;    p.clear();    rep(i,1,n)&#123;        int x;cin&gt;&gt;x;        p[x]=i;    &#125;    for(auto [x,y]:p)&#123;        for(auto [xx,yy]:p)&#123;            if(__gcd(xx,x)==1)&#123;                ans=max(ans,y+yy);            &#125;        &#125;    &#125;        cout&lt;&lt;ans&lt;&lt;endl;&#125;</code></pre><p>E：前缀和，前最大值存一下二分</p><pre><code class="cpp">ll a[N],p[N],h[N];void solve()&#123;    ll n,m;cin&gt;&gt;n&gt;&gt;m;    rep(i,1,n)&#123;        cin&gt;&gt;a[i];        p[i]=max(a[i],p[i-1]);        h[i]=h[i-1]+a[i];    &#125;    while(m--)&#123;        ll x;cin&gt;&gt;x;        ll l=1,r=n;        while(l&lt;=r)&#123;            int k=(l+r)&gt;&gt;1;            if(x&gt;=p[k])l=k+1;            else r=k-1;        &#125;        cout&lt;&lt;h[r]&lt;&lt;&#39; &#39;;    &#125;    cout&lt;&lt;endl;&#125;</code></pre><p>F:问每次操作给初始字符串都为’a’的s和t加k次字符串x，是否可以排序使得a&lt;b</p><p>记录操作后a和b的最大字符和长度</p><pre><code class="cpp">void solve() &#123;    int n,lens=1,lent=1;cin&gt;&gt;n;    char maxs=&#39;a&#39;,maxt=&#39;a&#39;;    rep(i,1,n)&#123;        int o,k;string s;cin&gt;&gt;o&gt;&gt;k&gt;&gt;s;        for(auto c:s)&#123;            if(o==1) &#123;                maxs=max(maxs,c);                lens+=k;            &#125; else &#123;                maxt=max(maxt,c);                lent+=k;            &#125;        &#125;        //如果maxt&gt;&#39;a&#39;  ,那么必然可以使得成立        //否则若a和b中都是&#39;a&#39;，那就比较长度        if(&#39;a&#39;&lt;maxt||(&#39;a&#39;==maxt&amp;&amp;&#39;a&#39;==maxs&amp;&amp;lens&lt;lent))cout&lt;&lt;&quot;YES&quot;&lt;&lt;endl;        else cout&lt;&lt;&quot;NO&quot;&lt;&lt;endl;            &#125;&#125;</code></pre><p>G:重新排列数组a，使得a的前缀异或和按最大排列</p><p>int二进制位只有三十多，所以排列前31次找出按位补1位的最大值，剩下的随便</p><pre><code class="cpp">int a[N],num;bool cmp(int a,int b)&#123;    return (a|num) &gt; (b|num);&#125;void solve()&#123;    int n;cin&gt;&gt;n;    num=0;    rep(i,1,n)cin&gt;&gt;a[i];    rep(i,1,min(31,n))&#123;    ///最多就30*nlog2n        sort(a+i,a+n+1,cmp);        num|=a[i];    &#125;    rep(i,1,n)cout&lt;&lt;a[i]&lt;&lt;&#39; &#39;;    cout&lt;&lt;endl;&#125;</code></pre><p>起床想到的第一件事就是我怎么这么废，这都没ak，二十几号还有两门结课考试，忙去了。。。</p>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;水博客&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="codeforces" scheme="https://www.ylq1104.cn/categories/codeforces/"/>
-    
-    
-    <category term="笨蛋" scheme="https://www.ylq1104.cn/tags/%E7%AC%A8%E8%9B%8B/"/>
     
   </entry>
   
