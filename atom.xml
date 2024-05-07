@@ -6,7 +6,7 @@
   <link href="https://www.ylq1104.cn/atom.xml" rel="self"/>
   
   <link href="https://www.ylq1104.cn/"/>
-  <updated>2023-12-02T02:25:47.823Z</updated>
+  <updated>2024-05-07T04:06:24.083Z</updated>
   <id>https://www.ylq1104.cn/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2024ICPC武汉邀请赛</title>
+    <link href="https://www.ylq1104.cn/posts/59785/"/>
+    <id>https://www.ylq1104.cn/posts/59785/</id>
+    <published>2024-05-07T03:19:23.000Z</published>
+    <updated>2024-05-07T04:06:24.083Z</updated>
+    
+    <content type="html"><![CDATA[<p>备战西安昆明</p><span id="more"></span><h3 id="I-Cyclic-Apple-Strings"><a href="#I-Cyclic-Apple-Strings" class="headerlink" title="I.Cyclic Apple Strings"></a>I.Cyclic Apple Strings</h3><p>  题意：给定一个 $01$ 串，每次操作可以选择一个连续段使该范围内字符连续左移若干次，求使得整串严格非递减的最少操作数。</p><p>  解：显然统计从左到右需操作的段数即可。<br>  <details></p><summary>Code</summary><pre><code class="language-cpp">#include"bits/stdc++.h"using namespace std;#define pb(x) push_back(x)#define PII pair<int, int>typedef long long ll;const int N = 2e5 + 10, MOD = 1e9 + 7;int main()&#123;    string s; cin >> s;    int n = s.size(), ans = 0;     s = " " + s; s += "1";    for(int i = 1; i <= n; ++ i)&#123;        if(s[i] == '1' && s[i + 1] == '0') ans ++;    &#125;    cout << ans;&#125;</code></pre></details><h3 id="K-Party-Games"><a href="#K-Party-Games" class="headerlink" title="K.Party Games"></a>K.Party Games</h3><p>  题意：定义一个长度为 $n$ 的数组为 $1 - n$ 的排列，两个人轮流进行操作，每次操作可以从该数组的头部或尾部拿走一个数，当且仅当剩下的数组异或和为 $0$ 时判定当前操作人为输。</p><p>  解：通过打表得</p><pre><code class="cpp">i = 1,    sum = 1i = 2,    sum = 3i = 3,    sum = 0i = 4,    sum = 4i = 5,    sum = 1i = 6,    sum = 7i = 7,    sum = 0i = 8,    sum = 8i = 9,    sum = 1i = 10,    sum = 11i = 11,    sum = 0i = 12,    sum = 12i = 13,    sum = 1i = 14,    sum = 15i = 15,    sum = 0i = 16,    sum = 16</code></pre><p>可以发现其中异或和 $sum$ 四个数一个周期，、且 $sum = 1$ 时通过拿走头数字先手必胜， $i\ mod\ 4 = 0$ 时通过拿走队尾数字先手必胜，其余情况先手必败。<br>  <details></p><summary>Code</summary><pre><code class="language-cpp">#include<bits/stdc++.h>using namespace std;#define pb(x) push_back(x)#define PII pair<int, int>typedef long long ll;const int N = 2e5 + 10, MOD = 1e9 + 7;int main()&#123;    int T; cin >> T;    while(T --)&#123;        int x; cin >> x;        if(x % 4 == 0 || x % 4 == 1) cout << "Fluttershy\n";        else cout << "Pinkie Pie\n";    &#125;&#125;</code></pre></details><h3 id="B-Countless-Me"><a href="#B-Countless-Me" class="headerlink" title="B.Countless Me"></a>B.Countless Me</h3><p>  题意：给定长度为 $n$ 的 $a\ (a_i\le1e9)$ 数组，使用不超过 $n$ 次操作，每次操作选择两个不同的元素  $a_i, a_j$ 和一个不大于 $a_j$ 的  $x$ 使得  $a_i = a_i + x, a _j = a_j - x$。 问最终数组的<br>  $按位或$ 后最小值为多少。</p><p>  解：通过 $n$ 次操作我们可以使得数组变成任意的数组组合，且满足于数组的总和 $sum$ 不变。因此我们可以从高到低位判断是否需要在 $1&lt;&lt;i$ 这个位置上放数，一旦放数后即可尽量把  $n$ 个 $1&lt;&lt;i$ 填满即可。</p>  <details><summary>Code</summary><pre><code class="language-cpp">signed main()&#123;    int ans = 0, sum = 0;    int n; cin >> n;    for(int i = 1; i <= n; ++ i) &#123;        int x; cin >> x;        sum += x;    &#125;    for(int i = 30; i >= 0; -- i)&#123;        int x = 1ll << i;        if(sum > (x - 1) * n)&#123;            int y = sum / x;            sum -= 1ll * x * min(y, n);            ans |= x;        &#125;    &#125;    cout << ans;&#125;</code></pre></details><h3 id="F-Custom-Made-Clothes"><a href="#F-Custom-Made-Clothes" class="headerlink" title="F.Custom-Made Clothes"></a>F.Custom-Made Clothes</h3><h4 id="交互题"><a href="#交互题" class="headerlink" title="交互题"></a>交互题</h4><p>  题意：存在一个 $n*n\ (n\le 1000)$ 的正整数矩阵，其中的正整数满足 $a_{i,j}\ge a_{i,j-1},\ a_{i,j}\ge a_{i - 1,j}$， 最多 $50000$ 次询问，每次询问 $i, j, x$ 返回 $a_{i,j}\le x$ 的结果，求问该矩阵中第 $k$ 大的值。</p><p>  解：间接转化成求矩阵中第 $n * n - k$ 个小的值，可以二分这个答案 $x$, 并根据矩阵的特性每次通过 $n$ 次询问查找矩阵中小于 $x$ 的个数而更新二分边界。<br>    <details></p><summary>Code</summary><pre><code class="language-cpp">int n, k; bool ask(int x, int y, int s)&#123;    cout << "? " << x << ' ' << y << ' ' << s << '\n';    int xx; cin >> xx;    return xx;&#125;int ok(int mid)&#123;    int sum = 0;    for(int i = 1, j = n; i <= n; i ++)&#123;        while(j >= 1 && !ask(i, j, mid)) j --;        sum += j;    &#125;    return sum;&#125;int main()&#123;    cin >> n >> k;    k = n * n - k + 1;    // cout << k << '\n';    int l = 1, r = n * n;    while(l < r)&#123;        int mid = l + r >> 1;        if(k > ok(mid)) l = mid + 1;        else r = mid;     &#125;    cout << "! " << l;&#125;</code></pre></details><h3 id="E-Boomerang"><a href="#E-Boomerang" class="headerlink" title="E.Boomerang"></a>E.Boomerang</h3><p>  题意：给定一个 $n$ 大小的无向树，一个谣言起始点 $r$ 和 开始消除谣言的时间 $t_0$，存在谣言的结点每个时间单位向边上的结点扩散， $t_0$ 时间之后可以选择一个结点以个时间单位里  $k$ 的步长向边沿结点辟谣，问分别当 $k=1 \sim n$ 时辟完所有谣的最小时间单位。</p><p>  解：通过根节点 $r$ 预处理求出经过每个时间单位树中被谣言覆盖的直径，随机对于每个 $k$ 二分查找花费最少时间辟谣的时间 $t$，此时答案就是 $t_0 + t$</p><details><summary>Code</summary><pre><code class="language-cpp">#include"bits/stdc++.h"using namespace std;#define pb(x) push_back(x)#define PII pair<int, int>typedef long long ll;const int N = 2e5 + 10, MOD = 1e9 + 7;vector<int> g[N], g0[N];int dist[N], f[N][30], lg[N], d[N];void build(int u, int pre)&#123;    f[u][0] = pre;    dist[u] = dist[pre] + 1;    g0[dist[u]].push_back(u);    for(int i = 1; f[u][i - 1]; i ++)&#123;        f[u][i] = f[f[u][i - 1]][i - 1];    &#125;    for(auto v: g[u])&#123;        if(v != pre) build(v, u);    &#125;&#125;int lca(int u, int v)&#123;    if(dist[u] < dist[v]) swap(u, v);    while(dist[u] > dist[v]) u = f[u][lg[dist[u] - dist[v]] - 1];    if(u == v) return v;    for(int i = lg[dist[u]] - 1; i >= 0; -- i)&#123;        if(f[u][i] != f[v][i])&#123;            u = f[u][i];            v = f[v][i];        &#125;    &#125;    return f[u][0];&#125;int get(int u, int v)&#123;    int tt = lca(u, v);    return dist[u] + dist[v] - 2 * dist[tt];&#125;int main()&#123;    for(int i = 1; i <= N; ++ i)&#123;        int x = i;        while(x)&#123;            lg[i] ++;            x /= 2;        &#125;    &#125;    int n, r, t0; cin >> n;    for(int i = 1; i < n; ++ i)&#123;        int u, v; cin >> u >> v;        g[u].push_back(v);        g[v].push_back(u);    &#125;    cin >> r >> t0;    dist[0] = -1;    build(r, 0);    for(int i = 1; i <= n; ++ i)&#123;        d[i] = d[i - 1];        if(g0[i].size() != 0)&#123;            int x = g0[i][0];            int mx = d[i] + 1;            for(int j = 1; j < g0[i].size(); ++ j)&#123;                mx = max(mx, get(x, g0[i][j]));            &#125;            d[i] = max(mx, d[i]);        &#125;    &#125;    for(int i = 1; i <= n; ++ i)&#123;        d[i] ++;        // cout << d[i] << " \n"[i == n];    &#125;    for(int i = n + 1; i <= n + n; ++ i) d[i] = d[i - 1];    for(int k = 1; k <= n; ++ k)&#123;        int l = 1, r = n;        while(l < r)&#123;            int mid = l + r >> 1;            if(d[t0 + mid] / 2 <= 1ll * mid * k) r = mid;            else l = mid + 1;        &#125;        cout << t0 + l << " \n"[k == n];    &#125;&#125;</code></pre></details>lca+二分]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;备战西安昆明&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="ICPC" scheme="https://www.ylq1104.cn/categories/ICPC/"/>
+    
+    
+    <category term="思维" scheme="https://www.ylq1104.cn/tags/%E6%80%9D%E7%BB%B4/"/>
+    
+    <category term="模拟" scheme="https://www.ylq1104.cn/tags/%E6%A8%A1%E6%8B%9F/"/>
+    
+  </entry>
   
   <entry>
     <title>划水</title>
@@ -450,29 +473,6 @@
     <category term="逆元" scheme="https://www.ylq1104.cn/tags/%E9%80%86%E5%85%83/"/>
     
     <category term="矩阵运算" scheme="https://www.ylq1104.cn/tags/%E7%9F%A9%E9%98%B5%E8%BF%90%E7%AE%97/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>KMP字符串匹配</title>
-    <link href="https://www.ylq1104.cn/posts/10532/"/>
-    <id>https://www.ylq1104.cn/posts/10532/</id>
-    <published>2022-11-01T09:27:03.000Z</published>
-    <updated>2022-11-02T03:11:37.585Z</updated>
-    
-    <content type="html"><![CDATA[<p>个人感觉，Y总讲的有点抽象，于是上b站看了几个，喵喵的和几个讲的挺好的，但是因为不是c写的代码看不懂(呜呜呜)，所以看来wls的版本就就懂了，代码还是Y总的短。</p><span id="more"></span><p>朴素查询两个长度分别为n，m的字符串的时间复杂度是O(n * m),<br>而KMP算法只需要O(n + m)，代码很简洁。</p><p>当我们需要在长度m的字符串p中，查询具有完整的长度为n的字符串s时，</p><p>下面直接开始KMP的操作<br><img src="/picture/kmp1.png"><br>我们开始会将两个字符串逐一匹配，直到无法匹配<br><img src="/picture/kmp2.png"><br>当发现两个字符无法匹配时，我们如果同时回溯i 和 j 的话就时朴素做法了，但是KMP是保证i不回溯，只回溯j，此时我们发现在两个p的前一段和s已匹配的后一段中有一部分是相同的，如下图<br><img src="/picture/kmp3.png"><br>那我们是不是只用将j回溯到1，判断此时p[j + 1] 和 s[i] 是否相等，如果相等的话可以进行下一步操作，如果不相等的话，j还应该继续往前回溯<br><img src="/picture/kmp4.png"><br>然后继续匹配，直到 j==n 时说明匹配成功<br><img src="/picture/kmp5.png"></p><p>而KMP的重点就是如何进行回溯操作呢，我们发现当寻找s已匹配后缀和p的前缀最大相同时，其实都是对相同的子字符串进行操作，所以我们可以对p字符串查找每个下标对应的前缀长度，这时候我们需要开辟最重要的ne数组。<br>从上面我们可以了解到，ne数组存的是可回溯长度，也就是前后缀相同的子字符串长度，<br>但是查询这个也需要O(n * n)暴力查询吗，当然也不需要。(最大相同长度不应该等于整个字符串长度)<br>对于 i = 1, 我们初始 ne[1] = 0 i = 2, j = 0,<br>当 p[i] != p[j + 1] 时，我们需要使 j = ne[j] ,使得 j 回溯(j &gt; 0)<br><img src="/picture/kmp6.png"><br>显而易见，当 i == 2 时，ab字符串不存在前后缀相同的子串，所以ne[2] = 0 ，<br><img src="/picture/kmp7.png"><br>当 i = 3 时，我们发现 p[i] == p[j + 1]，子串aba的最大相同长度是1，所以可以把j后移一位即 j++，然后更新 ne[3] = j = 1,<br><img src="/picture/kmp8.png"><br>同理，当 i = 4 时，j应该后移一位，ne[4] = 2,<br><img src="/picture/kmp9.png"><br>当 i = 5 时， j++，于是 ne[5] = 3,<br><img src="/picture/kmp10.png"><br>当 i = 6 时，发现 p[i] != p[j + 1] ,于是 j = ne[j] = 1,<br>然而发现 p[6] != p[1] ,所以 继续 j = ne[j] = 0 结束.<br>因为此时p[i] != p[j + 1] ,所以 j++ 不用执行，ne[6] = 0。<br>以上ne更新完毕.<br>对于ne数组的更新，O(n) 的复杂度<br>我们用代码实现</p><pre><code class="cpp">    for(int i = 2, j = 0; i &lt;= n; ++i )&#123;        while(j &amp;&amp; p[i] != p[j + 1])j = ne[j];        if(p[i] == p[j + 1])j++;        ne[i] = j;    &#125;</code></pre><p>十分简洁，而对于之后的查询相同也是以上类似的做法</p><pre><code class="cpp">    for(int i = 1, j = 0; i &lt;= m; ++i)&#123;        while(j &amp;&amp; s[i] != p[j + 1])j = ne[j];        if(p[j + 1] == s[i])j++;        if(j == n)&#123;         //当 p 字符串全部匹配，输出此时s中对应的p字符串的首字母下标        //然后回溯j               cout &lt;&lt; i - n + 1 &lt;&lt; &#39; &#39;;            j = ne[j];        &#125;    &#125;</code></pre><p><a href="https://www.luogu.com.cn/problem/P3375">KMP洛谷模板题</a></p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;#define rep(i,n,m) for(int i=n;i&lt;=m;++i)#define per(i,n,m) for(int i=n;i&gt;=m;--i)#define all(x) x.begin(),x.end()#define pb(x) push_back(x)#define PII pair&lt;int,int&gt;#define VI vector&lt;int&gt;#define lowbit(x) x&amp;-x#define INF 1&lt;&lt;30using namespace std;typedef long long ll;const int N=2e5+10;string s, p;int ne[N], n, m;int main()&#123;    ios::sync_with_stdio(0);cin.tie(0);    cin &gt;&gt; s &gt;&gt; p;    n = p.size();    m = s.size();    s = &#39; &#39; + s;    p = &#39; &#39; + p;    VI ans;    for(int i = 2, j = 0; i &lt;= n; ++i )&#123;        while(j &amp;&amp; p[i] != p[j + 1])j = ne[j];        if(p[i] == p[j + 1])j++;        ne[i] = j;    &#125;    for(int i = 1, j = 0; i &lt;= m; ++i)&#123;        while(j &amp;&amp; s[i] != p[j + 1])j = ne[j];        if(p[j + 1] == s[i])j++;        if(j == n)&#123;            cout &lt;&lt; i - n + 1 &lt;&lt; &#39;\n&#39;;            j = ne[j];        &#125;    &#125;    rep(i, 1, n)cout &lt;&lt; ne[i] &lt;&lt; &#39; &#39;;    return 0;&#125;</code></pre><p>呜呜呜，我要好好学习，不能摆烂<br><img src="/picture/QAQ.png"></p>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;个人感觉，Y总讲的有点抽象，于是上b站看了几个，喵喵的和几个讲的挺好的，但是因为不是c写的代码看不懂(呜呜呜)，所以看来wls的版本就就懂了，代码还是Y总的短。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="KMP" scheme="https://www.ylq1104.cn/categories/KMP/"/>
-    
-    
-    <category term="字符串" scheme="https://www.ylq1104.cn/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
-    
-    <category term="匹配" scheme="https://www.ylq1104.cn/tags/%E5%8C%B9%E9%85%8D/"/>
     
   </entry>
   
