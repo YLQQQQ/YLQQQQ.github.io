@@ -244,7 +244,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E5%89%B2%E7%82%B9/" style="color: #00bcd4">割点</a>
+                <a href="/tags/%E5%89%B2%E7%82%B9/" style="color: #03a9f4">割点</a>
             </span>
             
         </span>
@@ -276,7 +276,8 @@
 </code></pre>
 <p>反之该结点标记过了，并且结点没有往回跑的话，我们如果继续用$low[u]=min(low[u],low[v])$的话，<br>以下图为例，<br><img src="/picture/tarjan4.png"><br>当我们在从$D$跑到$E$时，如果对$E$用$low[E]=min(low[E],low[C])$的话，那么$low[E]=low[C]=1$，此时不满足显然的割点条件，因此<br>我们需要对标记过的连接值取$low[u]=min(low[u],dfn[v])$<br>至此我们得出该题的解决方案.</p>
 <details><summary>代码</summary>
-<pre><code>
+<pre>
+<code>
 #include "bits/stdc++.h"
 #define rep(i, n, m) for(int i = n; i <= m; ++i)
 using namespace std;
@@ -331,7 +332,8 @@ int main()
     &#125;
     return 0;
 &#125;
-</code></pre>
+</code>
+</pre>
 </details>
     </div>
     
