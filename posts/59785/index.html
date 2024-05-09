@@ -239,12 +239,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E6%A8%A1%E6%8B%9F/" style="color: #03a9f4">模拟</a>
+                <a href="/tags/%E6%A8%A1%E6%8B%9F/" style="color: #00bcd4">模拟</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E6%80%9D%E7%BB%B4/" style="color: #00a596">思维</a>
+                <a href="/tags/%E6%80%9D%E7%BB%B4/" style="color: #ffa2c4">思维</a>
             </span>
             
         </span>
@@ -459,7 +459,7 @@ int main()&#123;
 </details>
 lca+二分
 
-<h3 id="D-ICPC"><a href="#D-ICPC" class="headerlink" title="D.ICPC"></a>D.ICPC</h3><p>题意：有一个长度为 $n$ 的餐桌每个位置有一个权值为 $a_i$ 的食物，初始位于 $s$ 处的小M每秒可以向左或向右移动一个单位并立即吃掉该食物，假设 $F[i][j]$ 表示初始位于位置 $i$ 的小M经过 $j$ 秒吃到权值和最大的值，那么求<br>     $⨁^{n}<em>{i=1}(i+⨁^{2n}</em>{j=1}*F[i][j])$</p>
+<h3 id="D-ICPC"><a href="#D-ICPC" class="headerlink" title="D.ICPC"></a>D.ICPC</h3><p>题意：有一个长度为 $n$ 的餐桌每个位置有一个权值为 $a_i$ 的食物，初始位于 $s$ 处的小M每秒可以向左或向右移动一个单位并立即吃掉该食物，假设 $F[i][j]$ 表示初始位于位置 $i$ 的小M经过 $j$ 秒吃到权值和最大的值，那么求<br>     $\oplus^{n}<em>{i=1}(i+\oplus^{2n}</em>{j=1}*F[i][j])$</p>
 <p>解：从公式看出本题的重点在于求出 $F[i][j]$，而思考后显然移动的情况要么一直往一个方向，要么最多折返一次。</p>
 <p>当一直往一个方向时 $F[i][j] = max(sum[i + j] - sum[i - 1], sum[i] - sum[i - j - 1])$, 此时求出直线运动的最大值。</p>
 <p>当折返一次时，$F[i][j] = max(F[i+1][j-1], F[i-1][j-1])$, 由于转移过程中一直调用 $j-1$ 的状态，所以 $j$ 应在第一层枚举。</p>
