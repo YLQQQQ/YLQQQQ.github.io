@@ -3,7 +3,7 @@
 <html lang="zh-CN">
     <head>
         <meta charset="utf-8" />
-        <title>Dijkstra | YLQQ のBLOG</title>
+        <title>Tarjan * 4 | YLQQ のBLOG</title>
         <meta name="author" content="YLQQ" />
         <meta name="description" content="" />
         <meta name="keywords" content="" />
@@ -212,22 +212,22 @@
                 <div id="main" v-show="!loading">
                     <div class="article">
     <div>
-        <h1>Dijkstra</h1>
+        <h1>Tarjan * 4</h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2022/6/13
+            2024/5/14
         </span>
         
         <span class="category">
-            <a href="/categories/Dijkstra/">
+            <a href="/categories/%E5%9B%BE%E8%AE%BA/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
-                Dijkstra
+                图论
             </a>
         </span>
         
@@ -239,12 +239,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF/" style="color: #00a596">最短路</a>
+                <a href="/tags/Tarjan/" style="color: #00a596">Tarjan</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E5%8D%95%E6%BA%90/" style="color: #00a596">单源</a>
+                <a href="/tags/2-Sat/" style="color: #ff7d73">2-Sat</a>
             </span>
             
         </span>
@@ -252,144 +252,293 @@
     </div>
     
     <div class="content" v-pre>
-        <p><strong>堆优化的dijkstra板子</strong>*</p>
+        <p>关于 $Tarjan$ 的四种常见应用场景</p>
 <span id="more"></span>
-<p>对于单源最短路的问题，目前已知最快的解决算法就是堆优化处理过的dijkstra（条件当然是不存在负边的情况下，若存在负边的情况则要用spfa辽，但是蒻苟不会嘻嘻🤭）</p>
-<p>dijkstra的本质是贪心，对于求目标两个位置间的最短权边和，查找从起点位置到每个点的最短距离，同时更新与该当前点相关的点的距离。</p>
-<p>这种存图方式只需要开一个数组存储每个点引出的第一条边，然后存储每个点作为起点的每条边，这样就可以做到不重不漏。</p>
-<p>在链式前向星存图中，我们需要定义一个结构体：</p>
-<pre><code class="cpp">struct EDGE 
-&#123;
-    int next;
-    int to;
-&#125;edge[1000000];
-</code></pre>
-<p>和一个数组</p>
-<pre><code>int head[1000000];
-</code></pre>
-<p>和一个变量：</p>
-<pre><code>int cnt=0;//指针
-</code></pre>
-<p>你会发现竟然没存起点！！其实起点是用headhead存的</p>
-<p><strong>举例：</strong><br><img src="https://img-blog.csdnimg.cn/4251f50ed86040a7bcb9cc38c9a646e4.png"><br>如图：这样的一个有向图，输入是：</p>
-<pre><code>1 2
-1 3
-1 4
-2 3
-</code></pre>
-<p><strong>逐步分析：</strong><br>1.输入1 2，代表1连向2。</p>
-<pre><code>cnt++;//作为结构体下标，没有意义
-head[1]=cnt;//结点1的第一个儿子存在了edge[cnt]里面
-edge[cnt].to=2;结点1的儿子是2
-</code></pre>
-<p>此时： cnt=1</p>
-<p><img src="https://img-blog.csdnimg.cn/b685f2dda2604fc5bf0ae668134aa5a5.png"></p>
-<p>2.输入1 3，代表1连向3。</p>
-<pre><code>cnt++;
-head[1]=cnt;
-edge[cnt].to=3;结点1的儿子是3
-//这时,3成为了结点1的儿子，不过2被挤了下去...
-//所以要引入结构体中next元素，记录：3还有个兄弟（next）是2
-//所以代码要换成：
-cnt++;
-edge[cnt].to=3;//结点1连向3
-edge[cnt].next=head[1];//3的兄弟是2
-head[1]=cnt;//更新head
-</code></pre>
-<p>此时： cnt=2<br><img src="https://img-blog.csdnimg.cn/d1790bebf3bd4e1997bdb8e6808cb914.png"><br>3.输入1 4，代表1连向4。<br>此时cnt=3<br><img src="https://img-blog.csdnimg.cn/f7c6347d69b14f3d9cb6a7a23a2d2cdf.png"><br>4.输入2 3，代表2连向3。</p>
-<p>此时： cnt=4<br><img src="https://img-blog.csdnimg.cn/94eec493c18b481eb72a64f8db4ade5c.png"><br>可以理解的是，next存的是当前结点连接的最近的兄弟结点的下标，如1-&gt;2，1-&gt;3，1-&gt;4，则4的next是3，3的next是2。</p>
-<p>而head 存的是当前结点指向的最远的结点的下标，1-&gt;2，1-&gt;3，则head [1] =3，</p>
-<p>对于带权值的问题，在结构体中加入一个元素记录权值即可</p>
-<p>代码：(带权值）</p>
-<pre><code class="cpp">#include&lt;iostream&gt;
-using namespace std;
-struct edge 
-&#123; 
-    int next;
-    int to;
-    int wei;
-&#125;edge[MAXM];
-int head[MAXN];//head[i]为i点的第一条边
-int cnt=0;
-void addedge(int u,int v,int w) //起点，终点，权值 
-&#123;
-    edge[++cnt].next=head[u];//更新cnt
-    edge[cnt].to=v;
-    edge[cnt].w=w;
-    head[u]=cnt;
-&#125;
-int main()
-&#123;
-    int n;
-    for(int i=1;i&lt;=n;i++)
-    &#123;
-        int a,b,wei;
-        addedge(a,b,wei);
-        //如果是无向图，还要addedge(b,a,wei);
+
+<h3 id="割点："><a href="#割点：" class="headerlink" title="割点："></a>割点：</h3><p><a href="https://www.ylq1104.cn/posts/47101/">割点学习记录</a></p>
+<details>
+<summary>Code</summary>
+<pre><code class="language-cpp">void tarjan(int u, int fa)&#123;  // 割点
+    def[u] = low[u] = ++ in;
+    int num = 0;
+    for(int i = h[u]; ~i; i = ne[i])&#123;
+        int v = e[i];
+        if(!def[v])&#123;
+            num ++;
+            tarjan(v, u);
+            low[u] = min(low[u], low[v]);
+            if(fa != u && low[v] >= def[u] && !ok[u])&#123;
+                ok[u] = 1;
+                ans ++;
+            &#125;
+        &#125;else if(v != fa)&#123;
+            low[u] = min(low[u], def[v]);
+        &#125;
+    &#125;
+    if(u == fa && num >= 2 && !ok[u])&#123;
+        ok[u] = 1;
+        ans ++;
     &#125;
 &#125;
 </code></pre>
-<p><strong>边的遍历</strong></p>
-<p>在遍历以x为起点的所有边时，只需要这样就行</p>
-<pre><code>    for(int i=head[x];i!=0;i=edge[i].next)
-</code></pre>
-<p>这个循环的结束条件是i等于0，因为最后一条边，也就是存边时第一条边，在把head值存进next时，head还没有更新过，也就是0。所以当next返回0时，就说明这些边遍历完毕了。</p>
-<p><strong>代码</strong><br><strong>堆优化</strong></p>
-<p>在寻找最短值的时候，用优先队列priority_queue&lt;pair&lt;int,int&gt;&gt;来存储，其中的pair中记录的分别是每条边的权值和终点结点。</p>
-<p>优化完成后的总复杂度为O(mlogn)</p>
-<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
-#define rep(i,n,m) for(int i=n;i&lt;=m;++i)
-#define per(i,n,m) for(int i=n;i&gt;=m;--i)
-#define INF 0x3f3f3f3f
-using namespace std;
-typedef long long ll;
-const int N=250010;
-int head[N],ne[N],to[N],w[N],dist[N];
-// head记录当前结点连接的最远结点的下标，ne记录当前结点连接的最近结点的下标，
-//to记录当前边指向的结点，w记录权值，dist记录目标起点到各个点的最短距离
-bool st[N];  //记录当前结点是否已经找到最短距离
-int n,m,s,cnt=0;  //cnt是记录每次数据的指针，相当于下标
-void addw(int a,int b,int c)&#123;
-    w[++cnt]=c;
-    to[cnt]=b;
-    ne[cnt]=head[a];  //更新指向最近结点的下标
-    head[a]=cnt;  //更新指向最远结点的下标
-&#125;
-void Dijkstra()
-&#123;
-    priority_queue&lt;pair&lt;int,int&gt;,vector&lt;pair&lt;int,int&gt;&gt;,greater&lt;pair&lt;int,int&gt;&gt;&gt; heap;
-    //优先队列自带的排序函数greater，使得默认按第一个元素升序排序
-    heap.push(&#123;0,s&#125;);dist[s]=0;  //s记录的是所求起点，将其放入堆中，距离为0，终点是其自己
-    while(!heap.empty())&#123;
-        pair&lt;int,int&gt; temp=heap.top();
-        heap.pop();     //弹出权值最小的点，待处理
-        int x=temp.first,y=temp.second;  
-        if(st[y])continue;  //如果该点已经找到最短距离，则跳过
-        st[y]=true;  //更新该点已经找到最短距离
-        for(int i=head[y];i!=0;i=ne[i])&#123;  //遍历与该点连接的结点
-            int t=to[i];    
-            if(dist[t]&gt;x+w[i])&#123;  //找到连接的可更新的最短结点
-                dist[t]=x+w[i];  //更新权值路径
-                heap.push(&#123;dist[t],t&#125;);  //把该更新过的结点放到堆中待处理
+</details>
+去年写过就不赘述了，其中注意的是已经走过的点的更新方式。
+
+<h3 id="割边："><a href="#割边：" class="headerlink" title="割边："></a>割边：</h3><p>与割点的性质相同，故名思意将该边删除后将该边存在的一个连通分量分成了两个连通分量。割边的代码与割点一致，区别仅在判断 $if(low[v] &gt; dfn[u])$， 即 $u → v$ 的边是割边无法使得 $v$ 通过其他路径到达 $u$, 这里为了方便记录割边的两个端点，使用链式前向星记录邻接表，并且对于割边的两点标记 $st[i] = st[i ^ 1] = 1$。</p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/T103481">洛谷割边模板</a></p>
+<details>
+<summary>Code</summary>
+<pre><code class="language-cpp">void tarjan(int u, int fa)&#123;   //割边
+    dfn[u] = low[u] = ++ in;
+    for(int i = h[u]; ~i; i = ne[i])&#123;
+        int v = e[i];
+        if(!dfn[v])&#123;
+            tarjan(v, u);
+            low[u] = min(low[u], low[v]);
+            if(low[v] > dfn[u])&#123;
+                if(!st[i]) ans ++;
+                st[i] = st[i ^ 1] = 1;
             &#125;
+        &#125;else if(v != fa)&#123;
+            low[u] = min(low[u], dfn[v]);
         &#125;
     &#125;
 &#125;
-int main()
-&#123;
-    cin&gt;&gt;n&gt;&gt;m;
-    memset(dist,INF,sizeof(dist)); //初始化距离无穷大
-    for(int i=1;i&lt;=m;++i)&#123;
-        int a,b,c;cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;
-        addw(a,b,c);
+</code></pre>
+</details>
+
+<h3 id="缩点："><a href="#缩点：" class="headerlink" title="缩点："></a>缩点：</h3><p>缩点即在一个有向图中，将带环路径压缩成一个结点方便后续操作。<br>具体操作是在 $Tarjan$ 的基础上给每个经过的结点入栈，当 $if(low[u] == dfn[u])$ 时说明有一条路径为 $u→v→…→u$,说明存在一个以 $u$ 为起始的环，那么我们就可以将此时的栈顶结点全部标记成统一的标记，以下代码中的标记用 $id[u]$ 表示该结点隶属于哪一组，同一组的结点即可表示为一个环用 $u$ 代替表示即称为缩点。如果环上有权值的话也可以将换上的权值全部转移到 $u$ 上。</p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3387">洛谷缩点模板</a></p>
+<details>
+<summary>Code</summary>
+<pre><code class="language-cpp">void tarjan(int u)&#123;  // 缩点
+    dfn[u] = low[u] = ++ in;
+    sta[++ top] = u; st[u] = 1;
+    for(int i = h[u]; ~ i; i = ne[i])&#123;
+        int v = e[i];
+        if(!dfn[v]) tarjan(v), low[u] = min(low[u], low[v]);
+        else if(st[v]) low[u] = min(low[u], dfn[v]);
     &#125;
-    Dijkstra();
-    rep(i,1,n)cout&lt;&lt;dist[i]&lt;&lt;&#39; &#39;;
+    if(low[u] == dfn[u])&#123;
+        int v;
+        t ++;
+        do&#123;
+            v = sta[top --];
+            st[v] = 0;
+            id[v] = t;
+        &#125;while(v != u);
+    &#125;
+&#125;
+</code></pre>
+</details>
+
+<h3 id="2-sat"><a href="#2-sat" class="headerlink" title="2-sat:"></a>2-sat:</h3><p>有一种抽象的概念，假设 $(a为真 || b 为假)$， 那么我们可以从 $a为假推出b为假$ 和 $b为真推出a为真$ 即 $!a→!b$ 和 $b→a$, 我们可以将这种有向关系转换成一条条的有向边并且标记每个联通块中每个结点的标记，假若 $a和!a$ 属于同种标记则说明 $a和!a$ 同时存在，而实际上这是不可能的，所以最终的条件不能全部满足。</p>
+<p>通过抽象出有向边后，我们通过 $Tarjan$ 的缩点处理连通块，最后查看一个连通块中一个元素的对立两种情况是否会在该连通分量中同时存在而判断若干种逻辑条件能否存在。通过以下模板题练习。</p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4782">洛谷2-sat模板</a></p>
+<details>
+<summary>Code</summary>
+<pre><code class="language-cpp">#include "bits/stdc++.h"
+#define all(x) x.begin(),x.end()
+#define pb(x) push_back(x)
+#define INF 1ll << 30
+#define ll long long
+using namespace std;
+const int N = 2e6 + 10, MOD = 1e9 + 7;
+int h[N], ne[N], e[N], cnt;
+int low[N], dfn[N], st[N], in, sta[N], top, id[N], t;
+int ans[N];
+void add(int a, int b)&#123;
+    e[cnt] = b, ne[cnt] = h[a], h[a] = cnt++;
+&#125;
+void tarjan(int u)&#123;
+    dfn[u] = low[u] = ++ in;
+    sta[++ top] = u; st[u] = 1;
+    for(int i = h[u]; ~ i; i = ne[i])&#123;
+        int v = e[i];
+        if(!dfn[v]) tarjan(v), low[u] = min(low[u], low[v]);
+        else if(st[v]) low[u] = min(low[u], dfn[v]);
+    &#125;
+    if(low[u] == dfn[u])&#123;
+        int v;
+        t ++;
+        do&#123;
+            v = sta[top --];
+            st[v] = 0;
+            id[v] = t;
+        &#125;while(v != u);
+    &#125;
+&#125;
+int main()&#123;
+    // ios::sync_with_stdio(0); cin.tie(0);
+    memset(h, -1, sizeof h);
+    int n, m; scanf("%d%d", &n, &m);
+    while(m --)&#123;
+        int i, a, j, b; scanf("%d%d%d%d", &i, &a, &j, & b);
+        add(i * 2 + !a, j * 2 + b);
+        add(j * 2 + !b, i * 2 + a);
+    &#125;
+    for(int i = 2; i < n * 2 + 2; ++ i)&#123;
+        if(!dfn[i]) tarjan(i);
+    &#125;
+    // for(int i = 1; i <= n + n + 1; ++ i) cout << id[i] << " \n"[i == n + n];
+    for(int i = 1; i <= n; ++ i)&#123;
+        if(id[i * 2] == id[i * 2 + 1])&#123;
+            puts("IMPOSSIBLE");
+            return 0;
+        &#125;
+        ans[i] = id[i * 2] > id[i * 2 + 1];
+    &#125;
+    puts("POSSIBLE");
+    for(int i = 1; i <= n; ++ i)&#123;
+        printf("%d ", ans[i]);
+    &#125;
+&#125;
+</code></pre>
+</details>
+
+
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P5782">2-sat练习题</a></p>
+<details>
+<summary>Code</summary>
+<pre><code class="language-cpp">#include "bits/stdc++.h"
+#define all(x) x.begin(),x.end()
+#define pb(x) push_back(x)
+#define INF 1ll << 30
+#define ll long long
+using namespace std;
+const int N = 2e6 + 10, MOD = 1e9 + 7;
+int h[N], ne[N], e[N], cnt;
+int low[N], dfn[N], st[N], in, sta[N], top, id[N], t;
+int ans[N];
+void add(int a, int b)&#123;
+    e[cnt] = b, ne[cnt] = h[a], h[a] = cnt++;
+&#125;
+void tarjan(int u)&#123;
+    dfn[u] = low[u] = ++ in;
+    sta[++ top] = u; st[u] = 1;
+    for(int i = h[u]; ~ i; i = ne[i])&#123;
+        int v = e[i];
+        if(!dfn[v]) tarjan(v), low[u] = min(low[u], low[v]);
+        else if(st[v]) low[u] = min(low[u], dfn[v]);
+    &#125;
+    if(low[u] == dfn[u])&#123;
+        int v;
+        t ++;
+        do&#123;
+            v = sta[top --];
+            st[v] = 0;
+            id[v] = t;
+        &#125;while(v != u);
+    &#125;
+&#125;
+int main()&#123;
+    // ios::sync_with_stdio(0); cin.tie(0);
+    memset(h, -1, sizeof h);
+    int n, m; cin >> n >> m;
+    while(m --)&#123;
+        int a, b; cin >> a >> b;
+        add(a, b + ((b & 1) ? 1 : -1));
+        add(b, a + ((a & 1) ? 1 : -1));
+    &#125;
+    for(int i = 1; i <= n * 2; ++ i)&#123;
+        if(!dfn[i]) tarjan(i);
+    &#125;
+
+<pre><code>for(int i = 1; i &lt;= n; i ++)&#123;
+    if(id[i * 2] == id[i * 2 - 1])&#123;
+        puts(&quot;NIE&quot;);
+        return 0;
+    &#125;
+    ans[i] = ((id[i * 2] &lt; id[i * 2 - 1]) ? i * 2 : i * 2 - 1);
+&#125;
+for(int i = 1; i &lt;= n; ++ i)&#123;
+    cout &lt;&lt; ans[i] &lt;&lt; &#39;\n&#39;;
+&#125;
+</code></pre>
+<p>}<br></code></pre></p>
+</details>
+
+<p>还有一条Div4的H题<br><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1971/problem/H">cf(2-sat)</a></p>
+<details>
+<summary>Code</summary>
+<pre><code class="language-cpp">#include "bits/stdc++.h"
+#define all(x) x.begin(),x.end()
+#define pb(x) push_back(x)
+#define INF 1ll << 30
+#define ll long long
+using namespace std;
+const int N = 2e5 + 10, MOD = 1e9 + 7;
+int h[N], ne[N], e[N], cnt, t;
+int low[N], dfn[N], st[N], in, sta[N], top, id[N];
+void add(int a, int b)&#123;
+     e[cnt] = b, ne[cnt] = h[a], h[a] = cnt++;
+&#125;
+void tarjan(int u)&#123;
+    dfn[u] = low[u] = ++ in;
+    sta[++ top] = u; st[u] = 1;
+    for(int i = h[u]; ~ i; i = ne[i])&#123;
+        int v = e[i];
+        if(!dfn[v]) tarjan(v), low[u] = min(low[u], low[v]);
+        else if(st[v]) low[u] = min(low[u], dfn[v]);
+    &#125;
+    if(low[u] == dfn[u])&#123;
+        int v;
+        t ++;
+        while(v = sta[top --])&#123;
+            id[v] = t;
+            st[v] = 0;
+            if(v == u) break;
+        &#125;
+    &#125;
+&#125;
+void init()&#123;
+    cnt = in = top = t = 0;
+    memset(h, -1, sizeof h);
+    memset(ne, 0, sizeof ne);
+    memset(st, 0, sizeof st);
+    memset(e, 0, sizeof e);
+    memset(dfn, 0, sizeof dfn);
+    memset(low, 0, sizeof low);
+    memset(id, 0, sizeof id);
+&#125;
+int s[4][510];
+void solve()&#123;
+    init();
+    int n; cin >> n;
+    for(int i = 1; i <= 3; ++ i)&#123;
+        for(int j = 1; j <= n; ++ j)&#123;
+            cin >> s[i][j];
+        &#125;
+    &#125;
+    for(int ii = 1; ii <= n; ++ ii)&#123;
+        for(int i = 1; i < 3; ++ i)&#123;
+            for(int j = i + 1; j <= 3; ++ j)&#123;
+                int u = s[i][ii], v = s[j][ii];
+                int a = abs(u), b = abs(v);
+                add(a * 2 + (u < 0), b * 2 + (v > 0));
+                add(b * 2 + (v < 0), a * 2 + (u > 0));
+            &#125;
+        &#125;
+    &#125;
+    for(int i = 1; i <= n + n; ++ i)&#123;
+        if(!dfn[i]) tarjan(i);
+    &#125;
+    for(int i = 1; i <= n; ++ i)&#123;
+        if(id[i * 2] == id[i * 2 + 1]) &#123;
+            cout << "NO\n";
+            return ;
+        &#125;
+    &#125;
+    cout << "YES\n";
+&#125;
+int main()&#123;
+    //ios::sync_with_stdio(0); cin.tie(0);
+    int n; cin >> n;
+    while(n--) solve();
     return 0;
 &#125;
 </code></pre>
-<p>带负权边问题的spfa算法之后再考虑学不学🙄🙄🙄🙄</p>
-
+</details>
     </div>
     
     
