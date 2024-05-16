@@ -239,12 +239,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E6%A8%A1%E6%8B%9F/" style="color: #ffa2c4">模拟</a>
+                <a href="/tags/%E6%A8%A1%E6%8B%9F/" style="color: #03a9f4">模拟</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E6%80%9D%E7%BB%B4/" style="color: #00a596">思维</a>
+                <a href="/tags/%E6%80%9D%E7%BB%B4/" style="color: #03a9f4">思维</a>
             </span>
             
         </span>
@@ -507,6 +507,53 @@ int main()&#123;
         ans ^= res + i;
     &#125;
     cout << ans;
+&#125;
+</code></pre>
+</details>
+
+<h3 id="C-TreeBag-and-LIS"><a href="#C-TreeBag-and-LIS" class="headerlink" title="C:TreeBag and LIS"></a>C:TreeBag and LIS</h3><p>题意：给定一个数 $x(x\le 10^13)$， 要求构造一个长度不超过 $10^5$ 的数字序列，使得里面严格递增的所有最长子序列和为 $x$。</p>
+<p>比如 $x=494$，可以构造$001243$，此时序列中$0124+0123+0124+0123=494$。</p>
+<p>发现可以通过012012012012的摆法，使得和为 $(12*等差数列求和数量sum)$，通过在每一对 $”012”$ 后边放 “2”，并且从大到小凑这个 $sum$ 即可。当然这里的前提是将 $x$ 变成 $12$ 的倍数，这里通过暴力枚举三个数即可。<br>不用 $12$ 也可以，下面代码以13为例。</p>
+<details>
+<summary>Code</summary>
+<pre><code class="language-cpp">int main()&#123;
+    ll x; cin >> x;
+    string s = "";
+    if(x == 0) s += '0';
+    else if(x <= 99910)&#123;
+        s += '0';
+        while(x --) s += '1';
+    &#125;else &#123;
+        for(int a = 3; a < 10; ++ a)&#123;
+            for(int b = a + 1; b < 10; ++ b)&#123;
+                for(int c = b + 1; c < 10; ++ c)&#123;
+                    int k = a * 100 + b * 10 + c;
+                    if(x % 13 != 0 && (x - k) % 13 == 0)&#123;
+                        s += '0' + a;
+                        s += '0' + b;
+                        s += '0' + c;
+                        x -= k;
+                    &#125;
+                &#125;
+            &#125;
+        &#125;
+        x /= 13;
+        int t = 0;
+        while(1ll * t * (t + 1) * (t + 2) / 6 <= x) t ++;
+        t --;
+        x -= 1ll * t * (t + 1) * (t + 2) / 6;
+        vector<int> p(t + 1);
+        for(int i = t; i >= 1; -- i)&#123;
+            ll d = 1ll * (1 + i) * i / 2;
+            p[i] = x / d;
+            x -= 1ll * d * p[i];        
+        &#125;
+        for(int i = 1; i <= t; ++ i)&#123;
+            s += "013";
+            while(p[i] --) s += '3';
+        &#125;
+    &#125;
+    cout << s;
 &#125;
 </code></pre>
 </details>
