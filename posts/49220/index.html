@@ -56,8 +56,6 @@
         
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
         
-            
-        
     
     <!-- import script -->
     
@@ -666,42 +664,7 @@
 <p>第一个部分我们很好理解，分治递归之。<br />
 第二个部分我们可以假设从已经从每个部分中得到一个最小距离d，我们假设中间点的坐标为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">x_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，那么我们可以枚举 $x_1 - d &lt; x &lt;x_1 + d $ 的点查找是否有小于 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">d</span></span></span></span> 的值并更新。<br />
 因为对于以 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">x_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 为中心，边长为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">d</span></span></span></span> 的两个正方形， 显然枚举的点数一直在减小。</p>
-<pre class="highlight"><code class="cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> rep(i, n, m) for(int i = n; i &lt;= m; ++i)</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> per(i, n, m) for(int i = n; i &gt;= m; --i)</span>
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-<span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">2e5</span> + <span class="hljs-number">10</span>;
-pair&lt;<span class="hljs-type">double</span>, <span class="hljs-type">double</span>&gt; p[N];
-<span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">cal</span><span class="hljs-params">(pair&lt;<span class="hljs-type">double</span>, <span class="hljs-type">double</span>&gt; a, pair&lt;<span class="hljs-type">double</span>, <span class="hljs-type">double</span>&gt; b)</span></span>&#123;
-    <span class="hljs-keyword">return</span> <span class="hljs-built_in">sqrt</span>((a.first - b.first) * (a.first - b.first) + (a.second - b.second) * (a.second - b.second));
-&#125;
-<span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">get</span><span class="hljs-params">(<span class="hljs-type">int</span> l, <span class="hljs-type">int</span> r)</span></span>&#123;
-    <span class="hljs-keyword">if</span>(l == r) <span class="hljs-keyword">return</span> INF;
-    <span class="hljs-keyword">if</span>(l + <span class="hljs-number">1</span> == r) <span class="hljs-keyword">return</span> <span class="hljs-built_in">cal</span>(p[l], p[r]);
-    <span class="hljs-type">int</span> mid = l + r &gt;&gt; <span class="hljs-number">1</span>;
-    <span class="hljs-type">double</span> x = p[mid].first;
-    <span class="hljs-type">double</span> d = <span class="hljs-built_in">min</span>(<span class="hljs-built_in">get</span>(l, mid), <span class="hljs-built_in">get</span>(mid + <span class="hljs-number">1</span>, r));
-    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = mid; i &gt;= l &amp;&amp; x - p[i].first &lt; d; -- i)&#123;
-        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = mid + <span class="hljs-number">1</span>; j &lt;= r &amp;&amp; p[j].first - x &lt; d; ++ j)&#123;
-            <span class="hljs-type">double</span> res = <span class="hljs-built_in">cal</span>(p[i], p[j]);
-            d = <span class="hljs-built_in">min</span>(res, d);
-        &#125;
-    &#125;
-    <span class="hljs-keyword">return</span> d;
-&#125;
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
-</span>&#123;
-    <span class="hljs-comment">//ios::sync_with_stdio(0); cin.tie(0);</span>
-    <span class="hljs-type">int</span> n; cin &gt;&gt; n;
-    <span class="hljs-built_in">rep</span>(i, <span class="hljs-number">1</span>, n)&#123;
-        cin &gt;&gt; p[i].first;
-        cin &gt;&gt; p[i].second;
-    &#125;
-    <span class="hljs-built_in">sort</span>(p + <span class="hljs-number">1</span>, p + <span class="hljs-number">1</span> + n);
-    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%.4lf&quot;</span>, <span class="hljs-built_in">get</span>(<span class="hljs-number">1</span>, n));
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i, n, m) for(int i = n; i &lt;= m; ++i)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i, n, m) for(int i = n; i &gt;= m; --i)</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">2e5</span> + <span class="number">10</span>;</span><br><span class="line">pair&lt;<span class="type">double</span>, <span class="type">double</span>&gt; p[N];</span><br><span class="line"><span class="function"><span class="type">double</span> <span class="title">cal</span><span class="params">(pair&lt;<span class="type">double</span>, <span class="type">double</span>&gt; a, pair&lt;<span class="type">double</span>, <span class="type">double</span>&gt; b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sqrt</span>((a.first - b.first) * (a.first - b.first) + (a.second - b.second) * (a.second - b.second));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">double</span> <span class="title">get</span><span class="params">(<span class="type">int</span> l, <span class="type">int</span> r)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(l == r) <span class="keyword">return</span> INF;</span><br><span class="line">    <span class="keyword">if</span>(l + <span class="number">1</span> == r) <span class="keyword">return</span> <span class="built_in">cal</span>(p[l], p[r]);</span><br><span class="line">    <span class="type">int</span> mid = l + r &gt;&gt; <span class="number">1</span>;</span><br><span class="line">    <span class="type">double</span> x = p[mid].first;</span><br><span class="line">    <span class="type">double</span> d = <span class="built_in">min</span>(<span class="built_in">get</span>(l, mid), <span class="built_in">get</span>(mid + <span class="number">1</span>, r));</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = mid; i &gt;= l &amp;&amp; x - p[i].first &lt; d; -- i)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j = mid + <span class="number">1</span>; j &lt;= r &amp;&amp; p[j].first - x &lt; d; ++ j)&#123;</span><br><span class="line">            <span class="type">double</span> res = <span class="built_in">cal</span>(p[i], p[j]);</span><br><span class="line">            d = <span class="built_in">min</span>(res, d);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> d;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//ios::sync_with_stdio(0); cin.tie(0);</span></span><br><span class="line">    <span class="type">int</span> n; cin &gt;&gt; n;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, n)&#123;</span><br><span class="line">        cin &gt;&gt; p[i].first;</span><br><span class="line">        cin &gt;&gt; p[i].second;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">sort</span>(p + <span class="number">1</span>, p + <span class="number">1</span> + n);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%.4lf&quot;</span>, <span class="built_in">get</span>(<span class="number">1</span>, n));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>然后回到正事<br />
 洛谷题：<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3806">点分治</a></p>
 <blockquote>
@@ -720,157 +683,11 @@ pair&lt;<span class="hljs-type">double</span>, <span class="hljs-type">double</s
 <p>（树的重心：它的子树的数量最大值最小）<br />
 我们可以用一个递归来找重心</p>
 </blockquote>
-<pre class="highlight"><code class="cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">get_root</span><span class="hljs-params">(<span class="hljs-type">int</span> u, <span class="hljs-type">int</span> pre, <span class="hljs-type">int</span> sum)</span></span>&#123;
-    siz[u] = <span class="hljs-number">1</span>; mx[u] = <span class="hljs-number">0</span>;
-    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = head[u]; i; i = ne[i])&#123;
-        <span class="hljs-type">int</span> to = e[i];
-        <span class="hljs-keyword">if</span>(to == pre || vis[to]) <span class="hljs-keyword">continue</span>; <span class="hljs-comment">//如果当前点已经做过重心</span>
-        <span class="hljs-built_in">get_root</span>(to, u, sum);
-        siz[u] += siz[to]; <span class="hljs-comment">//子树大小相加</span>
-        mx[u] = <span class="hljs-built_in">max</span>(mx[u], siz[to]); <span class="hljs-comment">//找最大子树大小</span>
-    &#125;
-    mx[u] = <span class="hljs-built_in">max</span>(mx[u], sum - siz[u]); <span class="hljs-comment">//当前子树外的所有点 sum - siz[u]</span>
-    <span class="hljs-keyword">if</span>(mx[u] &lt; mx[root] || !root) root = u; <span class="hljs-comment">//如果最大子树大小比 mx[root]小就更新</span>
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">get_root</span><span class="params">(<span class="type">int</span> u, <span class="type">int</span> pre, <span class="type">int</span> sum)</span></span>&#123;</span><br><span class="line">    siz[u] = <span class="number">1</span>; mx[u] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = head[u]; i; i = ne[i])&#123;</span><br><span class="line">        <span class="type">int</span> to = e[i];</span><br><span class="line">        <span class="keyword">if</span>(to == pre || vis[to]) <span class="keyword">continue</span>; <span class="comment">//如果当前点已经做过重心</span></span><br><span class="line">        <span class="built_in">get_root</span>(to, u, sum);</span><br><span class="line">        siz[u] += siz[to]; <span class="comment">//子树大小相加</span></span><br><span class="line">        mx[u] = <span class="built_in">max</span>(mx[u], siz[to]); <span class="comment">//找最大子树大小</span></span><br><span class="line">    &#125;</span><br><span class="line">    mx[u] = <span class="built_in">max</span>(mx[u], sum - siz[u]); <span class="comment">//当前子树外的所有点 sum - siz[u]</span></span><br><span class="line">    <span class="keyword">if</span>(mx[u] &lt; mx[root] || !root) root = u; <span class="comment">//如果最大子树大小比 mx[root]小就更新</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>另外，在一个根节点下面的所有dist都知道了以后，如果两个点是同一颗子树中的，那他俩的dist相加肯定不是正确的路径长度，所以我们可以用一个col来标记当前节点属于哪一棵子树，最后我们二分该根节点下的所有节点，如果不属于同一颗子树且满足dist[l] + dist[r] == query[i] ，则答案存在</p>
-<pre class="highlight"><code class="cpp">    <span class="hljs-built_in">sort</span>(q + <span class="hljs-number">1</span>, q + <span class="hljs-number">1</span> + tol, cmp); <span class="hljs-comment">//我们对所有点按 到 根节点的距离长度排序</span>
-    <span class="hljs-built_in">rep</span>(i, <span class="hljs-number">1</span>, m)&#123;
-        <span class="hljs-type">int</span> l = <span class="hljs-number">1</span>, r = tol;
-        <span class="hljs-keyword">if</span>(ok[i]) <span class="hljs-keyword">continue</span>;
-        <span class="hljs-keyword">while</span>(l &lt; r)&#123;
-            <span class="hljs-type">int</span> x = q[l], y = q[r];
-            <span class="hljs-keyword">if</span>(dist[x] + dist[y] &lt; query[i])&#123; 
-                l ++;
-            &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(dist[x] + dist[y] &gt; query[i])&#123;
-                r --;
-            &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(col[x] == col[y])&#123;
-                <span class="hljs-keyword">if</span>(col[y] == col[q[r - <span class="hljs-number">1</span>]]) r --;
-                <span class="hljs-keyword">else</span> l ++;
-            &#125;<span class="hljs-keyword">else</span> &#123;
-                ok[i] = <span class="hljs-number">1</span>;
-                <span class="hljs-keyword">break</span>;
-            &#125;
-        &#125;
-    &#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sort</span>(q + <span class="number">1</span>, q + <span class="number">1</span> + tol, cmp); <span class="comment">//我们对所有点按 到 根节点的距离长度排序</span></span><br><span class="line"><span class="built_in">rep</span>(i, <span class="number">1</span>, m)&#123;</span><br><span class="line">    <span class="type">int</span> l = <span class="number">1</span>, r = tol;</span><br><span class="line">    <span class="keyword">if</span>(ok[i]) <span class="keyword">continue</span>;</span><br><span class="line">    <span class="keyword">while</span>(l &lt; r)&#123;</span><br><span class="line">        <span class="type">int</span> x = q[l], y = q[r];</span><br><span class="line">        <span class="keyword">if</span>(dist[x] + dist[y] &lt; query[i])&#123; </span><br><span class="line">            l ++;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(dist[x] + dist[y] &gt; query[i])&#123;</span><br><span class="line">            r --;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(col[x] == col[y])&#123;</span><br><span class="line">            <span class="keyword">if</span>(col[y] == col[q[r - <span class="number">1</span>]]) r --;</span><br><span class="line">            <span class="keyword">else</span> l ++;</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            ok[i] = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>最终代码</p>
-<pre class="highlight"><code class="cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> rep(i, n, m) for(int i = n; i &lt;= m; ++i)</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> per(i, n, m) for(int i = n; i &gt;= m; --i)</span>
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-<span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">2e5</span> + <span class="hljs-number">10</span>;
-<span class="hljs-type">int</span> ne[N], w[N], e[N], head[N], cnt = <span class="hljs-number">0</span>; <span class="hljs-comment">//邻接表</span>
-<span class="hljs-type">int</span> n, m, root, ok[N], query[N], siz[N], mx[N], vis[N];
-<span class="hljs-type">int</span> tol, q[N], dist[N], col[N];
-<span class="hljs-comment">/*
-ok：是否存在点对满足解  query：每次询问的k值 siz：以当前为根节点的子树大小
-mx：以当前节点为根节点，其子树中大小的最小值 vis：当前节点是否当过重心
-tol：队列的大小， q：队列 
-dist：当前节点到根节点的距离 col：当前点属于哪棵子树
-*/</span>
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b, <span class="hljs-type">int</span> c)</span></span>&#123;
-    e[++cnt] = b, w[cnt] = c, ne[cnt] = head[a], head[a] = cnt; 
-&#125;
-<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">cmp</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span></span>&#123;
-    <span class="hljs-keyword">return</span> dist[a] &lt; dist[b];
-&#125;
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">get_root</span><span class="hljs-params">(<span class="hljs-type">int</span> u, <span class="hljs-type">int</span> pre, <span class="hljs-type">int</span> sum)</span></span>&#123;
-    siz[u] = <span class="hljs-number">1</span>; mx[u] = <span class="hljs-number">0</span>;
-    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = head[u]; i; i = ne[i])&#123;
-        <span class="hljs-type">int</span> to = e[i];
-        <span class="hljs-keyword">if</span>(to == pre || vis[to]) <span class="hljs-keyword">continue</span>;
-        <span class="hljs-built_in">get_root</span>(to, u, sum);
-        siz[u] += siz[to];
-        mx[u] = <span class="hljs-built_in">max</span>(mx[u], siz[to]);
-    &#125;
-    mx[u] = <span class="hljs-built_in">max</span>(mx[u], sum - siz[u]);
-    <span class="hljs-keyword">if</span>(mx[u] &lt; mx[root] || !root) root = u;
-&#125;
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">get_dist</span><span class="hljs-params">(<span class="hljs-type">int</span> u, <span class="hljs-type">int</span> pre, <span class="hljs-type">int</span> dis, <span class="hljs-type">int</span> camp)</span></span>&#123;
-    q[++tol] = u;   <span class="hljs-comment">// 入队列</span>
-    dist[u] = dis;
-    col[u] = camp;  <span class="hljs-comment">// u节点属于子树 camp</span>
-    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = head[u]; i; i = ne[i])&#123;
-        <span class="hljs-type">int</span> to = e[i];
-        <span class="hljs-keyword">if</span>(to == pre || vis[to]) <span class="hljs-keyword">continue</span>;
-        <span class="hljs-built_in">get_dist</span>(to, u, w[i] + dis, camp);
-    &#125;
-&#125;
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">cal</span><span class="hljs-params">(<span class="hljs-type">int</span> u)</span></span>&#123;
-    tol = <span class="hljs-number">0</span>;
-    q[++ tol] = u;
-    dist[u] = <span class="hljs-number">0</span>;
-    col[u] = u;
-    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = head[u]; i ; i = ne[i])&#123;
-        <span class="hljs-type">int</span> to = e[i];
-        <span class="hljs-keyword">if</span>(!vis[to]) <span class="hljs-built_in">get_dist</span>(to, u, w[i], to);
-    &#125;
-    <span class="hljs-built_in">sort</span>(q + <span class="hljs-number">1</span>, q + <span class="hljs-number">1</span> + tol, cmp);
-    <span class="hljs-built_in">rep</span>(i, <span class="hljs-number">1</span>, m)&#123;
-        <span class="hljs-type">int</span> l = <span class="hljs-number">1</span>, r = tol;
-        <span class="hljs-keyword">if</span>(ok[i]) <span class="hljs-keyword">continue</span>;
-        <span class="hljs-keyword">while</span>(l &lt; r)&#123;
-            <span class="hljs-type">int</span> x = q[l], y = q[r];
-            <span class="hljs-keyword">if</span>(dist[x] + dist[y] &lt; query[i])&#123;
-                l ++;
-            &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(dist[x] + dist[y] &gt; query[i])&#123;
-                r --;
-            &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(col[x] == col[y])&#123;
-                <span class="hljs-keyword">if</span>(col[y] == col[q[r - <span class="hljs-number">1</span>]]) r --;
-                <span class="hljs-keyword">else</span> l ++;
-            &#125;<span class="hljs-keyword">else</span> &#123;
-                ok[i] = <span class="hljs-number">1</span>;
-                <span class="hljs-keyword">break</span>;
-            &#125;
-        &#125;
-    &#125;
-&#125;
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">(<span class="hljs-type">int</span> u)</span></span>&#123; <span class="hljs-comment">// 分治</span>
-    vis[u] = <span class="hljs-number">1</span>;
-    <span class="hljs-built_in">cal</span>(u);
-    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = head[u]; i; i = ne[i])&#123;
-        <span class="hljs-type">int</span> to = e[i];
-        <span class="hljs-keyword">if</span>(!vis[to])&#123;
-            root = <span class="hljs-number">0</span>;
-            <span class="hljs-built_in">get_root</span>(to, <span class="hljs-number">0</span>, siz[to]);
-            <span class="hljs-built_in">solve</span>(root);
-        &#125;
-    &#125;
-&#125;
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
-</span>&#123;
-    <span class="hljs-comment">//ios::sync_with_stdio(0); cin.tie(0);</span>
-    cin &gt;&gt; n &gt;&gt; m;
-    <span class="hljs-built_in">rep</span>(i, <span class="hljs-number">1</span>, n - <span class="hljs-number">1</span>)&#123;
-        <span class="hljs-type">int</span> u, v, w; cin &gt;&gt; u &gt;&gt; v &gt;&gt; w;
-        <span class="hljs-built_in">add</span>(u, v, w); <span class="hljs-built_in">add</span>(v, u, w);
-    &#125;
-    <span class="hljs-built_in">rep</span>(i, <span class="hljs-number">1</span>, m)&#123;
-        cin &gt;&gt; query[i];
-    &#125;
-    mx[<span class="hljs-number">0</span>] = n;
-    <span class="hljs-built_in">get_root</span>(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, n);
-    <span class="hljs-built_in">solve</span>(root);
-    <span class="hljs-built_in">rep</span>(i, <span class="hljs-number">1</span>, m)&#123;
-        <span class="hljs-keyword">if</span>(ok[i]) cout &lt;&lt; <span class="hljs-string">&quot;AYE&quot;</span> &lt;&lt; <span class="hljs-string">&#x27;\n&#x27;</span>;
-        <span class="hljs-keyword">else</span> cout &lt;&lt; <span class="hljs-string">&quot;NAY&quot;</span> &lt;&lt; <span class="hljs-string">&#x27;\n&#x27;</span>;
-    &#125;
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-&#125;
-
-<span class="hljs-comment">/*
-4 4
-1 2 3
-2 3 2
-3 4 1
-2
-3
-1
-4
-*/</span>
-</code></pre>
-
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i, n, m) for(int i = n; i &lt;= m; ++i)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i, n, m) for(int i = n; i &gt;= m; --i)</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">2e5</span> + <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> ne[N], w[N], e[N], head[N], cnt = <span class="number">0</span>; <span class="comment">//邻接表</span></span><br><span class="line"><span class="type">int</span> n, m, root, ok[N], query[N], siz[N], mx[N], vis[N];</span><br><span class="line"><span class="type">int</span> tol, q[N], dist[N], col[N];</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">ok：是否存在点对满足解  query：每次询问的k值 siz：以当前为根节点的子树大小</span></span><br><span class="line"><span class="comment">mx：以当前节点为根节点，其子树中大小的最小值 vis：当前节点是否当过重心</span></span><br><span class="line"><span class="comment">tol：队列的大小， q：队列 </span></span><br><span class="line"><span class="comment">dist：当前节点到根节点的距离 col：当前点属于哪棵子树</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b, <span class="type">int</span> c)</span></span>&#123;</span><br><span class="line">    e[++cnt] = b, w[cnt] = c, ne[cnt] = head[a], head[a] = cnt; </span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">cmp</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> dist[a] &lt; dist[b];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">get_root</span><span class="params">(<span class="type">int</span> u, <span class="type">int</span> pre, <span class="type">int</span> sum)</span></span>&#123;</span><br><span class="line">    siz[u] = <span class="number">1</span>; mx[u] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = head[u]; i; i = ne[i])&#123;</span><br><span class="line">        <span class="type">int</span> to = e[i];</span><br><span class="line">        <span class="keyword">if</span>(to == pre || vis[to]) <span class="keyword">continue</span>;</span><br><span class="line">        <span class="built_in">get_root</span>(to, u, sum);</span><br><span class="line">        siz[u] += siz[to];</span><br><span class="line">        mx[u] = <span class="built_in">max</span>(mx[u], siz[to]);</span><br><span class="line">    &#125;</span><br><span class="line">    mx[u] = <span class="built_in">max</span>(mx[u], sum - siz[u]);</span><br><span class="line">    <span class="keyword">if</span>(mx[u] &lt; mx[root] || !root) root = u;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">get_dist</span><span class="params">(<span class="type">int</span> u, <span class="type">int</span> pre, <span class="type">int</span> dis, <span class="type">int</span> camp)</span></span>&#123;</span><br><span class="line">    q[++tol] = u;   <span class="comment">// 入队列</span></span><br><span class="line">    dist[u] = dis;</span><br><span class="line">    col[u] = camp;  <span class="comment">// u节点属于子树 camp</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = head[u]; i; i = ne[i])&#123;</span><br><span class="line">        <span class="type">int</span> to = e[i];</span><br><span class="line">        <span class="keyword">if</span>(to == pre || vis[to]) <span class="keyword">continue</span>;</span><br><span class="line">        <span class="built_in">get_dist</span>(to, u, w[i] + dis, camp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">cal</span><span class="params">(<span class="type">int</span> u)</span></span>&#123;</span><br><span class="line">    tol = <span class="number">0</span>;</span><br><span class="line">    q[++ tol] = u;</span><br><span class="line">    dist[u] = <span class="number">0</span>;</span><br><span class="line">    col[u] = u;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = head[u]; i ; i = ne[i])&#123;</span><br><span class="line">        <span class="type">int</span> to = e[i];</span><br><span class="line">        <span class="keyword">if</span>(!vis[to]) <span class="built_in">get_dist</span>(to, u, w[i], to);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">sort</span>(q + <span class="number">1</span>, q + <span class="number">1</span> + tol, cmp);</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, m)&#123;</span><br><span class="line">        <span class="type">int</span> l = <span class="number">1</span>, r = tol;</span><br><span class="line">        <span class="keyword">if</span>(ok[i]) <span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">while</span>(l &lt; r)&#123;</span><br><span class="line">            <span class="type">int</span> x = q[l], y = q[r];</span><br><span class="line">            <span class="keyword">if</span>(dist[x] + dist[y] &lt; query[i])&#123;</span><br><span class="line">                l ++;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(dist[x] + dist[y] &gt; query[i])&#123;</span><br><span class="line">                r --;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(col[x] == col[y])&#123;</span><br><span class="line">                <span class="keyword">if</span>(col[y] == col[q[r - <span class="number">1</span>]]) r --;</span><br><span class="line">                <span class="keyword">else</span> l ++;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                ok[i] = <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">(<span class="type">int</span> u)</span></span>&#123; <span class="comment">// 分治</span></span><br><span class="line">    vis[u] = <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">cal</span>(u);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = head[u]; i; i = ne[i])&#123;</span><br><span class="line">        <span class="type">int</span> to = e[i];</span><br><span class="line">        <span class="keyword">if</span>(!vis[to])&#123;</span><br><span class="line">            root = <span class="number">0</span>;</span><br><span class="line">            <span class="built_in">get_root</span>(to, <span class="number">0</span>, siz[to]);</span><br><span class="line">            <span class="built_in">solve</span>(root);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//ios::sync_with_stdio(0); cin.tie(0);</span></span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, n - <span class="number">1</span>)&#123;</span><br><span class="line">        <span class="type">int</span> u, v, w; cin &gt;&gt; u &gt;&gt; v &gt;&gt; w;</span><br><span class="line">        <span class="built_in">add</span>(u, v, w); <span class="built_in">add</span>(v, u, w);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, m)&#123;</span><br><span class="line">        cin &gt;&gt; query[i];</span><br><span class="line">    &#125;</span><br><span class="line">    mx[<span class="number">0</span>] = n;</span><br><span class="line">    <span class="built_in">get_root</span>(<span class="number">1</span>, <span class="number">0</span>, n);</span><br><span class="line">    <span class="built_in">solve</span>(root);</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, m)&#123;</span><br><span class="line">        <span class="keyword">if</span>(ok[i]) cout &lt;&lt; <span class="string">&quot;AYE&quot;</span> &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">        <span class="keyword">else</span> cout &lt;&lt; <span class="string">&quot;NAY&quot;</span> &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">4 4</span></span><br><span class="line"><span class="comment">1 2 3</span></span><br><span class="line"><span class="comment">2 3 2</span></span><br><span class="line"><span class="comment">3 4 1</span></span><br><span class="line"><span class="comment">2</span></span><br><span class="line"><span class="comment">3</span></span><br><span class="line"><span class="comment">1</span></span><br><span class="line"><span class="comment">4</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
       </div>
       <div class="post-tags-categories">
         
@@ -953,8 +770,7 @@ dist：当前节点到根节点的距离 col：当前点属于哪棵子树
         md鼻塞真难受
 
 欧几里得辗转相除法：求a，b的最大公约数
-int gcd(int a, int b)&#123;
-  
+123int gcd(int a, int b)&#123;
       </div> -->
     </a>
   </div>

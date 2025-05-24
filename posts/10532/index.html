@@ -56,8 +56,6 @@
         
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
         
-            
-        
     
     <!-- import script -->
     
@@ -664,65 +662,11 @@
 以上ne更新完毕.<br />
 对于ne数组的更新，O(n) 的复杂度<br />
 我们用代码实现</p>
-<pre class="highlight"><code class="cpp">    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">2</span>, j = <span class="hljs-number">0</span>; i &lt;= n; ++i )&#123;
-        <span class="hljs-keyword">while</span>(j &amp;&amp; p[i] != p[j + <span class="hljs-number">1</span>])j = ne[j];
-        <span class="hljs-keyword">if</span>(p[i] == p[j + <span class="hljs-number">1</span>])j++;
-        ne[i] = j;
-    &#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">2</span>, j = <span class="number">0</span>; i &lt;= n; ++i )&#123;</span><br><span class="line">    <span class="keyword">while</span>(j &amp;&amp; p[i] != p[j + <span class="number">1</span>])j = ne[j];</span><br><span class="line">    <span class="keyword">if</span>(p[i] == p[j + <span class="number">1</span>])j++;</span><br><span class="line">    ne[i] = j;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>十分简洁，而对于之后的查询相同也是以上类似的做法</p>
-<pre class="highlight"><code class="cpp">    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>, j = <span class="hljs-number">0</span>; i &lt;= m; ++i)&#123;
-        <span class="hljs-keyword">while</span>(j &amp;&amp; s[i] != p[j + <span class="hljs-number">1</span>])j = ne[j];
-        <span class="hljs-keyword">if</span>(p[j + <span class="hljs-number">1</span>] == s[i])j++;
-        <span class="hljs-keyword">if</span>(j == n)&#123; 
-        <span class="hljs-comment">//当 p 字符串全部匹配，输出此时s中对应的p字符串的首字母下标</span>
-        <span class="hljs-comment">//然后回溯j   </span>
-            cout &lt;&lt; i - n + <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-string">&#x27; &#x27;</span>;
-            j = ne[j];
-        &#125;
-    &#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>, j = <span class="number">0</span>; i &lt;= m; ++i)&#123;</span><br><span class="line">    <span class="keyword">while</span>(j &amp;&amp; s[i] != p[j + <span class="number">1</span>])j = ne[j];</span><br><span class="line">    <span class="keyword">if</span>(p[j + <span class="number">1</span>] == s[i])j++;</span><br><span class="line">    <span class="keyword">if</span>(j == n)&#123; </span><br><span class="line">    <span class="comment">//当 p 字符串全部匹配，输出此时s中对应的p字符串的首字母下标</span></span><br><span class="line">    <span class="comment">//然后回溯j   </span></span><br><span class="line">        cout &lt;&lt; i - n + <span class="number">1</span> &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">        j = ne[j];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3375">KMP洛谷模板题</a></p>
-<pre class="highlight"><code class="cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> rep(i,n,m) for(int i=n;i&lt;=m;++i)</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> per(i,n,m) for(int i=n;i&gt;=m;--i)</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> all(x) x.begin(),x.end()</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> pb(x) push_back(x)</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> PII pair<span class="hljs-string">&lt;int,int&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> VI vector<span class="hljs-string">&lt;int&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> lowbit(x) x&amp;-x</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> INF 1&lt;&lt;30</span>
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-<span class="hljs-keyword">typedef</span> <span class="hljs-type">long</span> <span class="hljs-type">long</span> ll;
-<span class="hljs-type">const</span> <span class="hljs-type">int</span> N=<span class="hljs-number">2e5</span>+<span class="hljs-number">10</span>;
-string s, p;
-<span class="hljs-type">int</span> ne[N], n, m;
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
-</span>&#123;
-	ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>);cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
-	cin &gt;&gt; s &gt;&gt; p;
-	n = p.<span class="hljs-built_in">size</span>();
-	m = s.<span class="hljs-built_in">size</span>();
-	s = <span class="hljs-string">&#x27; &#x27;</span> + s;
-	p = <span class="hljs-string">&#x27; &#x27;</span> + p;
-	VI ans;
-	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">2</span>, j = <span class="hljs-number">0</span>; i &lt;= n; ++i )&#123;
-		<span class="hljs-keyword">while</span>(j &amp;&amp; p[i] != p[j + <span class="hljs-number">1</span>])j = ne[j];
-		<span class="hljs-keyword">if</span>(p[i] == p[j + <span class="hljs-number">1</span>])j++;
-		ne[i] = j;
-	&#125;
-	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>, j = <span class="hljs-number">0</span>; i &lt;= m; ++i)&#123;
-		<span class="hljs-keyword">while</span>(j &amp;&amp; s[i] != p[j + <span class="hljs-number">1</span>])j = ne[j];
-		<span class="hljs-keyword">if</span>(p[j + <span class="hljs-number">1</span>] == s[i])j++;
-		<span class="hljs-keyword">if</span>(j == n)&#123;
-			cout &lt;&lt; i - n + <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-string">&#x27;\n&#x27;</span>;
-			j = ne[j];
-		&#125;
-	&#125;
-	<span class="hljs-built_in">rep</span>(i, <span class="hljs-number">1</span>, n)cout &lt;&lt; ne[i] &lt;&lt; <span class="hljs-string">&#x27; &#x27;</span>;
-	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,n,m) for(int i=n;i&lt;=m;++i)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,n,m) for(int i=n;i&gt;=m;--i)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> all(x) x.begin(),x.end()</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb(x) push_back(x)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> PII pair<span class="string">&lt;int,int&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> VI vector<span class="string">&lt;int&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> lowbit(x) x&amp;-x</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> INF 1&lt;&lt;30</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">2e5</span>+<span class="number">10</span>;</span><br><span class="line">string s, p;</span><br><span class="line"><span class="type">int</span> ne[N], n, m;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	ios::<span class="built_in">sync_with_stdio</span>(<span class="number">0</span>);cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">	cin &gt;&gt; s &gt;&gt; p;</span><br><span class="line">	n = p.<span class="built_in">size</span>();</span><br><span class="line">	m = s.<span class="built_in">size</span>();</span><br><span class="line">	s = <span class="string">&#x27; &#x27;</span> + s;</span><br><span class="line">	p = <span class="string">&#x27; &#x27;</span> + p;</span><br><span class="line">	VI ans;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">2</span>, j = <span class="number">0</span>; i &lt;= n; ++i )&#123;</span><br><span class="line">		<span class="keyword">while</span>(j &amp;&amp; p[i] != p[j + <span class="number">1</span>])j = ne[j];</span><br><span class="line">		<span class="keyword">if</span>(p[i] == p[j + <span class="number">1</span>])j++;</span><br><span class="line">		ne[i] = j;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>, j = <span class="number">0</span>; i &lt;= m; ++i)&#123;</span><br><span class="line">		<span class="keyword">while</span>(j &amp;&amp; s[i] != p[j + <span class="number">1</span>])j = ne[j];</span><br><span class="line">		<span class="keyword">if</span>(p[j + <span class="number">1</span>] == s[i])j++;</span><br><span class="line">		<span class="keyword">if</span>(j == n)&#123;</span><br><span class="line">			cout &lt;&lt; i - n + <span class="number">1</span> &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">			j = ne[j];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">rep</span>(i, <span class="number">1</span>, n)cout &lt;&lt; ne[i] &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>呜呜呜，我要好好学习，不能摆烂<br />
 <img src="/picture/QAQ.png" class="lazyload placeholder" data-srcset="/picture/QAQ.png" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" alt="" /></p>
 

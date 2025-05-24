@@ -56,8 +56,6 @@
         
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
         
-            
-        
     
     <!-- import script -->
     
@@ -598,7 +596,7 @@
       
         <div class="post-detail-header_wordcount">
           <span class="totalcount">
-            <i class="fas fa-file-text-o"></i> 字数统计: 707 |
+            <i class="fas fa-file-text-o"></i> 字数统计: 708 |
           </span>
   
           <span class="min2read">
@@ -640,33 +638,7 @@
 <p>有点类似倍增，我们发现 st [ 3 ][ 2 ] 可以将2分成两个1，就是把2<sup>2分成了2</sup>1的两个部分，用 max ( st [ 3 ][ 1 ]，st [ 5 ][ 1 ] ) 两个部分来表示 st [ 3 ][ 2 ] 的区间最大值。</p>
 <p>查询的时候先计算出查询区间的长度(我们需要找到一个最大的k满足2^k&lt;=len)，因为不能保证区间长度是2的次方，所以我们需要在区间内找到一个x值，使得 x + 2^k -1= r，因此</p>
 <p>x=r-2^k+1 ，我们只需要查询 max ( st [ l ][ m ] ，st [ r - ( 1&lt;&lt;m ) + 1 ][ m ] ))即可</p>
-<pre class="highlight"><code class="cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> rep(i,n,m) for(int i=n;i&lt;=m;++i)</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> per(i,n,m) for(int i=n;i&gt;=m;--i)</span>
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-<span class="hljs-type">const</span> <span class="hljs-type">int</span> N=<span class="hljs-number">2e6</span>+<span class="hljs-number">10</span>;
-<span class="hljs-type">int</span> st[N][<span class="hljs-number">30</span>];
-<span class="hljs-comment">//这个区间是左闭右开 是[N,N+2^30)</span>
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
-</span>&#123;
-    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>);cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
-    <span class="hljs-type">int</span> n,q;cin&gt;&gt;n&gt;&gt;q;
-    <span class="hljs-built_in">rep</span>(i,<span class="hljs-number">1</span>,n)cin&gt;&gt;st[i][<span class="hljs-number">0</span>]; 第i个位置到i+<span class="hljs-number">2</span>^<span class="hljs-number">0</span>位置的最值，[i,i+<span class="hljs-number">2</span>^<span class="hljs-number">0</span>)，左闭右开 
-    <span class="hljs-built_in">rep</span>(j,<span class="hljs-number">1</span>,<span class="hljs-number">30</span>)&#123;  <span class="hljs-comment">//枚举区间的长度，从 2^0 → 2^30</span>
-        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i+(<span class="hljs-number">1</span>&lt;&lt;j)<span class="hljs-number">-1</span>&lt;=n;++i)&#123;   <span class="hljs-comment">//</span>
-           <span class="hljs-comment">//防止数组值越界，因此区间右值不能超过数组右端点 i+(1&lt;&lt;j)-1</span>
-            st[i][j]=<span class="hljs-built_in">max</span>(st[i][j<span class="hljs-number">-1</span>],st[i+(<span class="hljs-number">1</span>&lt;&lt;j<span class="hljs-number">-1</span>)][j<span class="hljs-number">-1</span>]);
-        &#125;
-    &#125;
-    <span class="hljs-keyword">while</span> (q--) &#123;
-        <span class="hljs-type">int</span> l,r;cin&gt;&gt;l&gt;&gt;r;
-        <span class="hljs-type">int</span> m=<span class="hljs-built_in">log</span>(r-l+<span class="hljs-number">1</span>)/<span class="hljs-built_in">log</span>(<span class="hljs-number">2</span>);
-        <span class="hljs-comment">//l到r之间的长度大小（2的次方）</span>
-        cout&lt;&lt;<span class="hljs-built_in">max</span>(st[l][m],st[r-(<span class="hljs-number">1</span>&lt;&lt;m)+<span class="hljs-number">1</span>][m]))&lt;&lt;<span class="hljs-string">&#x27;\n&#x27;</span>;
-    &#125;
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,n,m) for(int i=n;i&lt;=m;++i)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,n,m) for(int i=n;i&gt;=m;--i)</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">2e6</span>+<span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> st[N][<span class="number">30</span>];</span><br><span class="line"><span class="comment">//这个区间是左闭右开 是[N,N+2^30)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ios::<span class="built_in">sync_with_stdio</span>(<span class="number">0</span>);cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="type">int</span> n,q;cin&gt;&gt;n&gt;&gt;q;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">1</span>,n)cin&gt;&gt;st[i][<span class="number">0</span>]; 第i个位置到i+<span class="number">2</span>^<span class="number">0</span>位置的最值，[i,i+<span class="number">2</span>^<span class="number">0</span>)，左闭右开 </span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">1</span>,<span class="number">30</span>)&#123;  <span class="comment">//枚举区间的长度，从 2^0 → 2^30</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i+(<span class="number">1</span>&lt;&lt;j)<span class="number">-1</span>&lt;=n;++i)&#123;   <span class="comment">//</span></span><br><span class="line">           <span class="comment">//防止数组值越界，因此区间右值不能超过数组右端点 i+(1&lt;&lt;j)-1</span></span><br><span class="line">            st[i][j]=<span class="built_in">max</span>(st[i][j<span class="number">-1</span>],st[i+(<span class="number">1</span>&lt;&lt;j<span class="number">-1</span>)][j<span class="number">-1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (q--) &#123;</span><br><span class="line">        <span class="type">int</span> l,r;cin&gt;&gt;l&gt;&gt;r;</span><br><span class="line">        <span class="type">int</span> m=<span class="built_in">log</span>(r-l+<span class="number">1</span>)/<span class="built_in">log</span>(<span class="number">2</span>);</span><br><span class="line">        <span class="comment">//l到r之间的长度大小（2的次方）</span></span><br><span class="line">        cout&lt;&lt;<span class="built_in">max</span>(st[l][m],st[r-(<span class="number">1</span>&lt;&lt;m)+<span class="number">1</span>][m]))&lt;&lt;<span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>当然，也可以用ST表查询最小值，静态区间最值问题都可以解决，要抓紧时间学学线段树了，马上就大二了。。。</p>
 <p>附上洛谷 题目：<br />
 <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3865">P3865 【模板】ST 表 - 洛谷 | 计算机科学教育新生态 </a></p>

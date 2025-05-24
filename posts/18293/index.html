@@ -56,8 +56,6 @@
         
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
         
-            
-        
     
     <!-- import script -->
     
@@ -640,106 +638,20 @@
 <p>输出任何满足条件的x，y，z</p>
 <p>题解：要求任意满足条件的三个值互相取模得到输入值，我们不妨假设一个输出的值就是其对应的输入值，如y=b，此时要求得另外两解，我们可以对a和c进行调用，我们可以发现以下规律，但是这会有一个特殊情况，因为c使最大的，所以 a+b+c&lt;3*c，a+b+c 可能是  a+b 的整数倍 ，所以固定y值时可能出现第三个条件不满足的情况，所以我们应该固定最大的z对应的c值。<br />
 <img src="https://img-blog.csdnimg.cn/257a77cfcb7f4f9aa21a14a74f519511.png" class="lazyload placeholder" data-srcset="https://img-blog.csdnimg.cn/257a77cfcb7f4f9aa21a14a74f519511.png" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" alt="" /></p>
-<pre class="highlight"><code class="cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;iostream&gt;</span></span>
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span>
-</span>&#123;
-    <span class="hljs-type">int</span> a,b,c;cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;
-    cout&lt;&lt;a+b+c&lt;&lt;<span class="hljs-string">&#x27; &#x27;</span>&lt;&lt;b+c&lt;&lt;<span class="hljs-string">&#x27; &#x27;</span>&lt;&lt;c&lt;&lt;endl;
-&#125;
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
-</span>&#123;
-    <span class="hljs-type">int</span> n;cin&gt;&gt;n;
-    <span class="hljs-keyword">while</span>(n--)<span class="hljs-built_in">solve</span>();
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> a,b,c;cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;</span><br><span class="line">    cout&lt;&lt;a+b+c&lt;&lt;<span class="string">&#x27; &#x27;</span>&lt;&lt;b+c&lt;&lt;<span class="string">&#x27; &#x27;</span>&lt;&lt;c&lt;&lt;endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n;cin&gt;&gt;n;</span><br><span class="line">    <span class="keyword">while</span>(n--)<span class="built_in">solve</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>C ：</p>
 <p>题意：</p>
 <p>对每组数据输入 n * m (1 ≤  n, m ≤ 2⋅10^5 )的矩阵，其中每个位置的值不超过10^9，要求对换两列元素使得矩阵每行非递增，输出对调的两列下标，若不存在满足情况的两列则输出 -1</p>
 <p>题解：</p>
 <p>先找到任一 一行的非递减的的位置下标存入数组bb，记该行不满足的下标数量为num，若num大于2则直接输出 -1，若 num<mark>0 即矩阵本就满足情况，输出1  1，若以上情况都不存在即num</mark>2的时候，对调矩阵中每行该下标位置的元素值，然后遍历每一行元素判断是否非递减排列，若不满足输出-1，否则最后输出 两个下标位置。</p>
-<pre class="highlight"><code class="cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> rep(i,n,m) for(int i=n;i&lt;=m;++i)</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> per(i,n,m) for(int i=n;i&gt;=m;--i)</span>
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-<span class="hljs-keyword">typedef</span> <span class="hljs-type">long</span> <span class="hljs-type">long</span> ll;;
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span>
-</span>&#123;
-	<span class="hljs-type">int</span> n,m;cin&gt;&gt;n&gt;&gt;m;
-	vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-built_in">a</span>(n,<span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(m));
-	vector&lt;<span class="hljs-type">int</span>&gt; bb;
-	<span class="hljs-built_in">rep</span>(i,<span class="hljs-number">0</span>,n<span class="hljs-number">-1</span>)
-		<span class="hljs-built_in">rep</span>(j,<span class="hljs-number">0</span>,m<span class="hljs-number">-1</span>)
-			cin&gt;&gt;a[i][j];   <span class="hljs-comment">//输入每个元素值</span>
-		
-	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;n&amp;&amp;bb.<span class="hljs-built_in">empty</span>();++i)&#123;   
-        <span class="hljs-comment">//当下标越界或者该行发现有不满足条件的元素出现时跳出</span>
-		vector&lt;<span class="hljs-type">int</span>&gt; b=a[i];
-		<span class="hljs-built_in">sort</span>(b.<span class="hljs-built_in">begin</span>(),b.<span class="hljs-built_in">end</span>());  <span class="hljs-comment">//对数组b排序，然后对原数值进行比较</span>
-		<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">0</span>;j&lt;m;++j)&#123;
-			<span class="hljs-keyword">if</span>(a[i][j]!=b[j])bb.<span class="hljs-built_in">push_back</span>(j);  <span class="hljs-comment">//加入不满足的下标</span>
-		&#125;
-	&#125;
-	<span class="hljs-keyword">if</span>(bb.<span class="hljs-built_in">size</span>()==<span class="hljs-number">0</span>)&#123;cout&lt;&lt;<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-string">&#x27; &#x27;</span>&lt;&lt;<span class="hljs-number">1</span>&lt;&lt;endl;<span class="hljs-keyword">return</span> ;&#125;  <span class="hljs-comment">//不存在不满足的情况</span>
-	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(bb.<span class="hljs-built_in">size</span>()&gt;<span class="hljs-number">2</span>)&#123;cout&lt;&lt;<span class="hljs-number">-1</span>&lt;&lt;endl;<span class="hljs-keyword">return</span> ;&#125;   <span class="hljs-comment">//不满足的情况太多，&gt;2</span>
-	<span class="hljs-built_in">rep</span>(i,<span class="hljs-number">0</span>,n<span class="hljs-number">-1</span>)<span class="hljs-built_in">swap</span>(a[i][bb[<span class="hljs-number">0</span>]],a[i][bb[<span class="hljs-number">1</span>]]);    <span class="hljs-comment">//否则交换两列数值</span>
-	<span class="hljs-built_in">rep</span>(i,<span class="hljs-number">0</span>,n<span class="hljs-number">-1</span>)&#123;
-		<span class="hljs-built_in">rep</span>(j,<span class="hljs-number">0</span>,m<span class="hljs-number">-2</span>)&#123;
-			<span class="hljs-keyword">if</span>(a[i][j]&gt;a[i][j+<span class="hljs-number">1</span>])&#123;       <span class="hljs-comment">//判断是否满足条件</span>
-				cout&lt;&lt;<span class="hljs-number">-1</span>&lt;&lt;endl;
-				<span class="hljs-keyword">return</span> ;
-			&#125;
-		&#125;
-	&#125;
-	cout&lt;&lt;bb[<span class="hljs-number">0</span>]+<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-string">&#x27; &#x27;</span>&lt;&lt;bb[<span class="hljs-number">1</span>]+<span class="hljs-number">1</span>&lt;&lt;endl;  <span class="hljs-comment">//因为记的下标是从0开始的，所以记得+1</span>
-	
-&#125;
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
-</span>&#123;
-	ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>);cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
-	<span class="hljs-type">int</span> n;cin&gt;&gt;n;
-	<span class="hljs-keyword">while</span>(n--)<span class="hljs-built_in">solve</span>();
-	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,n,m) for(int i=n;i&lt;=m;++i)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,n,m) for(int i=n;i&gt;=m;--i)</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> n,m;cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">	vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">a</span>(n,<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(m));</span><br><span class="line">	vector&lt;<span class="type">int</span>&gt; bb;</span><br><span class="line">	<span class="built_in">rep</span>(i,<span class="number">0</span>,n<span class="number">-1</span>)</span><br><span class="line">		<span class="built_in">rep</span>(j,<span class="number">0</span>,m<span class="number">-1</span>)</span><br><span class="line">			cin&gt;&gt;a[i][j];   <span class="comment">//输入每个元素值</span></span><br><span class="line">		</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n&amp;&amp;bb.<span class="built_in">empty</span>();++i)&#123;   </span><br><span class="line">        <span class="comment">//当下标越界或者该行发现有不满足条件的元素出现时跳出</span></span><br><span class="line">		vector&lt;<span class="type">int</span>&gt; b=a[i];</span><br><span class="line">		<span class="built_in">sort</span>(b.<span class="built_in">begin</span>(),b.<span class="built_in">end</span>());  <span class="comment">//对数组b排序，然后对原数值进行比较</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;m;++j)&#123;</span><br><span class="line">			<span class="keyword">if</span>(a[i][j]!=b[j])bb.<span class="built_in">push_back</span>(j);  <span class="comment">//加入不满足的下标</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(bb.<span class="built_in">size</span>()==<span class="number">0</span>)&#123;cout&lt;&lt;<span class="number">1</span>&lt;&lt;<span class="string">&#x27; &#x27;</span>&lt;&lt;<span class="number">1</span>&lt;&lt;endl;<span class="keyword">return</span> ;&#125;  <span class="comment">//不存在不满足的情况</span></span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(bb.<span class="built_in">size</span>()&gt;<span class="number">2</span>)&#123;cout&lt;&lt;<span class="number">-1</span>&lt;&lt;endl;<span class="keyword">return</span> ;&#125;   <span class="comment">//不满足的情况太多，&gt;2</span></span><br><span class="line">	<span class="built_in">rep</span>(i,<span class="number">0</span>,n<span class="number">-1</span>)<span class="built_in">swap</span>(a[i][bb[<span class="number">0</span>]],a[i][bb[<span class="number">1</span>]]);    <span class="comment">//否则交换两列数值</span></span><br><span class="line">	<span class="built_in">rep</span>(i,<span class="number">0</span>,n<span class="number">-1</span>)&#123;</span><br><span class="line">		<span class="built_in">rep</span>(j,<span class="number">0</span>,m<span class="number">-2</span>)&#123;</span><br><span class="line">			<span class="keyword">if</span>(a[i][j]&gt;a[i][j+<span class="number">1</span>])&#123;       <span class="comment">//判断是否满足条件</span></span><br><span class="line">				cout&lt;&lt;<span class="number">-1</span>&lt;&lt;endl;</span><br><span class="line">				<span class="keyword">return</span> ;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	cout&lt;&lt;bb[<span class="number">0</span>]+<span class="number">1</span>&lt;&lt;<span class="string">&#x27; &#x27;</span>&lt;&lt;bb[<span class="number">1</span>]+<span class="number">1</span>&lt;&lt;endl;  <span class="comment">//因为记的下标是从0开始的，所以记得+1</span></span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	ios::<span class="built_in">sync_with_stdio</span>(<span class="number">0</span>);cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">	<span class="type">int</span> n;cin&gt;&gt;n;</span><br><span class="line">	<span class="keyword">while</span>(n--)<span class="built_in">solve</span>();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>天啦噜，昨晚开a【200001】【200001】的数组爆栈了，麻木了我一个多小时，今天学到了个新招 ，用vector 开二维，就 vector&lt;vector<int>&gt; a(n,vector<int>(m)); 这样写，是 n * m 的二维数组。</p>
 <p>D</p>
 <p>题意：每组数据给定 n 个陷阱的伤害值，k 次跳越一个陷阱的机会，每跳过一个陷阱，后面所有的陷阱伤害值都会 +1，求经过所有陷阱后所受伤害的 最小值。</p>
 <p>题解：</p>
 <p>当所有的陷阱都要跳进去时，所受伤害就是每个陷阱伤害值的和 ans，对于每一个陷阱，如果跳过当前的陷阱，对于整体所受的伤害 ans 就是 ans = ans - a [ i ] +( n - i )  = n - i - a [ i ] ，而对于当前跳的第 j 个陷阱，若跳过该陷阱 ，后面还有 k - j 次机会可以跳，即还有k - j 个陷阱的+1 不用算到ans之中去，所有对于k次机会，一共有 （k - 1）*k / 2点伤害不用承受。</p>
 <p>我们只需求出跳越每个陷阱对整体所减少的伤害值，并贪心求最大减伤即可。</p>
-<pre class="highlight"><code class="cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> rep(i,n,m) for(int i=n;i&lt;=m;++i)</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> per(i,n,m) for(int i=n;i&gt;=m;--i)</span>
-<span class="hljs-comment">//#define INF 0x3f3f3f3f</span>
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-<span class="hljs-keyword">typedef</span> <span class="hljs-type">long</span> <span class="hljs-type">long</span> ll;
-<span class="hljs-type">const</span> <span class="hljs-type">int</span> N=<span class="hljs-number">200010</span>;
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span>
-</span>&#123;
-	ll n,k,ans=<span class="hljs-number">0</span>;cin&gt;&gt;n&gt;&gt;k;
-	
-	vector&lt; ll &gt;<span class="hljs-built_in">a</span>(n);
-	
-	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;n;++i)&#123;
-		<span class="hljs-type">int</span> x;cin&gt;&gt;x;
-		ans+=x;      <span class="hljs-comment">//计总伤害值</span>
-		a[i]=<span class="hljs-number">1LL</span>*(n-i<span class="hljs-number">-1</span>-x);   <span class="hljs-comment">//记得取1LL，不然会超范围</span>
-	&#125;		
-	<span class="hljs-built_in">sort</span>(a.<span class="hljs-built_in">begin</span>(),a.<span class="hljs-built_in">end</span>());  
- 
-	<span class="hljs-built_in">rep</span>(i,<span class="hljs-number">0</span>,k<span class="hljs-number">-1</span>)  ans+=a[i];  <span class="hljs-comment">//贪心使伤害最小化</span>
- 
-	cout&lt;&lt; ans - ( k * (k<span class="hljs-number">-1</span>) / <span class="hljs-number">2</span> )&lt;&lt;endl;  <span class="hljs-comment">//减去对当前跳过的陷阱后面跳过的陷阱+1的伤害</span>
-&#125;
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
-</span>&#123;
-	ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>);cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
-	<span class="hljs-type">int</span> n;cin&gt;&gt;n;
-	<span class="hljs-keyword">while</span>(n--)<span class="hljs-built_in">solve</span>();
-	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,n,m) for(int i=n;i&lt;=m;++i)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,n,m) for(int i=n;i&gt;=m;--i)</span></span><br><span class="line"><span class="comment">//#define INF 0x3f3f3f3f</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">200010</span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	ll n,k,ans=<span class="number">0</span>;cin&gt;&gt;n&gt;&gt;k;</span><br><span class="line">	</span><br><span class="line">	vector&lt; ll &gt;<span class="built_in">a</span>(n);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;++i)&#123;</span><br><span class="line">		<span class="type">int</span> x;cin&gt;&gt;x;</span><br><span class="line">		ans+=x;      <span class="comment">//计总伤害值</span></span><br><span class="line">		a[i]=<span class="number">1LL</span>*(n-i<span class="number">-1</span>-x);   <span class="comment">//记得取1LL，不然会超范围</span></span><br><span class="line">	&#125;		</span><br><span class="line">	<span class="built_in">sort</span>(a.<span class="built_in">begin</span>(),a.<span class="built_in">end</span>());  </span><br><span class="line"> </span><br><span class="line">	<span class="built_in">rep</span>(i,<span class="number">0</span>,k<span class="number">-1</span>)  ans+=a[i];  <span class="comment">//贪心使伤害最小化</span></span><br><span class="line"> </span><br><span class="line">	cout&lt;&lt; ans - ( k * (k<span class="number">-1</span>) / <span class="number">2</span> )&lt;&lt;endl;  <span class="comment">//减去对当前跳过的陷阱后面跳过的陷阱+1的伤害</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	ios::<span class="built_in">sync_with_stdio</span>(<span class="number">0</span>);cin.<span class="built_in">tie</span>(<span class="number">0</span>);cout.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">	<span class="type">int</span> n;cin&gt;&gt;n;</span><br><span class="line">	<span class="keyword">while</span>(n--)<span class="built_in">solve</span>();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>cf分天天掉，上绿还没稳住一直拼命往下掉，<s>蒻苟本狗</s></p>
 
       </div>

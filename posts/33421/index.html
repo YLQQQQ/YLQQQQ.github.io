@@ -56,8 +56,6 @@
         
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
         
-            
-        
     
     <!-- import script -->
     
@@ -598,7 +596,7 @@
       
         <div class="post-detail-header_wordcount">
           <span class="totalcount">
-            <i class="fas fa-file-text-o"></i> 字数统计: 1.1k |
+            <i class="fas fa-file-text-o"></i> 字数统计: 1k |
           </span>
   
           <span class="min2read">
@@ -648,124 +646,14 @@
 −10<sup>9≤l≤r≤10</sup>9<br />
 −10000≤c≤10000</p>
 <p>输入样例：</p>
-<pre class="highlight"><code class="">3 3
-1 2
-3 6
-7 5
-1 3
-4 6
-7 8
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">3 3</span><br><span class="line">1 2</span><br><span class="line">3 6</span><br><span class="line">7 5</span><br><span class="line">1 3</span><br><span class="line">4 6</span><br><span class="line">7 8</span><br></pre></td></tr></table></figure>
 <p>输出样例：</p>
-<pre class="highlight"><code class="">8
-0
-5
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">8</span><br><span class="line">0</span><br><span class="line">5</span><br></pre></td></tr></table></figure>
 <p>题解：</p>
 <p>把需要操作的位置都放到 all 数组里，对于操作的数据我们放在 add 内，对于要查询的区间我们放在 query 内，此外我们定义一个 find（x） 函数来查找数值为x的值在 all 数组内的下标，在放完所有数据之后，我们要对 all 数组内的值整理一次，先用sort使数据有序排列，这样才能保证在用find查找下标的时候有效进行，然后还得对 all 数组内相同的数据进行清除，然后遍历 add 内的值，给a数组进行赋值，再对all遍历计算有效前缀和，最后遍历query输出答案</p>
-<pre class="highlight"><code class="">例如:
- 
-在最以下数据进行操作之后
-   1 2
-   3 6
-   7 5
- 
-   1 3
-   4 6
-   7 8
- 
-读取数据之后各vector的内容
- 
-   add&#123;&#123;1,2&#125;,&#123;3,6&#125;,&#123;7,5&#125;&#125;
- 
-   query&#123;&#123;1,3&#125;,&#123;4,6&#125;,&#123;7,8&#125;&#125;
- 
-   all&#123;1,3,7,1,3,4,6,7,8&#125;
- 
-对all排序去重之后为
-   
-   all&#123;1,3,4,6,7,8&#125;   //即在数轴上就用到了这些位置
-   
-   先遍历add对a数组进行操作后
- 
-    a &#123;2， 6 ，0， 0 ， 5 ，0 &#125;
-   
-   然后用sum计算a内的前缀和
-   
-   sum&#123;2 , 8 , 8 , 8 , 13, 13 &#125;   
-   
-   然后遍历query内的值，对sum中的范围进行求差（得用find查找all中下标）
-   
-   而对应的sum下标和值即为
- 
-        0   1   2   3   4   5
-   sum &#123;2 , 8 , 8 , 8 , 13, 13 &#125; 
-    all&#123;1,  3,  4,  6,   7,  8 &#125;  
-   所以对以下三个区间
-      1 3
-      4 6
-      7 8
-   三个用find查找的下标区间为
-      0 1
-      2 3
-      4 5
-   计算得出答案
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">例如:</span><br><span class="line"> </span><br><span class="line">在最以下数据进行操作之后</span><br><span class="line">   1 2</span><br><span class="line">   3 6</span><br><span class="line">   7 5</span><br><span class="line"> </span><br><span class="line">   1 3</span><br><span class="line">   4 6</span><br><span class="line">   7 8</span><br><span class="line"> </span><br><span class="line">读取数据之后各vector的内容</span><br><span class="line"> </span><br><span class="line">   add&#123;&#123;1,2&#125;,&#123;3,6&#125;,&#123;7,5&#125;&#125;</span><br><span class="line"> </span><br><span class="line">   query&#123;&#123;1,3&#125;,&#123;4,6&#125;,&#123;7,8&#125;&#125;</span><br><span class="line"> </span><br><span class="line">   all&#123;1,3,7,1,3,4,6,7,8&#125;</span><br><span class="line"> </span><br><span class="line">对all排序去重之后为</span><br><span class="line">   </span><br><span class="line">   all&#123;1,3,4,6,7,8&#125;   //即在数轴上就用到了这些位置</span><br><span class="line">   </span><br><span class="line">   先遍历add对a数组进行操作后</span><br><span class="line"> </span><br><span class="line">    a &#123;2， 6 ，0， 0 ， 5 ，0 &#125;</span><br><span class="line">   </span><br><span class="line">   然后用sum计算a内的前缀和</span><br><span class="line">   </span><br><span class="line">   sum&#123;2 , 8 , 8 , 8 , 13, 13 &#125;   </span><br><span class="line">   </span><br><span class="line">   然后遍历query内的值，对sum中的范围进行求差（得用find查找all中下标）</span><br><span class="line">   </span><br><span class="line">   而对应的sum下标和值即为</span><br><span class="line"> </span><br><span class="line">        0   1   2   3   4   5</span><br><span class="line">   sum &#123;2 , 8 , 8 , 8 , 13, 13 &#125; </span><br><span class="line">    all&#123;1,  3,  4,  6,   7,  8 &#125;  </span><br><span class="line">   所以对以下三个区间</span><br><span class="line">      1 3</span><br><span class="line">      4 6</span><br><span class="line">      7 8</span><br><span class="line">   三个用find查找的下标区间为</span><br><span class="line">      0 1</span><br><span class="line">      2 3</span><br><span class="line">      4 5</span><br><span class="line">   计算得出答案</span><br></pre></td></tr></table></figure>
 <p>代码呈上😉😉😉😉</p>
-<pre class="highlight"><code class="cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> repp(i,n,m) for(int i=n;i&lt;=m;++i)</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> reps(i,n,m) for(int i=n;i&gt;=m;--i)</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> INF 0x3f3f3f3f</span>
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-<span class="hljs-keyword">typedef</span> <span class="hljs-type">long</span> <span class="hljs-type">long</span> ll;
-<span class="hljs-keyword">typedef</span> pair&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>&gt; PII;
-<span class="hljs-type">const</span> <span class="hljs-type">int</span> N=<span class="hljs-number">300010</span>;
-<span class="hljs-type">int</span> a[N],sum[N];
-vector&lt;PII&gt; add,query;
-vector&lt;<span class="hljs-type">int</span>&gt;all;
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span>&#123;    <span class="hljs-comment">//离散化查找下标</span>
- <span class="hljs-type">int</span> l=<span class="hljs-number">0</span>,r=all.<span class="hljs-built_in">size</span>()<span class="hljs-number">-1</span>;
- <span class="hljs-keyword">while</span>(l&lt;r)&#123;
-     <span class="hljs-type">int</span> mid=l+r&gt;&gt;<span class="hljs-number">1</span>;
-     <span class="hljs-keyword">if</span>(all[mid]&gt;=x)r=mid;
-     <span class="hljs-keyword">else</span> l=mid+<span class="hljs-number">1</span>;
- &#125;
- <span class="hljs-keyword">return</span> r+<span class="hljs-number">1</span>;
-&#125;
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
-</span>&#123;
- ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>);cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
- <span class="hljs-type">int</span> n,m;cin&gt;&gt;n&gt;&gt;m;
- <span class="hljs-built_in">repp</span>(i,<span class="hljs-number">1</span>,n)&#123;        <span class="hljs-comment">//数据读入</span>
-     <span class="hljs-type">int</span> x,y;cin&gt;&gt;x&gt;&gt;y;
-     add.<span class="hljs-built_in">push_back</span>(&#123;x,y&#125;);
-     all.<span class="hljs-built_in">push_back</span>(x);
- &#125;
- <span class="hljs-built_in">repp</span>(i,<span class="hljs-number">1</span>,m)&#123;
-     <span class="hljs-type">int</span> x,y;cin&gt;&gt;x&gt;&gt;y;
-     query.<span class="hljs-built_in">push_back</span>(&#123;x,y&#125;);
-     all.<span class="hljs-built_in">push_back</span>(x);
-     all.<span class="hljs-built_in">push_back</span>(y);
- &#125;
-
- <span class="hljs-built_in">sort</span>(all.<span class="hljs-built_in">begin</span>(),all.<span class="hljs-built_in">end</span>());        <span class="hljs-comment">//排序+去重</span>
- all.<span class="hljs-built_in">erase</span>(<span class="hljs-built_in">unique</span>(all.<span class="hljs-built_in">begin</span>(),all.<span class="hljs-built_in">end</span>()),all.<span class="hljs-built_in">end</span>());
-
- <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> it:add)&#123;        <span class="hljs-comment">//赋值操作</span>
-     <span class="hljs-type">int</span> x=<span class="hljs-built_in">find</span>(it.first);
-     a[x]+=it.second;
- &#125; 
-
- <span class="hljs-built_in">repp</span>(i,<span class="hljs-number">1</span>,all.<span class="hljs-built_in">size</span>()) sum[i]=sum[i<span class="hljs-number">-1</span>]+a[i];   <span class="hljs-comment">//前缀和计算</span>
-
- <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> it : query) &#123;                       <span class="hljs-comment">//区间和</span>
-     <span class="hljs-type">int</span> l=<span class="hljs-built_in">find</span>(it.first),r=<span class="hljs-built_in">find</span>(it.second);
-     cout&lt;&lt;sum[r]-sum[l<span class="hljs-number">-1</span>]&lt;&lt;endl;
- &#125;
- <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-&#125;
-</code></pre>
-
+   <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">   <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> repp(i,n,m) for(int i=n;i&lt;=m;++i)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> reps(i,n,m) for(int i=n;i&gt;=m;--i)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> INF 0x3f3f3f3f</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="keyword">typedef</span> pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt; PII;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">300010</span>;</span><br><span class="line"><span class="type">int</span> a[N],sum[N];</span><br><span class="line">vector&lt;PII&gt; add,query;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt;all;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;    <span class="comment">//离散化查找下标</span></span><br><span class="line">    <span class="type">int</span> l=<span class="number">0</span>,r=all.<span class="built_in">size</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">while</span>(l&lt;r)&#123;</span><br><span class="line">        <span class="type">int</span> mid=l+r&gt;&gt;<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(all[mid]&gt;=x)r=mid;</span><br><span class="line">        <span class="keyword">else</span> l=mid+<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> r+<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ios::<span class="built_in">sync_with_stdio</span>(<span class="number">0</span>);cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="type">int</span> n,m;cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">    <span class="built_in">repp</span>(i,<span class="number">1</span>,n)&#123;        <span class="comment">//数据读入</span></span><br><span class="line">        <span class="type">int</span> x,y;cin&gt;&gt;x&gt;&gt;y;</span><br><span class="line">        add.<span class="built_in">push_back</span>(&#123;x,y&#125;);</span><br><span class="line">        all.<span class="built_in">push_back</span>(x);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">repp</span>(i,<span class="number">1</span>,m)&#123;</span><br><span class="line">        <span class="type">int</span> x,y;cin&gt;&gt;x&gt;&gt;y;</span><br><span class="line">        query.<span class="built_in">push_back</span>(&#123;x,y&#125;);</span><br><span class="line">        all.<span class="built_in">push_back</span>(x);</span><br><span class="line">        all.<span class="built_in">push_back</span>(y);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="built_in">sort</span>(all.<span class="built_in">begin</span>(),all.<span class="built_in">end</span>());        <span class="comment">//排序+去重</span></span><br><span class="line">    all.<span class="built_in">erase</span>(<span class="built_in">unique</span>(all.<span class="built_in">begin</span>(),all.<span class="built_in">end</span>()),all.<span class="built_in">end</span>());</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> it:add)&#123;        <span class="comment">//赋值操作</span></span><br><span class="line">        <span class="type">int</span> x=<span class="built_in">find</span>(it.first);</span><br><span class="line">        a[x]+=it.second;</span><br><span class="line">    &#125; </span><br><span class="line"> </span><br><span class="line">    <span class="built_in">repp</span>(i,<span class="number">1</span>,all.<span class="built_in">size</span>()) sum[i]=sum[i<span class="number">-1</span>]+a[i];   <span class="comment">//前缀和计算</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> it : query) &#123;                       <span class="comment">//区间和</span></span><br><span class="line">        <span class="type">int</span> l=<span class="built_in">find</span>(it.first),r=<span class="built_in">find</span>(it.second);</span><br><span class="line">        cout&lt;&lt;sum[r]-sum[l<span class="number">-1</span>]&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       </div>
       <div class="post-tags-categories">
         

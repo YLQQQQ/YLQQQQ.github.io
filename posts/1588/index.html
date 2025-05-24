@@ -56,8 +56,6 @@
         
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
         
-            
-        
     
     <!-- import script -->
     
@@ -639,155 +637,24 @@ zhihu偷图<br />
 D:<br />
 题意：一颗二叉树的所有最小儿子上分布着1-n的不同数，问时候可以交换任意个结点的左右儿子，使得最后最小儿子从左到右递增排序，输出ans值</p>
 <p>dfs跑一下</p>
-<pre class="highlight"><code class="cpp"><span class="hljs-type">int</span> a[N],ans=<span class="hljs-number">0</span>;
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r)</span></span>&#123;
-	<span class="hljs-keyword">if</span>(l&gt;=r)<span class="hljs-keyword">return</span> ;
-	<span class="hljs-keyword">if</span>(l+<span class="hljs-number">1</span>==r)&#123;
-		<span class="hljs-keyword">if</span>(a[l]&gt;a[r])&#123;
-			<span class="hljs-built_in">swap</span>(a[l],a[r]);
-			ans++;
-		&#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> ;
-	&#125;
-	<span class="hljs-built_in">dfs</span>(l,(l+r)/<span class="hljs-number">2</span>);
-	<span class="hljs-built_in">dfs</span>((l+r)/<span class="hljs-number">2</span>+<span class="hljs-number">1</span>,r);
-	<span class="hljs-keyword">if</span>(a[l]&gt;a[(l+r)/<span class="hljs-number">2</span>+<span class="hljs-number">1</span>])&#123;
-		ans++;
-		<span class="hljs-type">int</span> k=(r-l)/<span class="hljs-number">2</span>+<span class="hljs-number">1</span>;
-		<span class="hljs-built_in">rep</span>(i,l,(l+r)/<span class="hljs-number">2</span>)&#123;
-			<span class="hljs-built_in">swap</span>(a[i],a[i+k]);
-		&#125;
-	&#125;
-&#125;
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span>
-</span>&#123;
-	<span class="hljs-type">int</span> n;cin&gt;&gt;n;
-	ans=<span class="hljs-number">0</span>;
-	<span class="hljs-built_in">rep</span>(i,<span class="hljs-number">1</span>,n)cin&gt;&gt;a[i];
-	<span class="hljs-built_in">dfs</span>(<span class="hljs-number">1</span>,n);
-	<span class="hljs-comment">// rep(i,1,n)cout&lt;&lt;a[i]&lt;&lt;&#x27; &#x27;;</span>
-	<span class="hljs-comment">// cout&lt;&lt;endl;</span>
-	<span class="hljs-built_in">rep</span>(i,<span class="hljs-number">1</span>,n)
-	<span class="hljs-keyword">if</span>(a[i]&lt;a[i<span class="hljs-number">-1</span>])&#123;
-		cout&lt;&lt;<span class="hljs-number">-1</span>&lt;&lt;endl;
-		<span class="hljs-keyword">return</span> ;
-	&#125;
-	cout&lt;&lt;ans&lt;&lt;endl;
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a[N],ans=<span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> l,<span class="type">int</span> r)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(l&gt;=r)<span class="keyword">return</span> ;</span><br><span class="line">	<span class="keyword">if</span>(l+<span class="number">1</span>==r)&#123;</span><br><span class="line">		<span class="keyword">if</span>(a[l]&gt;a[r])&#123;</span><br><span class="line">			<span class="built_in">swap</span>(a[l],a[r]);</span><br><span class="line">			ans++;</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">return</span> ;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">dfs</span>(l,(l+r)/<span class="number">2</span>);</span><br><span class="line">	<span class="built_in">dfs</span>((l+r)/<span class="number">2</span>+<span class="number">1</span>,r);</span><br><span class="line">	<span class="keyword">if</span>(a[l]&gt;a[(l+r)/<span class="number">2</span>+<span class="number">1</span>])&#123;</span><br><span class="line">		ans++;</span><br><span class="line">		<span class="type">int</span> k=(r-l)/<span class="number">2</span>+<span class="number">1</span>;</span><br><span class="line">		<span class="built_in">rep</span>(i,l,(l+r)/<span class="number">2</span>)&#123;</span><br><span class="line">			<span class="built_in">swap</span>(a[i],a[i+k]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> n;cin&gt;&gt;n;</span><br><span class="line">	ans=<span class="number">0</span>;</span><br><span class="line">	<span class="built_in">rep</span>(i,<span class="number">1</span>,n)cin&gt;&gt;a[i];</span><br><span class="line">	<span class="built_in">dfs</span>(<span class="number">1</span>,n);</span><br><span class="line">	<span class="comment">// rep(i,1,n)cout&lt;&lt;a[i]&lt;&lt;&#x27; &#x27;;</span></span><br><span class="line">	<span class="comment">// cout&lt;&lt;endl;</span></span><br><span class="line">	<span class="built_in">rep</span>(i,<span class="number">1</span>,n)</span><br><span class="line">	<span class="keyword">if</span>(a[i]&lt;a[i<span class="number">-1</span>])&#123;</span><br><span class="line">		cout&lt;&lt;<span class="number">-1</span>&lt;&lt;endl;</span><br><span class="line">		<span class="keyword">return</span> ;</span><br><span class="line">	&#125;</span><br><span class="line">	cout&lt;&lt;ans&lt;&lt;endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>F ：<br />
 题意：给定一个数组，问是否可以将其分为若干连续段，使得每一段的最左或最右值表示该段中其他元素的个数</p>
 <p>左右dp一下</p>
-<pre class="highlight"><code class="cpp"><span class="hljs-type">const</span> <span class="hljs-type">int</span> N=<span class="hljs-number">3e5</span>+<span class="hljs-number">10</span>;
-<span class="hljs-type">int</span> dp[N],a[N];
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span>
-</span>&#123;
-	<span class="hljs-type">int</span> n;cin&gt;&gt;n;
- 
-	<span class="hljs-built_in">rep</span>(i,<span class="hljs-number">1</span>,n)cin&gt;&gt;a[i];
- 
-	<span class="hljs-built_in">memset</span>(dp,<span class="hljs-number">0</span>,<span class="hljs-keyword">sizeof</span> dp);
- 
-	dp[<span class="hljs-number">0</span>]=<span class="hljs-number">1</span>;
- 
-	<span class="hljs-built_in">rep</span>(i,<span class="hljs-number">1</span>,n)&#123;
-		<span class="hljs-keyword">if</span>(i&gt;=a[i]+<span class="hljs-number">1</span>)dp[i]|=dp[i-a[i]<span class="hljs-number">-1</span>];
- 
-		<span class="hljs-keyword">if</span>(a[i]+i&lt;=n)dp[a[i]+i]|=dp[i<span class="hljs-number">-1</span>];
-	&#125;
-	<span class="hljs-keyword">if</span>(dp[n])cout&lt;&lt;<span class="hljs-string">&quot;YES&quot;</span>&lt;&lt;endl;
-	<span class="hljs-keyword">else</span> cout&lt;&lt;<span class="hljs-string">&quot;NO&quot;</span>&lt;&lt;endl;
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">3e5</span>+<span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> dp[N],a[N];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> n;cin&gt;&gt;n;</span><br><span class="line"> </span><br><span class="line">	<span class="built_in">rep</span>(i,<span class="number">1</span>,n)cin&gt;&gt;a[i];</span><br><span class="line"> </span><br><span class="line">	<span class="built_in">memset</span>(dp,<span class="number">0</span>,<span class="keyword">sizeof</span> dp);</span><br><span class="line"> </span><br><span class="line">	dp[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line"> </span><br><span class="line">	<span class="built_in">rep</span>(i,<span class="number">1</span>,n)&#123;</span><br><span class="line">		<span class="keyword">if</span>(i&gt;=a[i]+<span class="number">1</span>)dp[i]|=dp[i-a[i]<span class="number">-1</span>];</span><br><span class="line"> </span><br><span class="line">		<span class="keyword">if</span>(a[i]+i&lt;=n)dp[a[i]+i]|=dp[i<span class="number">-1</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(dp[n])cout&lt;&lt;<span class="string">&quot;YES&quot;</span>&lt;&lt;endl;</span><br><span class="line">	<span class="keyword">else</span> cout&lt;&lt;<span class="string">&quot;NO&quot;</span>&lt;&lt;endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>round#827</strong><br />
 这道题卡了好久。。。<br />
 D:一个数组是否使得其中gcd(a[i],a[j])==1，求i+j的最大值</p>
 <p>因为a[i]&lt;=1000，所以map存一下暴力，我他妈脑子有坑,还用暴力tle了两发</p>
-<pre class="highlight"><code class="cpp">map&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>&gt;p;
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span>
-</span>&#123;
-    <span class="hljs-type">int</span> n,ans=<span class="hljs-number">-1</span>;cin&gt;&gt;n;
-    p.<span class="hljs-built_in">clear</span>();
-    <span class="hljs-built_in">rep</span>(i,<span class="hljs-number">1</span>,n)&#123;
-        <span class="hljs-type">int</span> x;cin&gt;&gt;x;
-        p[x]=i;
-    &#125;
-	<span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> [x,y]:p)&#123;
-		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> [xx,yy]:p)&#123;
-			<span class="hljs-keyword">if</span>(__gcd(xx,x)==<span class="hljs-number">1</span>)&#123;
-				ans=<span class="hljs-built_in">max</span>(ans,y+yy);
-			&#125;
-		&#125;
-	&#125;
-        cout&lt;&lt;ans&lt;&lt;endl;
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">map&lt;<span class="type">int</span>,<span class="type">int</span>&gt;p;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,ans=<span class="number">-1</span>;cin&gt;&gt;n;</span><br><span class="line">    p.<span class="built_in">clear</span>();</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">1</span>,n)&#123;</span><br><span class="line">        <span class="type">int</span> x;cin&gt;&gt;x;</span><br><span class="line">        p[x]=i;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">auto</span> [x,y]:p)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">auto</span> [xx,yy]:p)&#123;</span><br><span class="line">			<span class="keyword">if</span>(__gcd(xx,x)==<span class="number">1</span>)&#123;</span><br><span class="line">				ans=<span class="built_in">max</span>(ans,y+yy);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">        cout&lt;&lt;ans&lt;&lt;endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>E：前缀和，前最大值存一下二分</p>
-<pre class="highlight"><code class="cpp">ll a[N],p[N],h[N];
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span>
-</span>&#123;
-    ll n,m;cin&gt;&gt;n&gt;&gt;m;
-    <span class="hljs-built_in">rep</span>(i,<span class="hljs-number">1</span>,n)&#123;
-        cin&gt;&gt;a[i];
-        p[i]=<span class="hljs-built_in">max</span>(a[i],p[i<span class="hljs-number">-1</span>]);
-        h[i]=h[i<span class="hljs-number">-1</span>]+a[i];
-    &#125;
-    <span class="hljs-keyword">while</span>(m--)&#123;
-        ll x;cin&gt;&gt;x;
-        ll l=<span class="hljs-number">1</span>,r=n;
-        <span class="hljs-keyword">while</span>(l&lt;=r)&#123;
-            <span class="hljs-type">int</span> k=(l+r)&gt;&gt;<span class="hljs-number">1</span>;
-            <span class="hljs-keyword">if</span>(x&gt;=p[k])l=k+<span class="hljs-number">1</span>;
-            <span class="hljs-keyword">else</span> r=k<span class="hljs-number">-1</span>;
-        &#125;
-        cout&lt;&lt;h[r]&lt;&lt;<span class="hljs-string">&#x27; &#x27;</span>;
-    &#125;
-	cout&lt;&lt;endl;
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">ll a[N],p[N],h[N];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ll n,m;cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">1</span>,n)&#123;</span><br><span class="line">        cin&gt;&gt;a[i];</span><br><span class="line">        p[i]=<span class="built_in">max</span>(a[i],p[i<span class="number">-1</span>]);</span><br><span class="line">        h[i]=h[i<span class="number">-1</span>]+a[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(m--)&#123;</span><br><span class="line">        ll x;cin&gt;&gt;x;</span><br><span class="line">        ll l=<span class="number">1</span>,r=n;</span><br><span class="line">        <span class="keyword">while</span>(l&lt;=r)&#123;</span><br><span class="line">            <span class="type">int</span> k=(l+r)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span>(x&gt;=p[k])l=k+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span> r=k<span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        cout&lt;&lt;h[r]&lt;&lt;<span class="string">&#x27; &#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">	cout&lt;&lt;endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>F:问每次操作给初始字符串都为’a’的s和t加k次字符串x，是否可以排序使得a&lt;b</p>
 <p>记录操作后a和b的最大字符和长度</p>
-<pre class="highlight"><code class="cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span> </span>&#123;
-    <span class="hljs-type">int</span> n,lens=<span class="hljs-number">1</span>,lent=<span class="hljs-number">1</span>;cin&gt;&gt;n;
-    <span class="hljs-type">char</span> maxs=<span class="hljs-string">&#x27;a&#x27;</span>,maxt=<span class="hljs-string">&#x27;a&#x27;</span>;
-    <span class="hljs-built_in">rep</span>(i,<span class="hljs-number">1</span>,n)&#123;
-        <span class="hljs-type">int</span> o,k;string s;cin&gt;&gt;o&gt;&gt;k&gt;&gt;s;
-        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> c:s)&#123;
-            <span class="hljs-keyword">if</span>(o==<span class="hljs-number">1</span>) &#123;
-                maxs=<span class="hljs-built_in">max</span>(maxs,c);
-                lens+=k;
-            &#125; <span class="hljs-keyword">else</span> &#123;
-                maxt=<span class="hljs-built_in">max</span>(maxt,c);
-                lent+=k;
-            &#125;
-        &#125;
-        <span class="hljs-comment">//如果maxt&gt;&#x27;a&#x27;  ,那么必然可以使得成立</span>
-        <span class="hljs-comment">//否则若a和b中都是&#x27;a&#x27;，那就比较长度</span>
-        <span class="hljs-keyword">if</span>(<span class="hljs-string">&#x27;a&#x27;</span>&lt;maxt||(<span class="hljs-string">&#x27;a&#x27;</span>==maxt&amp;&amp;<span class="hljs-string">&#x27;a&#x27;</span>==maxs&amp;&amp;lens&lt;lent))cout&lt;&lt;<span class="hljs-string">&quot;YES&quot;</span>&lt;&lt;endl;
-        <span class="hljs-keyword">else</span> cout&lt;&lt;<span class="hljs-string">&quot;NO&quot;</span>&lt;&lt;endl;
-        
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> n,lens=<span class="number">1</span>,lent=<span class="number">1</span>;cin&gt;&gt;n;</span><br><span class="line">    <span class="type">char</span> maxs=<span class="string">&#x27;a&#x27;</span>,maxt=<span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">1</span>,n)&#123;</span><br><span class="line">        <span class="type">int</span> o,k;string s;cin&gt;&gt;o&gt;&gt;k&gt;&gt;s;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> c:s)&#123;</span><br><span class="line">            <span class="keyword">if</span>(o==<span class="number">1</span>) &#123;</span><br><span class="line">                maxs=<span class="built_in">max</span>(maxs,c);</span><br><span class="line">                lens+=k;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                maxt=<span class="built_in">max</span>(maxt,c);</span><br><span class="line">                lent+=k;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//如果maxt&gt;&#x27;a&#x27;  ,那么必然可以使得成立</span></span><br><span class="line">        <span class="comment">//否则若a和b中都是&#x27;a&#x27;，那就比较长度</span></span><br><span class="line">        <span class="keyword">if</span>(<span class="string">&#x27;a&#x27;</span>&lt;maxt||(<span class="string">&#x27;a&#x27;</span>==maxt&amp;&amp;<span class="string">&#x27;a&#x27;</span>==maxs&amp;&amp;lens&lt;lent))cout&lt;&lt;<span class="string">&quot;YES&quot;</span>&lt;&lt;endl;</span><br><span class="line">        <span class="keyword">else</span> cout&lt;&lt;<span class="string">&quot;NO&quot;</span>&lt;&lt;endl;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>G:重新排列数组a，使得a的前缀异或和按最大排列</p>
 <p>int二进制位只有三十多，所以排列前31次找出按位补1位的最大值，剩下的随便</p>
-<pre class="highlight"><code class="cpp"><span class="hljs-type">int</span> a[N],num;
-<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">cmp</span><span class="hljs-params">(<span class="hljs-type">int</span> a,<span class="hljs-type">int</span> b)</span></span>&#123;
-	<span class="hljs-keyword">return</span> (a|num) &gt; (b|num);
-&#125;
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span>
-</span>&#123;
-	<span class="hljs-type">int</span> n;cin&gt;&gt;n;
-	num=<span class="hljs-number">0</span>;
-	<span class="hljs-built_in">rep</span>(i,<span class="hljs-number">1</span>,n)cin&gt;&gt;a[i];
-	<span class="hljs-built_in">rep</span>(i,<span class="hljs-number">1</span>,<span class="hljs-built_in">min</span>(<span class="hljs-number">31</span>,n))&#123;
-    <span class="hljs-comment">///最多就30*nlog2n</span>
-		<span class="hljs-built_in">sort</span>(a+i,a+n+<span class="hljs-number">1</span>,cmp);
-		num|=a[i];
-	&#125;
-	<span class="hljs-built_in">rep</span>(i,<span class="hljs-number">1</span>,n)cout&lt;&lt;a[i]&lt;&lt;<span class="hljs-string">&#x27; &#x27;</span>;
-	cout&lt;&lt;endl;
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a[N],num;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">cmp</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (a|num) &gt; (b|num);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> n;cin&gt;&gt;n;</span><br><span class="line">	num=<span class="number">0</span>;</span><br><span class="line">	<span class="built_in">rep</span>(i,<span class="number">1</span>,n)cin&gt;&gt;a[i];</span><br><span class="line">	<span class="built_in">rep</span>(i,<span class="number">1</span>,<span class="built_in">min</span>(<span class="number">31</span>,n))&#123;</span><br><span class="line">    <span class="comment">///最多就30*nlog2n</span></span><br><span class="line">		<span class="built_in">sort</span>(a+i,a+n+<span class="number">1</span>,cmp);</span><br><span class="line">		num|=a[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">rep</span>(i,<span class="number">1</span>,n)cout&lt;&lt;a[i]&lt;&lt;<span class="string">&#x27; &#x27;</span>;</span><br><span class="line">	cout&lt;&lt;endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>起床想到的第一件事就是我怎么这么废，这都没ak，二十几号还有两门结课考试，忙去了。。。</p>
 
       </div>

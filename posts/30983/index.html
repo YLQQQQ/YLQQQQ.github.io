@@ -56,8 +56,6 @@
         
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
         
-            
-        
     
     <!-- import script -->
     
@@ -598,7 +596,7 @@
       
         <div class="post-detail-header_wordcount">
           <span class="totalcount">
-            <i class="fas fa-file-text-o"></i> 字数统计: 131 |
+            <i class="fas fa-file-text-o"></i> 字数统计: 132 |
           </span>
   
           <span class="min2read">
@@ -634,28 +632,7 @@
 <h3 id="题a"><a class="markdownIt-Anchor" href="#题a"></a> 题A</h3>
 <p>题意：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span> 组camp，每组若干个人，问多少人参加了全部camp<br />
 解：略</p>
-<pre class="highlight"><code class="cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-map&lt;string,<span class="hljs-type">int</span>&gt; p, q;
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;
-    <span class="hljs-type">int</span> n; cin &gt;&gt; n;
-    set&lt;string&gt; s;
-    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; ++ j)&#123;
-        <span class="hljs-type">int</span> c; cin &gt;&gt; c;
-        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= c; ++ i) &#123;
-            string x; cin &gt;&gt; x;
-            p[x] ++;
-            s.<span class="hljs-built_in">insert</span>(x);
-        &#125;
-    &#125;
-    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> [x, y]: p) <span class="hljs-keyword">if</span>(y == n) q[x] ++;
-    
-    cout &lt;&lt; q.<span class="hljs-built_in">size</span>() &lt;&lt; <span class="hljs-string">&#x27;\n&#x27;</span>;
-    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> [x, y]: q) cout &lt;&lt; x &lt;&lt; <span class="hljs-string">&#x27;\n&#x27;</span>;
-    
-&#125;
-</code></pre>
-
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">map&lt;string,<span class="type">int</span>&gt; p, q;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> n; cin &gt;&gt; n;</span><br><span class="line">    set&lt;string&gt; s;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>; j &lt;= n; ++ j)&#123;</span><br><span class="line">        <span class="type">int</span> c; cin &gt;&gt; c;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= c; ++ i) &#123;</span><br><span class="line">            string x; cin &gt;&gt; x;</span><br><span class="line">            p[x] ++;</span><br><span class="line">            s.<span class="built_in">insert</span>(x);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> [x, y]: p) <span class="keyword">if</span>(y == n) q[x] ++;</span><br><span class="line">    </span><br><span class="line">    cout &lt;&lt; q.<span class="built_in">size</span>() &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> [x, y]: q) cout &lt;&lt; x &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       </div>
       <div class="post-tags-categories">
         

@@ -56,8 +56,6 @@
         
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
         
-            
-        
     
     <!-- import script -->
     
@@ -635,47 +633,23 @@
 <p>dijkstra的本质是贪心，对于求目标两个位置间的最短权边和，查找从起点位置到每个点的最短距离，同时更新与该当前点相关的点的距离。</p>
 <p>这种存图方式只需要开一个数组存储每个点引出的第一条边，然后存储每个点作为起点的每条边，这样就可以做到不重不漏。</p>
 <p>在链式前向星存图中，我们需要定义一个结构体：</p>
-<pre class="highlight"><code class="cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">EDGE</span> 
-&#123;
-    <span class="hljs-type">int</span> next;
-    <span class="hljs-type">int</span> to;
-&#125;edge[<span class="hljs-number">1000000</span>];
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">EDGE</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> next;</span><br><span class="line">    <span class="type">int</span> to;</span><br><span class="line">&#125;edge[<span class="number">1000000</span>];</span><br></pre></td></tr></table></figure>
 <p>和一个数组</p>
-<pre class="highlight"><code class="">int head[1000000];
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int head[1000000];</span><br></pre></td></tr></table></figure>
 <p>和一个变量：</p>
-<pre class="highlight"><code class="">int cnt=0;//指针
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int cnt=0;//指针</span><br></pre></td></tr></table></figure>
 <p>你会发现竟然没存起点！！其实起点是用headhead存的</p>
 <p><strong>举例：</strong><br />
 <img src="https://img-blog.csdnimg.cn/4251f50ed86040a7bcb9cc38c9a646e4.png" class="lazyload placeholder" data-srcset="https://img-blog.csdnimg.cn/4251f50ed86040a7bcb9cc38c9a646e4.png" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" alt="" /><br />
 如图：这样的一个有向图，输入是：</p>
-<pre class="highlight"><code class="">1 2
-1 3
-1 4
-2 3
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1 2</span><br><span class="line">1 3</span><br><span class="line">1 4</span><br><span class="line">2 3</span><br></pre></td></tr></table></figure>
 <p><strong>逐步分析：</strong><br />
 1.输入1 2，代表1连向2。</p>
-<pre class="highlight"><code class="">cnt++;//作为结构体下标，没有意义
-head[1]=cnt;//结点1的第一个儿子存在了edge[cnt]里面
-edge[cnt].to=2;结点1的儿子是2
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cnt++;//作为结构体下标，没有意义</span><br><span class="line">head[1]=cnt;//结点1的第一个儿子存在了edge[cnt]里面</span><br><span class="line">edge[cnt].to=2;结点1的儿子是2</span><br></pre></td></tr></table></figure>
 <p>此时： cnt=1</p>
 <p><img src="https://img-blog.csdnimg.cn/b685f2dda2604fc5bf0ae668134aa5a5.png" class="lazyload placeholder" data-srcset="https://img-blog.csdnimg.cn/b685f2dda2604fc5bf0ae668134aa5a5.png" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" alt="" /></p>
 <p>2.输入1 3，代表1连向3。</p>
-<pre class="highlight"><code class="">cnt++;
-head[1]=cnt;
-edge[cnt].to=3;结点1的儿子是3
-//这时,3成为了结点1的儿子，不过2被挤了下去...
-//所以要引入结构体中next元素，记录：3还有个兄弟（next）是2
-//所以代码要换成：
-cnt++;
-edge[cnt].to=3;//结点1连向3
-edge[cnt].next=head[1];//3的兄弟是2
-head[1]=cnt;//更新head
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cnt++;</span><br><span class="line">head[1]=cnt;</span><br><span class="line">edge[cnt].to=3;结点1的儿子是3</span><br><span class="line">//这时,3成为了结点1的儿子，不过2被挤了下去...</span><br><span class="line">//所以要引入结构体中next元素，记录：3还有个兄弟（next）是2</span><br><span class="line">//所以代码要换成：</span><br><span class="line">cnt++;</span><br><span class="line">edge[cnt].to=3;//结点1连向3</span><br><span class="line">edge[cnt].next=head[1];//3的兄弟是2</span><br><span class="line">head[1]=cnt;//更新head</span><br></pre></td></tr></table></figure>
 <p>此时： cnt=2<br />
 <img src="https://img-blog.csdnimg.cn/d1790bebf3bd4e1997bdb8e6808cb914.png" class="lazyload placeholder" data-srcset="https://img-blog.csdnimg.cn/d1790bebf3bd4e1997bdb8e6808cb914.png" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" alt="" /><br />
 3.输入1 4，代表1连向4。<br />
@@ -688,97 +662,16 @@ head[1]=cnt;//更新head
 <p>而head 存的是当前结点指向的最远的结点的下标，1-&gt;2，1-&gt;3，则head [1] =3，</p>
 <p>对于带权值的问题，在结构体中加入一个元素记录权值即可</p>
 <p>代码：(带权值）</p>
-<pre class="highlight"><code class="cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;iostream&gt;</span></span>
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-<span class="hljs-keyword">struct</span> <span class="hljs-title class_">edge</span> 
-&#123; 
-    <span class="hljs-type">int</span> next;
-    <span class="hljs-type">int</span> to;
-    <span class="hljs-type">int</span> wei;
-&#125;edge[MAXM];
-<span class="hljs-type">int</span> head[MAXN];<span class="hljs-comment">//head[i]为i点的第一条边</span>
-<span class="hljs-type">int</span> cnt=<span class="hljs-number">0</span>;
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">addedge</span><span class="hljs-params">(<span class="hljs-type">int</span> u,<span class="hljs-type">int</span> v,<span class="hljs-type">int</span> w)</span> <span class="hljs-comment">//起点，终点，权值 </span>
-</span>&#123;
-    edge[++cnt].next=head[u];<span class="hljs-comment">//更新cnt</span>
-    edge[cnt].to=v;
-    edge[cnt].w=w;
-    head[u]=cnt;
-&#125;
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
-</span>&#123;
-	<span class="hljs-type">int</span> n;
-    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++)
-    &#123;
-    	<span class="hljs-type">int</span> a,b,wei;
-        <span class="hljs-built_in">addedge</span>(a,b,wei);
-        <span class="hljs-comment">//如果是无向图，还要addedge(b,a,wei);</span>
-    &#125;
-&#125;
-
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">edge</span> </span><br><span class="line">&#123; </span><br><span class="line">    <span class="type">int</span> next;</span><br><span class="line">    <span class="type">int</span> to;</span><br><span class="line">    <span class="type">int</span> wei;</span><br><span class="line">&#125;edge[MAXM];</span><br><span class="line"><span class="type">int</span> head[MAXN];<span class="comment">//head[i]为i点的第一条边</span></span><br><span class="line"><span class="type">int</span> cnt=<span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">addedge</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> v,<span class="type">int</span> w)</span> <span class="comment">//起点，终点，权值 </span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    edge[++cnt].next=head[u];<span class="comment">//更新cnt</span></span><br><span class="line">    edge[cnt].to=v;</span><br><span class="line">    edge[cnt].w=w;</span><br><span class="line">    head[u]=cnt;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> n;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">    	<span class="type">int</span> a,b,wei;</span><br><span class="line">        <span class="built_in">addedge</span>(a,b,wei);</span><br><span class="line">        <span class="comment">//如果是无向图，还要addedge(b,a,wei);</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p><strong>边的遍历</strong></p>
 <p>在遍历以x为起点的所有边时，只需要这样就行</p>
-<pre class="highlight"><code class="">	for(int i=head[x];i!=0;i=edge[i].next)
-
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">for(int i=head[x];i!=0;i=edge[i].next)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>这个循环的结束条件是i等于0，因为最后一条边，也就是存边时第一条边，在把head值存进next时，head还没有更新过，也就是0。所以当next返回0时，就说明这些边遍历完毕了。</p>
 <p><strong>代码</strong><br />
 <strong>堆优化</strong></p>
 <p>在寻找最短值的时候，用优先队列priority_queue&lt;pair&lt;int,int&gt;&gt;来存储，其中的pair中记录的分别是每条边的权值和终点结点。</p>
 <p>优化完成后的总复杂度为O(mlogn)</p>
-<pre class="highlight"><code class="cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> rep(i,n,m) for(int i=n;i&lt;=m;++i)</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> per(i,n,m) for(int i=n;i&gt;=m;--i)</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> INF 0x3f3f3f3f</span>
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-<span class="hljs-keyword">typedef</span> <span class="hljs-type">long</span> <span class="hljs-type">long</span> ll;
-<span class="hljs-type">const</span> <span class="hljs-type">int</span> N=<span class="hljs-number">250010</span>;
-<span class="hljs-type">int</span> head[N],ne[N],to[N],w[N],dist[N];
-<span class="hljs-comment">// head记录当前结点连接的最远结点的下标，ne记录当前结点连接的最近结点的下标，</span>
-<span class="hljs-comment">//to记录当前边指向的结点，w记录权值，dist记录目标起点到各个点的最短距离</span>
-<span class="hljs-type">bool</span> st[N];  <span class="hljs-comment">//记录当前结点是否已经找到最短距离</span>
-<span class="hljs-type">int</span> n,m,s,cnt=<span class="hljs-number">0</span>;  <span class="hljs-comment">//cnt是记录每次数据的指针，相当于下标</span>
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">addw</span><span class="hljs-params">(<span class="hljs-type">int</span> a,<span class="hljs-type">int</span> b,<span class="hljs-type">int</span> c)</span></span>&#123;
-    w[++cnt]=c;
-    to[cnt]=b;
-    ne[cnt]=head[a];  <span class="hljs-comment">//更新指向最近结点的下标</span>
-    head[a]=cnt;  <span class="hljs-comment">//更新指向最远结点的下标</span>
-&#125;
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Dijkstra</span><span class="hljs-params">()</span>
-</span>&#123;
-    priority_queue&lt;pair&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>&gt;,vector&lt;pair&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>&gt;&gt;,greater&lt;pair&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>&gt;&gt;&gt; heap;
-    <span class="hljs-comment">//优先队列自带的排序函数greater，使得默认按第一个元素升序排序</span>
-    heap.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-number">0</span>,s&#125;);dist[s]=<span class="hljs-number">0</span>;  <span class="hljs-comment">//s记录的是所求起点，将其放入堆中，距离为0，终点是其自己</span>
-    <span class="hljs-keyword">while</span>(!heap.<span class="hljs-built_in">empty</span>())&#123;
-        pair&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>&gt; temp=heap.<span class="hljs-built_in">top</span>();
-        heap.<span class="hljs-built_in">pop</span>();     <span class="hljs-comment">//弹出权值最小的点，待处理</span>
-        <span class="hljs-type">int</span> x=temp.first,y=temp.second;  
-        <span class="hljs-keyword">if</span>(st[y])<span class="hljs-keyword">continue</span>;  <span class="hljs-comment">//如果该点已经找到最短距离，则跳过</span>
-        st[y]=<span class="hljs-literal">true</span>;  <span class="hljs-comment">//更新该点已经找到最短距离</span>
-        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=head[y];i!=<span class="hljs-number">0</span>;i=ne[i])&#123;  <span class="hljs-comment">//遍历与该点连接的结点</span>
-            <span class="hljs-type">int</span> t=to[i];    
-            <span class="hljs-keyword">if</span>(dist[t]&gt;x+w[i])&#123;  <span class="hljs-comment">//找到连接的可更新的最短结点</span>
-                dist[t]=x+w[i];  <span class="hljs-comment">//更新权值路径</span>
-                heap.<span class="hljs-built_in">push</span>(&#123;dist[t],t&#125;);  <span class="hljs-comment">//把该更新过的结点放到堆中待处理</span>
-            &#125;
-        &#125;
-    &#125;
-&#125;
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
-</span>&#123;
-    cin&gt;&gt;n&gt;&gt;m;
-    <span class="hljs-built_in">memset</span>(dist,INF,<span class="hljs-built_in">sizeof</span>(dist)); <span class="hljs-comment">//初始化距离无穷大</span>
-    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=m;++i)&#123;
-        <span class="hljs-type">int</span> a,b,c;cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;
-        <span class="hljs-built_in">addw</span>(a,b,c);
-    &#125;
-    <span class="hljs-built_in">Dijkstra</span>();
-    <span class="hljs-built_in">rep</span>(i,<span class="hljs-number">1</span>,n)cout&lt;&lt;dist[i]&lt;&lt;<span class="hljs-string">&#x27; &#x27;</span>;
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-&#125;
-
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,n,m) for(int i=n;i&lt;=m;++i)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,n,m) for(int i=n;i&gt;=m;--i)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> INF 0x3f3f3f3f</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">250010</span>;</span><br><span class="line"><span class="type">int</span> head[N],ne[N],to[N],w[N],dist[N];</span><br><span class="line"><span class="comment">// head记录当前结点连接的最远结点的下标，ne记录当前结点连接的最近结点的下标，</span></span><br><span class="line"><span class="comment">//to记录当前边指向的结点，w记录权值，dist记录目标起点到各个点的最短距离</span></span><br><span class="line"><span class="type">bool</span> st[N];  <span class="comment">//记录当前结点是否已经找到最短距离</span></span><br><span class="line"><span class="type">int</span> n,m,s,cnt=<span class="number">0</span>;  <span class="comment">//cnt是记录每次数据的指针，相当于下标</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">addw</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b,<span class="type">int</span> c)</span></span>&#123;</span><br><span class="line">    w[++cnt]=c;</span><br><span class="line">    to[cnt]=b;</span><br><span class="line">    ne[cnt]=head[a];  <span class="comment">//更新指向最近结点的下标</span></span><br><span class="line">    head[a]=cnt;  <span class="comment">//更新指向最远结点的下标</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Dijkstra</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    priority_queue&lt;pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;,vector&lt;pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;&gt;,greater&lt;pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;&gt;&gt; heap;</span><br><span class="line">    <span class="comment">//优先队列自带的排序函数greater，使得默认按第一个元素升序排序</span></span><br><span class="line">    heap.<span class="built_in">push</span>(&#123;<span class="number">0</span>,s&#125;);dist[s]=<span class="number">0</span>;  <span class="comment">//s记录的是所求起点，将其放入堆中，距离为0，终点是其自己</span></span><br><span class="line">    <span class="keyword">while</span>(!heap.<span class="built_in">empty</span>())&#123;</span><br><span class="line">        pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt; temp=heap.<span class="built_in">top</span>();</span><br><span class="line">        heap.<span class="built_in">pop</span>();     <span class="comment">//弹出权值最小的点，待处理</span></span><br><span class="line">        <span class="type">int</span> x=temp.first,y=temp.second;  </span><br><span class="line">        <span class="keyword">if</span>(st[y])<span class="keyword">continue</span>;  <span class="comment">//如果该点已经找到最短距离，则跳过</span></span><br><span class="line">        st[y]=<span class="literal">true</span>;  <span class="comment">//更新该点已经找到最短距离</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=head[y];i!=<span class="number">0</span>;i=ne[i])&#123;  <span class="comment">//遍历与该点连接的结点</span></span><br><span class="line">            <span class="type">int</span> t=to[i];    </span><br><span class="line">            <span class="keyword">if</span>(dist[t]&gt;x+w[i])&#123;  <span class="comment">//找到连接的可更新的最短结点</span></span><br><span class="line">                dist[t]=x+w[i];  <span class="comment">//更新权值路径</span></span><br><span class="line">                heap.<span class="built_in">push</span>(&#123;dist[t],t&#125;);  <span class="comment">//把该更新过的结点放到堆中待处理</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">    <span class="built_in">memset</span>(dist,INF,<span class="built_in">sizeof</span>(dist)); <span class="comment">//初始化距离无穷大</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=m;++i)&#123;</span><br><span class="line">        <span class="type">int</span> a,b,c;cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;</span><br><span class="line">        <span class="built_in">addw</span>(a,b,c);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">Dijkstra</span>();</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">1</span>,n)cout&lt;&lt;dist[i]&lt;&lt;<span class="string">&#x27; &#x27;</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>带负权边问题的spfa算法之后再考虑学不学🙄🙄🙄🙄</p>
 
       </div>

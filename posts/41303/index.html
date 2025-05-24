@@ -56,8 +56,6 @@
         
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
         
-            
-        
     
     <!-- import script -->
     
@@ -638,79 +636,17 @@
 1、并查集的find函数</p>
 <p>对于并查集的实用，主要有两个函数，一个是find函数，用于查找该元素的头元素，对于以下途中的元素可知，A，C，D的头元素都是B，此时B元素就是该集合的老大。<br />
 <img src="https://img-blog.csdnimg.cn/f8de6a95a3154c5ca5c0ad42c7eb2858.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aWz5Lq65Y-q5Lya5b2x5ZON5oiR5pWy5Luj56CB55qE6YCf5bqmUUFR,size_10,color_FFFFFF,t_70,g_se,x_16" class="lazyload placeholder" data-srcset="https://img-blog.csdnimg.cn/f8de6a95a3154c5ca5c0ad42c7eb2858.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aWz5Lq65Y-q5Lya5b2x5ZON5oiR5pWy5Luj56CB55qE6YCf5bqmUUFR,size_10,color_FFFFFF,t_70,g_se,x_16" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" alt="" /></p>
-<pre class="highlight"><code class="cpp"><span class="hljs-type">int</span> pre[<span class="hljs-number">100</span>];   <span class="hljs-comment">//对数组f，f[i]=j中表示i元素的上一层元素是j</span>
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">find</span> <span class="hljs-params">( <span class="hljs-type">int</span> n )</span>
-</span>&#123;
-    <span class="hljs-type">int</span> head=n;
-    <span class="hljs-keyword">while</span>(pre[head]!=head) <span class="hljs-comment">//一直查找没有最上面一层的元素，相当于一个集合的boss吧</span>
-        head=pre[head];
- 
-    <span class="hljs-comment">//part 2  </span>
-    <span class="hljs-comment">//*路径压缩 </span>
-    <span class="hljs-type">int</span> i=n,j;
-    
-    <span class="hljs-keyword">while</span>(i!=head)&#123;    
-		j=pre[i];      <span class="hljs-comment">//j是i的前一元素</span>
-		pre[i]=head;  
-		i=j;
-	&#125;
-    <span class="hljs-comment">//压缩结束</span>
-    *<span class="hljs-comment">//</span>
- 
-	<span class="hljs-keyword">return</span> head;
-	
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> pre[<span class="number">100</span>];   <span class="comment">//对数组f，f[i]=j中表示i元素的上一层元素是j</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span> <span class="params">( <span class="type">int</span> n )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> head=n;</span><br><span class="line">    <span class="keyword">while</span>(pre[head]!=head) <span class="comment">//一直查找没有最上面一层的元素，相当于一个集合的boss吧</span></span><br><span class="line">        head=pre[head];</span><br><span class="line"> </span><br><span class="line">    <span class="comment">//part 2  </span></span><br><span class="line">    <span class="comment">//*路径压缩 </span></span><br><span class="line">    <span class="type">int</span> i=n,j;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>(i!=head)&#123;    </span><br><span class="line">		j=pre[i];      <span class="comment">//j是i的前一元素</span></span><br><span class="line">		pre[i]=head;  </span><br><span class="line">		i=j;</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="comment">//压缩结束</span></span><br><span class="line">    *<span class="comment">//</span></span><br><span class="line"> </span><br><span class="line">	<span class="keyword">return</span> head;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>如果我们不进行路径压缩那部分的话就会发现，每次要查找一个元素的老大的话，都要一直往上一层循环找，当层数很大的时候就很费时间复杂度，这时候我们就可以用路径压缩，使得在一个元素往上找老大的过程中遇到的元素都直接指向老大，如图<br />
 <img src="https://img-blog.csdnimg.cn/dc1a0e29ca69489a91825f43cc2b1428.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aWz5Lq65Y-q5Lya5b2x5ZON5oiR5pWy5Luj56CB55qE6YCf5bqmUUFR,size_14,color_FFFFFF,t_70,g_se,x_16" class="lazyload placeholder" data-srcset="https://img-blog.csdnimg.cn/dc1a0e29ca69489a91825f43cc2b1428.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aWz5Lq65Y-q5Lya5b2x5ZON5oiR5pWy5Luj56CB55qE6YCf5bqmUUFR,size_14,color_FFFFFF,t_70,g_se,x_16" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" alt="" /></p>
-<pre class="highlight"><code class="cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">join</span><span class="hljs-params">(<span class="hljs-type">int</span> i,<span class="hljs-type">int</span> j)</span></span>&#123;
-	<span class="hljs-type">int</span> x=pre[i],y=pre[j];  <span class="hljs-comment">//x和y分别是i和j的老大</span>
-	<span class="hljs-keyword">if</span>(x!=y)  pre[x]=y ;  <span class="hljs-comment">//如果i和j的老大不是是同一个人</span>
-	      <span class="hljs-comment">//让j组织的老大的成为i组织老大的老大</span>
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">join</span><span class="params">(<span class="type">int</span> i,<span class="type">int</span> j)</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> x=pre[i],y=pre[j];  <span class="comment">//x和y分别是i和j的老大</span></span><br><span class="line">	<span class="keyword">if</span>(x!=y)  pre[x]=y ;  <span class="comment">//如果i和j的老大不是是同一个人</span></span><br><span class="line">	      <span class="comment">//让j组织的老大的成为i组织老大的老大</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdnimg.cn/362b5461c2f541c396e156e975ebac10.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aWz5Lq65Y-q5Lya5b2x5ZON5oiR5pWy5Luj56CB55qE6YCf5bqmUUFR,size_20,color_FFFFFF,t_70,g_se,x_16" class="lazyload placeholder" data-srcset="https://img-blog.csdnimg.cn/362b5461c2f541c396e156e975ebac10.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aWz5Lq65Y-q5Lya5b2x5ZON5oiR5pWy5Luj56CB55qE6YCf5bqmUUFR,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" alt="" /><br />
 这时候合并的两组织层数用树来看还是比较长的，可以用find一次来压缩一下路径使得ABCEH属于同一层。</p>
 <p><strong>例题来自ACWing</strong></p>
 <p><img src="https://img-blog.csdnimg.cn/dc1bac1ba2e54292bdca747ff8a8d56b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aWz5Lq65Y-q5Lya5b2x5ZON5oiR5pWy5Luj56CB55qE6YCf5bqmUUFR,size_16,color_FFFFFF,t_70,g_se,x_16" class="lazyload placeholder" data-srcset="https://img-blog.csdnimg.cn/dc1bac1ba2e54292bdca747ff8a8d56b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aWz5Lq65Y-q5Lya5b2x5ZON5oiR5pWy5Luj56CB55qE6YCf5bqmUUFR,size_16,color_FFFFFF,t_70,g_se,x_16" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" alt="" /><br />
 这道题用主要用贪心的思想，同时加上并查集的优化，先求出最大的保质期时间，然后对于每一天的的头元素都是改天的日期，在从利润最大的商品往最小的商品遍历的时候，如果说对保质期使i的商品，若pre [ i ] == i，那么可以说明这一天的还没有卖出东西，所以可以把目前利润最大的卖了，同时使得目前该保质期的商品的 pre [ i ] = i - 1，即使得保质期为i的头元素为 i - 1， 这样当遇到第二大利润且保质期也是 i 的时候这个商品只能在该保质期的前的第 i - 1 天卖，从前往后的头元素表示着可以卖出商品的时间，如果该时间等于0了也说明天数卖完了</p>
 <p>这题里用的并查集pre [ i ] = j 表示在第 i 天之前距 i 最近的还未出售过商品的日期是 j ，在每用完第j天后更新 j = j - 1，使得某天后面的pre [ i ]都与前面空闲的某天直接联系。</p>
-<pre class="highlight"><code class="cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> N 10010</span>
-<span class="hljs-type">int</span> n, pre[N];
-pair&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt; good[N];  <span class="hljs-comment">//存储每一个货物的利润和保质期</span>
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span> </span>&#123;
-    <span class="hljs-type">int</span> day=<span class="hljs-number">0</span>, num=<span class="hljs-number">0</span>;
-    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;= n;i++) &#123;
-        cin&gt;&gt;good[i].first&gt;&gt;good[i].second;
-        day=<span class="hljs-built_in">max</span>(day,good[i].second);  <span class="hljs-comment">//取得一个最晚过期时间</span>
-    &#125;
-    <span class="hljs-built_in">sort</span>(good+<span class="hljs-number">1</span>,good+n+<span class="hljs-number">1</span>);  <span class="hljs-comment">// 对利润从小到大排序</span>
-    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;= day;i++)  pre[i] = i;<span class="hljs-comment">//初始化每一天的头元素     </span>
-    <span class="hljs-comment">//    利用路径压缩, 可以快速找出从过期时间往前数第一个空闲的天数</span>
-    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=n;i&gt;<span class="hljs-number">0</span>;i--)&#123;
-        <span class="hljs-type">int</span> r=<span class="hljs-built_in">findd</span>(good[i].second);  <span class="hljs-comment">//获取利润最大的商品的过期日期</span>
-        <span class="hljs-keyword">if</span>(r!=<span class="hljs-number">0</span>)&#123;                   <span class="hljs-comment">//如果这个&quot;位置&quot;还没有被用掉</span>
-            num+=good[i].first;     <span class="hljs-comment">//更新答案        </span>
-            pre[r]=r<span class="hljs-number">-1</span>;   <span class="hljs-comment">//合并两个集合(r与r-1)-&gt; 把这个&quot;位置&quot;指向他前一个&quot;位置&quot;</span>
-        &#125;
-    &#125;
-    cout&lt;&lt;num&lt;&lt;endl;
-&#125;
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">findd</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
-    <span class="hljs-keyword">if</span> (x==pre[x]) <span class="hljs-keyword">return</span> x;   
-    <span class="hljs-keyword">return</span> pre[x]=<span class="hljs-built_in">findd</span>(pre[x]);  <span class="hljs-comment">//路径压缩</span>
-&#125;
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
-</span>&#123;
-    <span class="hljs-keyword">while</span>(cin&gt;&gt;n) &#123;
-        <span class="hljs-built_in">solve</span>();
-    &#125;
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-&#125;
-</code></pre>
-
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> N 10010</span></span><br><span class="line"><span class="type">int</span> n, pre[N];</span><br><span class="line">pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt; good[N];  <span class="comment">//存储每一个货物的利润和保质期</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> day=<span class="number">0</span>, num=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">1</span>;i&lt;= n;i++) &#123;</span><br><span class="line">        cin&gt;&gt;good[i].first&gt;&gt;good[i].second;</span><br><span class="line">        day=<span class="built_in">max</span>(day,good[i].second);  <span class="comment">//取得一个最晚过期时间</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">sort</span>(good+<span class="number">1</span>,good+n+<span class="number">1</span>);  <span class="comment">// 对利润从小到大排序</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;= day;i++)  pre[i] = i;<span class="comment">//初始化每一天的头元素     </span></span><br><span class="line">    <span class="comment">//    利用路径压缩, 可以快速找出从过期时间往前数第一个空闲的天数</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=n;i&gt;<span class="number">0</span>;i--)&#123;</span><br><span class="line">        <span class="type">int</span> r=<span class="built_in">findd</span>(good[i].second);  <span class="comment">//获取利润最大的商品的过期日期</span></span><br><span class="line">        <span class="keyword">if</span>(r!=<span class="number">0</span>)&#123;                   <span class="comment">//如果这个&quot;位置&quot;还没有被用掉</span></span><br><span class="line">            num+=good[i].first;     <span class="comment">//更新答案        </span></span><br><span class="line">            pre[r]=r<span class="number">-1</span>;   <span class="comment">//合并两个集合(r与r-1)-&gt; 把这个&quot;位置&quot;指向他前一个&quot;位置&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;num&lt;&lt;endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">findd</span><span class="params">(<span class="type">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (x==pre[x]) <span class="keyword">return</span> x;   </span><br><span class="line">    <span class="keyword">return</span> pre[x]=<span class="built_in">findd</span>(pre[x]);  <span class="comment">//路径压缩</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(cin&gt;&gt;n) &#123;</span><br><span class="line">        <span class="built_in">solve</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       </div>
       <div class="post-tags-categories">
         

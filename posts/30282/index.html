@@ -56,8 +56,6 @@
         
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
         
-            
-        
     
     <!-- import script -->
     
@@ -643,46 +641,7 @@
 <p>对于给定的一个带连边的图，可以用染色法判定二分图，</p>
 <p>思路：我们可以把两个不同的集合中的元素染色为1和2。</p>
 <p>遍历A中的每一个点，若该点未被染色，则染为1，然后顺着与该点相连的点，将其染为相反的颜色，若过程中发现有下一个点的颜色与当前点的颜色相同，则该图不是二分图。</p>
-<pre class="highlight"><code class="cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-<span class="hljs-type">int</span> <span class="hljs-type">const</span> N=<span class="hljs-number">2e5</span>+<span class="hljs-number">10</span>;
-<span class="hljs-type">int</span> h[N],ne[N],w[N],cnt=<span class="hljs-number">0</span>;
-<span class="hljs-type">int</span> color[N];
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-type">int</span> a,<span class="hljs-type">int</span> b)</span></span>&#123;  <span class="hljs-comment">//数组存连接点 ，和最短路存路径的方法相同</span>
-    w[++cnt]=b,ne[cnt]=h[a],h[a]=cnt;
-&#125;
-<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> u)</span></span>&#123;
-    color[x]=u;
-    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=h[x];i!=<span class="hljs-number">-1</span>;i=ne[i])&#123;  <span class="hljs-comment">//查找与该点相连的一条路到底</span>
-        <span class="hljs-type">int</span> j=w[i];
-        <span class="hljs-keyword">if</span>(!color[j])&#123;   <span class="hljs-comment">//用3-u来表示相反的颜色</span>
-           <span class="hljs-keyword">if</span>(!<span class="hljs-built_in">dfs</span>(j,<span class="hljs-number">3</span>-u))<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
-        &#125;
-        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(color[j]==u)<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
-           <span class="hljs-comment">//邻接点的颜色与当前点颜色相同，跳出</span>
-    &#125;
-    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
-&#125;
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
-</span>&#123;
-    <span class="hljs-type">int</span> n,m,k=<span class="hljs-number">1</span>;cin&gt;&gt;n&gt;&gt;m;
-    <span class="hljs-built_in">memset</span>(h,<span class="hljs-number">-1</span>,<span class="hljs-keyword">sizeof</span> h);
-    <span class="hljs-keyword">while</span> (m -- )&#123;
-        <span class="hljs-type">int</span> a,b;cin&gt;&gt;a&gt;&gt;b;
-        <span class="hljs-built_in">add</span>(a,b);<span class="hljs-built_in">add</span>(b,a);  <span class="hljs-comment">//因为dfs的时候一条路到底，所以相反的路径也要加</span>
-    &#125;
-    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;++i)&#123;
-        <span class="hljs-keyword">if</span>(!color[i])&#123;  <span class="hljs-comment">//该点已经被染色</span>
-            <span class="hljs-keyword">if</span>(!<span class="hljs-built_in">dfs</span>(i,<span class="hljs-number">1</span>))&#123;  <span class="hljs-comment">//染色失败，不为二分图</span>
-                k=<span class="hljs-number">0</span>;
-                <span class="hljs-keyword">break</span>;
-            &#125;
-        &#125;
-    &#125;
-    <span class="hljs-keyword">if</span>(k)cout&lt;&lt;<span class="hljs-string">&quot;Yes&quot;</span>&lt;&lt;endl;
-    <span class="hljs-keyword">else</span> cout&lt;&lt;<span class="hljs-string">&quot;No&quot;</span>&lt;&lt;endl;
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">int</span> <span class="type">const</span> N=<span class="number">2e5</span>+<span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> h[N],ne[N],w[N],cnt=<span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> color[N];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span></span>&#123;  <span class="comment">//数组存连接点 ，和最短路存路径的方法相同</span></span><br><span class="line">    w[++cnt]=b,ne[cnt]=h[a],h[a]=cnt;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> u)</span></span>&#123;</span><br><span class="line">    color[x]=u;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=h[x];i!=<span class="number">-1</span>;i=ne[i])&#123;  <span class="comment">//查找与该点相连的一条路到底</span></span><br><span class="line">        <span class="type">int</span> j=w[i];</span><br><span class="line">        <span class="keyword">if</span>(!color[j])&#123;   <span class="comment">//用3-u来表示相反的颜色</span></span><br><span class="line">           <span class="keyword">if</span>(!<span class="built_in">dfs</span>(j,<span class="number">3</span>-u))<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(color[j]==u)<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">           <span class="comment">//邻接点的颜色与当前点颜色相同，跳出</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,m,k=<span class="number">1</span>;cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">    <span class="built_in">memset</span>(h,<span class="number">-1</span>,<span class="keyword">sizeof</span> h);</span><br><span class="line">    <span class="keyword">while</span> (m -- )&#123;</span><br><span class="line">        <span class="type">int</span> a,b;cin&gt;&gt;a&gt;&gt;b;</span><br><span class="line">        <span class="built_in">add</span>(a,b);<span class="built_in">add</span>(b,a);  <span class="comment">//因为dfs的时候一条路到底，所以相反的路径也要加</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i)&#123;</span><br><span class="line">        <span class="keyword">if</span>(!color[i])&#123;  <span class="comment">//该点已经被染色</span></span><br><span class="line">            <span class="keyword">if</span>(!<span class="built_in">dfs</span>(i,<span class="number">1</span>))&#123;  <span class="comment">//染色失败，不为二分图</span></span><br><span class="line">                k=<span class="number">0</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(k)cout&lt;&lt;<span class="string">&quot;Yes&quot;</span>&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">else</span> cout&lt;&lt;<span class="string">&quot;No&quot;</span>&lt;&lt;endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>ok，二分图判断完毕，开始匹配问题</p>
 <p>上题：</p>
 <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3386">P3386 【模板】二分图最大匹配 - 洛谷 | 计算机科学教育新生态</a></p>
@@ -696,47 +655,7 @@
 然后看A2的时候发现A2可以和B2连，也就连接他们<br />
 <img src="/picture/mid6.png" class="lazyload placeholder" data-srcset="/picture/mid6.png" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" alt="" /><br />
 然后到A3的时候，发现A3的第一个连接点B1已经被连了，这就是所谓的增广路了，一点被多个点所连接，这时候我们需要查看B1所连接的点有没有另外的连接点，发现A1还连接着B2，但B2被A2连接了，我们又看A2还另外连B3，而B3没有被连，那么我们就将A2连B3，于是A1就可以连B2，A3可以连B1了，知识点很少，挺容易看懂的</p>
-<pre class="highlight"><code class="cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> rep(i,n,m) for(int i=n;i&lt;=m;++i)</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> per(i,n,m) for(int i=n;i&gt;=m;--i)</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> PII pair<span class="hljs-string">&lt;int,int&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> INF 1&lt;&lt;30</span>
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-<span class="hljs-keyword">typedef</span> <span class="hljs-type">long</span> <span class="hljs-type">long</span> ll;
-<span class="hljs-type">const</span> <span class="hljs-type">int</span> N=<span class="hljs-number">2e3</span>+<span class="hljs-number">10</span>;
-<span class="hljs-type">bool</span> link[N][N];
-<span class="hljs-type">int</span> p[N],st[N],n,m,e,ans=<span class="hljs-number">0</span>;
-<span class="hljs-comment">//p【i】=j  表示第二个集合中的i点和第一个集合中的j点匹配</span>
-<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span>&#123;
-    <span class="hljs-built_in">rep</span>(i,<span class="hljs-number">1</span>,m)&#123;
-        <span class="hljs-keyword">if</span>(link[x][i]&amp;&amp;!st[i])&#123;   <span class="hljs-comment">//如果该点和x点有连接，并且此时i点还没被用过</span>
-           st[i]=<span class="hljs-number">1</span>;
-           <span class="hljs-keyword">if</span>(p[i]==<span class="hljs-number">0</span>||<span class="hljs-built_in">dfs</span>(p[i]))&#123;  <span class="hljs-comment">//i点没有匹配的边，或者i点所匹配的边还有另外的匹配</span>
-               p[i]=x;   <span class="hljs-comment">//更新i的匹配点是x</span>
-               <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
-           &#125;
-        &#125;
-    &#125;
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-&#125;
- 
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
-</span>&#123;
-    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>);cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
-    cin&gt;&gt;n&gt;&gt;m&gt;&gt;e;
-    <span class="hljs-keyword">while</span>(e--)&#123;
-        <span class="hljs-type">int</span> x,y;cin&gt;&gt;x&gt;&gt;y;
-        link[x][y]=<span class="hljs-number">1</span>;   <span class="hljs-comment">//x点和y点有连接</span>
-    &#125;
-    <span class="hljs-built_in">rep</span>(i,<span class="hljs-number">1</span>,n)&#123;  <span class="hljs-comment">//遍历第一个集合</span>
-        <span class="hljs-built_in">memset</span>(st,<span class="hljs-number">0</span>,<span class="hljs-keyword">sizeof</span> st);
-        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">dfs</span>(i))ans++;  <span class="hljs-comment">//如果该点匹配成功</span>
-    &#125;
-    cout&lt;&lt;ans;
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-&#125;
-</code></pre>
-
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,n,m) for(int i=n;i&lt;=m;++i)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,n,m) for(int i=n;i&gt;=m;--i)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> PII pair<span class="string">&lt;int,int&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> INF 1&lt;&lt;30</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">2e3</span>+<span class="number">10</span>;</span><br><span class="line"><span class="type">bool</span> link[N][N];</span><br><span class="line"><span class="type">int</span> p[N],st[N],n,m,e,ans=<span class="number">0</span>;</span><br><span class="line"><span class="comment">//p【i】=j  表示第二个集合中的i点和第一个集合中的j点匹配</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">1</span>,m)&#123;</span><br><span class="line">        <span class="keyword">if</span>(link[x][i]&amp;&amp;!st[i])&#123;   <span class="comment">//如果该点和x点有连接，并且此时i点还没被用过</span></span><br><span class="line">           st[i]=<span class="number">1</span>;</span><br><span class="line">           <span class="keyword">if</span>(p[i]==<span class="number">0</span>||<span class="built_in">dfs</span>(p[i]))&#123;  <span class="comment">//i点没有匹配的边，或者i点所匹配的边还有另外的匹配</span></span><br><span class="line">               p[i]=x;   <span class="comment">//更新i的匹配点是x</span></span><br><span class="line">               <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">           &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ios::<span class="built_in">sync_with_stdio</span>(<span class="number">0</span>);cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;m&gt;&gt;e;</span><br><span class="line">    <span class="keyword">while</span>(e--)&#123;</span><br><span class="line">        <span class="type">int</span> x,y;cin&gt;&gt;x&gt;&gt;y;</span><br><span class="line">        link[x][y]=<span class="number">1</span>;   <span class="comment">//x点和y点有连接</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">1</span>,n)&#123;  <span class="comment">//遍历第一个集合</span></span><br><span class="line">        <span class="built_in">memset</span>(st,<span class="number">0</span>,<span class="keyword">sizeof</span> st);</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">dfs</span>(i))ans++;  <span class="comment">//如果该点匹配成功</span></span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;ans;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       </div>
       <div class="post-tags-categories">
         

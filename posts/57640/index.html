@@ -56,8 +56,6 @@
         
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
         
-            
-        
     
     <!-- import script -->
     
@@ -598,7 +596,7 @@
       
         <div class="post-detail-header_wordcount">
           <span class="totalcount">
-            <i class="fas fa-file-text-o"></i> 字数统计: 614 |
+            <i class="fas fa-file-text-o"></i> 字数统计: 615 |
           </span>
   
           <span class="min2read">
@@ -638,77 +636,11 @@
 <p>于是我们以图示为例子，以“cd”结尾的字符串有两个，分别为 “cdf” 和 “cdh”， 所以我们可以在初始化的时候更新trie数组，</p>
 <p>我们用trie[p][x] 数组表示p结点连接的字符x是否存在，那么我们可以用Ascall来替代字符的数字，因为本题的字符有数字有字母，所以我们以ascall值最小的0来做基底</p>
 <p>以cnt来表示结点编号</p>
-<pre class="highlight"><code class="cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">in</span><span class="hljs-params">(string s)</span></span>&#123;
-    <span class="hljs-type">int</span> p = <span class="hljs-number">0</span>, n = s.<span class="hljs-built_in">size</span>();
-    <span class="hljs-built_in">rep</span>(i, <span class="hljs-number">0</span>, n - <span class="hljs-number">1</span>)&#123;
-        <span class="hljs-type">int</span> x = s[i] - <span class="hljs-string">&#x27;0&#x27;</span>;
-        <span class="hljs-keyword">if</span>(!trie[p][x]) trie[p][x] = ++ cnt; <span class="hljs-comment">// 如果该节点没有连接s[i]，那么新增结点编号</span>
-        p = trie[p][x]; <span class="hljs-comment">// 下传结点</span>
-        ans[p] ++; <span class="hljs-comment">//以该结点结尾的字符串个数</span>
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">in</span><span class="params">(string s)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> p = <span class="number">0</span>, n = s.<span class="built_in">size</span>();</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">0</span>, n - <span class="number">1</span>)&#123;</span><br><span class="line">        <span class="type">int</span> x = s[i] - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">        <span class="keyword">if</span>(!trie[p][x]) trie[p][x] = ++ cnt; <span class="comment">// 如果该节点没有连接s[i]，那么新增结点编号</span></span><br><span class="line">        p = trie[p][x]; <span class="comment">// 下传结点</span></span><br><span class="line">        ans[p] ++; <span class="comment">//以该结点结尾的字符串个数</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>于是我们便可以便捷地查询有s前缀字符串的个数</p>
-<pre class="highlight"><code class="cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">get</span><span class="hljs-params">(string s)</span></span>&#123;
-    <span class="hljs-type">int</span> p = <span class="hljs-number">0</span>, n = s.<span class="hljs-built_in">size</span>();
-    <span class="hljs-built_in">rep</span>(i, <span class="hljs-number">0</span>, n - <span class="hljs-number">1</span>)&#123;
-        <span class="hljs-type">int</span> x = s[i] - <span class="hljs-string">&#x27;0&#x27;</span>;
-        <span class="hljs-keyword">if</span>(!trie[p][x]) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>; <span class="hljs-comment">//还没找完就没有了，直接 return 0</span>
-        p = trie[p][x];
-    &#125;
-    <span class="hljs-keyword">return</span> ans[p]; <span class="hljs-comment">//</span>
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">get</span><span class="params">(string s)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> p = <span class="number">0</span>, n = s.<span class="built_in">size</span>();</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">0</span>, n - <span class="number">1</span>)&#123;</span><br><span class="line">        <span class="type">int</span> x = s[i] - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">        <span class="keyword">if</span>(!trie[p][x]) <span class="keyword">return</span> <span class="number">0</span>; <span class="comment">//还没找完就没有了，直接 return 0</span></span><br><span class="line">        p = trie[p][x];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans[p]; <span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>注意trie数组的大小，因为 本题一次性预处理的字符串个数有 1e5， 所以在累加结点编号的时候难免会超出 很多</p>
-<pre class="highlight"><code class="cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> rep(i, n, m) for(int i = n; i &lt;= m; ++i)</span>
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-<span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">3e6</span> + <span class="hljs-number">10</span>;
-<span class="hljs-type">int</span> ans[N], trie[N][<span class="hljs-number">150</span>], cnt;
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">in</span><span class="hljs-params">(string s)</span></span>&#123;
-    <span class="hljs-type">int</span> p = <span class="hljs-number">0</span>, n = s.<span class="hljs-built_in">size</span>();
-    <span class="hljs-built_in">rep</span>(i, <span class="hljs-number">0</span>, n - <span class="hljs-number">1</span>)&#123;
-        <span class="hljs-type">int</span> x = s[i] - <span class="hljs-string">&#x27;0&#x27;</span>;
-        <span class="hljs-keyword">if</span>(!trie[p][x]) trie[p][x] = ++ cnt;
-        p = trie[p][x];
-        ans[p] ++;
-    &#125;
-&#125;
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">get</span><span class="hljs-params">(string s)</span></span>&#123;
-    <span class="hljs-type">int</span> p = <span class="hljs-number">0</span>, n = s.<span class="hljs-built_in">size</span>();
-    <span class="hljs-built_in">rep</span>(i, <span class="hljs-number">0</span>, n - <span class="hljs-number">1</span>)&#123;
-        <span class="hljs-type">int</span> x = s[i] - <span class="hljs-string">&#x27;0&#x27;</span>;
-        <span class="hljs-keyword">if</span>(!trie[p][x]) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-        p = trie[p][x];
-    &#125;
-    <span class="hljs-keyword">return</span> ans[p];
-&#125;
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span>
-</span>&#123;
-    <span class="hljs-comment">// 初始化</span>
-    <span class="hljs-built_in">rep</span>(i, <span class="hljs-number">0</span>, cnt)&#123;
-        ans[i] = <span class="hljs-number">0</span>;
-        <span class="hljs-built_in">rep</span>(j, <span class="hljs-number">0</span>, <span class="hljs-number">140</span>) trie[i][j] = <span class="hljs-number">0</span>;
-    &#125; cnt = <span class="hljs-number">0</span>;
-
-    <span class="hljs-type">int</span> n, q; cin &gt;&gt; n &gt;&gt; q;
-    <span class="hljs-built_in">rep</span>(i, <span class="hljs-number">1</span>, n)&#123;
-        string s; cin &gt;&gt; s;
-        <span class="hljs-built_in">in</span>(s);
-    &#125;
-    <span class="hljs-built_in">rep</span>(i, <span class="hljs-number">1</span>, q)&#123;
-        string s; cin &gt;&gt; s;
-        cout &lt;&lt; <span class="hljs-built_in">get</span>(s) &lt;&lt; <span class="hljs-string">&#x27;\n&#x27;</span>;
-    &#125;
-&#125;
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
-</span>&#123;
-    <span class="hljs-comment">//ios::sync_with_stdio(0); cin.tie(0);</span>
-    <span class="hljs-type">int</span> n; cin &gt;&gt; n;
-    <span class="hljs-keyword">while</span>(n--) <span class="hljs-built_in">solve</span>();
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i, n, m) for(int i = n; i &lt;= m; ++i)</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">3e6</span> + <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> ans[N], trie[N][<span class="number">150</span>], cnt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">in</span><span class="params">(string s)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> p = <span class="number">0</span>, n = s.<span class="built_in">size</span>();</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">0</span>, n - <span class="number">1</span>)&#123;</span><br><span class="line">        <span class="type">int</span> x = s[i] - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">        <span class="keyword">if</span>(!trie[p][x]) trie[p][x] = ++ cnt;</span><br><span class="line">        p = trie[p][x];</span><br><span class="line">        ans[p] ++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">get</span><span class="params">(string s)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> p = <span class="number">0</span>, n = s.<span class="built_in">size</span>();</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">0</span>, n - <span class="number">1</span>)&#123;</span><br><span class="line">        <span class="type">int</span> x = s[i] - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">        <span class="keyword">if</span>(!trie[p][x]) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        p = trie[p][x];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans[p];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 初始化</span></span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">0</span>, cnt)&#123;</span><br><span class="line">        ans[i] = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">rep</span>(j, <span class="number">0</span>, <span class="number">140</span>) trie[i][j] = <span class="number">0</span>;</span><br><span class="line">    &#125; cnt = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> n, q; cin &gt;&gt; n &gt;&gt; q;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, n)&#123;</span><br><span class="line">        string s; cin &gt;&gt; s;</span><br><span class="line">        <span class="built_in">in</span>(s);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, q)&#123;</span><br><span class="line">        string s; cin &gt;&gt; s;</span><br><span class="line">        cout &lt;&lt; <span class="built_in">get</span>(s) &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//ios::sync_with_stdio(0); cin.tie(0);</span></span><br><span class="line">    <span class="type">int</span> n; cin &gt;&gt; n;</span><br><span class="line">    <span class="keyword">while</span>(n--) <span class="built_in">solve</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>延申题下次再更新。。。。</p>
 
       </div>

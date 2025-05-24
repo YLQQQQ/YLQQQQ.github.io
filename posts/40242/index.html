@@ -56,8 +56,6 @@
         
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
         
-            
-        
     
     <!-- import script -->
     
@@ -642,42 +640,13 @@
 <h3 id="查找获取区间的值"><a class="markdownIt-Anchor" href="#查找获取区间的值"></a> 查找(获取区间的值)</h3>
 <p>每次的插入和查找的复杂度均为O(logn)，总复杂度O(nlogn).</p>
 <p>不难发现的是，我们可以用每一个节点表示两个儿子的和，从下网上递归得出每一个区间得和。</p>
-<pre class="highlight"><code class="cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">build</span><span class="hljs-params">(<span class="hljs-type">int</span> k, <span class="hljs-type">int</span> l, <span class="hljs-type">int</span> r)</span> </span>&#123;
-	<span class="hljs-keyword">if</span>(l == r) &#123;
-		<span class="hljs-comment">//num是输入的数组值</span>
-		f[k] = num[l];
-		<span class="hljs-keyword">return</span>; 
-	&#125;
-	<span class="hljs-type">int</span> m=(l+r)&gt;&gt;<span class="hljs-number">1</span>;
-	<span class="hljs-comment">//递归左子树</span>
-	<span class="hljs-built_in">build</span>(k+k, l, m);
-
-	<span class="hljs-comment">//递归右子树</span>
-	<span class="hljs-built_in">build</span>(k+k+<span class="hljs-number">1</span>, m + <span class="hljs-number">1</span>, r); 
-
-	f[k]=f[k+k]+f[k+k+<span class="hljs-number">1</span>]; 
-	<span class="hljs-comment">//递归更新</span>
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">build</span><span class="params">(<span class="type">int</span> k, <span class="type">int</span> l, <span class="type">int</span> r)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(l == r) &#123;</span><br><span class="line">		<span class="comment">//num是输入的数组值</span></span><br><span class="line">		f[k] = num[l];</span><br><span class="line">		<span class="keyword">return</span>; </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">int</span> m=(l+r)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">	<span class="comment">//递归左子树</span></span><br><span class="line">	<span class="built_in">build</span>(k+k, l, m);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//递归右子树</span></span><br><span class="line">	<span class="built_in">build</span>(k+k+<span class="number">1</span>, m + <span class="number">1</span>, r); </span><br><span class="line"></span><br><span class="line">	f[k]=f[k+k]+f[k+k+<span class="number">1</span>]; </span><br><span class="line">	<span class="comment">//递归更新</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>当我们给下标为4的位置+1时，可以发现他的往上的节点都会+1,改递归操作应从上往下进行，<br />
 开始发现4∈(1-4)，则(1-4)+1，<br />
 然后发现4∈(3-4)，则(3-4)+1，<br />
 最后4∈(4)，则(4)+1。<br />
 <img src="/picture/tree3.png" class="lazyload placeholder" data-srcset="/picture/tree3.png" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" alt="" /></p>
-<pre class="highlight"><code class="cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">in</span><span class="hljs-params">(<span class="hljs-type">int</span> k, <span class="hljs-type">int</span> l, <span class="hljs-type">int</span> r, <span class="hljs-type">int</span> x, <span class="hljs-type">int</span> v)</span> </span>&#123;
-	f[k]+=v;
-	<span class="hljs-keyword">if</span>(l==r) <span class="hljs-keyword">return</span>;
-	<span class="hljs-type">int</span> m=(l+r)&gt;&gt;<span class="hljs-number">1</span>;
-
-	<span class="hljs-comment">//递归子树</span>
-	<span class="hljs-keyword">if</span>(x&lt;=m) 
-	    <span class="hljs-comment">//修改的区间完全在左区间</span>
-		<span class="hljs-built_in">in</span>(k+k, l, m, x, val);
-	<span class="hljs-keyword">else</span> 
-	    <span class="hljs-comment">//修改的区间完全在右区间</span>
-		<span class="hljs-built_in">in</span>(k+k+<span class="hljs-number">1</span>, m + <span class="hljs-number">1</span>, r, x, val); 
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">in</span><span class="params">(<span class="type">int</span> k, <span class="type">int</span> l, <span class="type">int</span> r, <span class="type">int</span> x, <span class="type">int</span> v)</span> </span>&#123;</span><br><span class="line">	f[k]+=v;</span><br><span class="line">	<span class="keyword">if</span>(l==r) <span class="keyword">return</span>;</span><br><span class="line">	<span class="type">int</span> m=(l+r)&gt;&gt;<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//递归子树</span></span><br><span class="line">	<span class="keyword">if</span>(x&lt;=m) </span><br><span class="line">	    <span class="comment">//修改的区间完全在左区间</span></span><br><span class="line">		<span class="built_in">in</span>(k+k, l, m, x, val);</span><br><span class="line">	<span class="keyword">else</span> </span><br><span class="line">	    <span class="comment">//修改的区间完全在右区间</span></span><br><span class="line">		<span class="built_in">in</span>(k+k+<span class="number">1</span>, m + <span class="number">1</span>, r, x, val); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="进行区间加值时"><a class="markdownIt-Anchor" href="#进行区间加值时"></a> 进行区间加值时</h3>
 <p>我们可以对这个操作进行优化，当进行区间加值时，如对3-4区间+1<br />
 开始发现(3-4)∈(1-4)，则(1-4)+1，<br />
@@ -689,30 +658,7 @@
 刚开始我想过，能不能不用 标记，直接包含的每段区间都 f[k]+=(y-x+1)*t; 就好了，结果是不行的，<br />
 如果不用标记，我修改了(1-4)的值+1，会在第一个节点停止，当我查询(2-3)的时候，会一直递归找到(2),(3)的值，发现并不能获取更新后的值，所以需要标记来记录更新。</p>
 <p><img src="/picture/tree4.png" class="lazyload placeholder" data-srcset="/picture/tree4.png" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" alt="" /></p>
-<pre class="highlight"><code class="cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">in</span><span class="hljs-params">(<span class="hljs-type">int</span> k,<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r,<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> y,ll t)</span></span>&#123;
-  <span class="hljs-comment">//当前节点为k，lr为节点的区间范围，xy为所要修改的区间范围，t为要加的值</span>
-	<span class="hljs-keyword">if</span>(l==x&amp;&amp;r==y)&#123;  <span class="hljs-comment">//范围符合，v数组进行标记</span>
-		v[k]+=t;	
-		<span class="hljs-keyword">return</span> ;
-	&#125;
-  <span class="hljs-comment">//继续寻找</span>
-	f[k]+=(y-x+<span class="hljs-number">1</span>)*t;   <span class="hljs-comment">//对属于范围内的元素进行加法运算</span>
-	<span class="hljs-type">int</span> m=(l+r)&gt;&gt;<span class="hljs-number">1</span>; 
-  <span class="hljs-comment">//将区间一分为二</span>
-	<span class="hljs-keyword">if</span>(y&lt;=m)  
-	    <span class="hljs-built_in">in</span>(k+k,l,m,x,y,t);
-     <span class="hljs-comment">//查询区间右边界&lt;=当前区间左儿子右边界，</span>
-     <span class="hljs-comment">//查询区间∈当前区间左儿子</span>
-	<span class="hljs-keyword">else</span>  
-	<span class="hljs-keyword">if</span>(x&gt;m)
-	   <span class="hljs-built_in">in</span>(k+k+<span class="hljs-number">1</span>,m+<span class="hljs-number">1</span>,r,x,y,t);
-     <span class="hljs-comment">//查询区间左边界&gt;=当前区间右儿子左边界，</span>
-     <span class="hljs-comment">//查询区间∈当前区间右儿子</span>
-	<span class="hljs-keyword">else</span> 
-	    <span class="hljs-built_in">in</span>(k+k+<span class="hljs-number">1</span>,m+<span class="hljs-number">1</span>,r,m+<span class="hljs-number">1</span>,y,t),<span class="hljs-built_in">in</span>(k+k,l,m,x,m,t);
-       <span class="hljs-comment">//否则递归两边区间</span>
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">in</span><span class="params">(<span class="type">int</span> k,<span class="type">int</span> l,<span class="type">int</span> r,<span class="type">int</span> x,<span class="type">int</span> y,ll t)</span></span>&#123;</span><br><span class="line">  <span class="comment">//当前节点为k，lr为节点的区间范围，xy为所要修改的区间范围，t为要加的值</span></span><br><span class="line">	<span class="keyword">if</span>(l==x&amp;&amp;r==y)&#123;  <span class="comment">//范围符合，v数组进行标记</span></span><br><span class="line">		v[k]+=t;	</span><br><span class="line">		<span class="keyword">return</span> ;</span><br><span class="line">	&#125;</span><br><span class="line">  <span class="comment">//继续寻找</span></span><br><span class="line">	f[k]+=(y-x+<span class="number">1</span>)*t;   <span class="comment">//对属于范围内的元素进行加法运算</span></span><br><span class="line">	<span class="type">int</span> m=(l+r)&gt;&gt;<span class="number">1</span>; </span><br><span class="line">  <span class="comment">//将区间一分为二</span></span><br><span class="line">	<span class="keyword">if</span>(y&lt;=m)  </span><br><span class="line">	    <span class="built_in">in</span>(k+k,l,m,x,y,t);</span><br><span class="line">     <span class="comment">//查询区间右边界&lt;=当前区间左儿子右边界，</span></span><br><span class="line">     <span class="comment">//查询区间∈当前区间左儿子</span></span><br><span class="line">	<span class="keyword">else</span>  </span><br><span class="line">	<span class="keyword">if</span>(x&gt;m)</span><br><span class="line">	   <span class="built_in">in</span>(k+k+<span class="number">1</span>,m+<span class="number">1</span>,r,x,y,t);</span><br><span class="line">     <span class="comment">//查询区间左边界&gt;=当前区间右儿子左边界，</span></span><br><span class="line">     <span class="comment">//查询区间∈当前区间右儿子</span></span><br><span class="line">	<span class="keyword">else</span> </span><br><span class="line">	    <span class="built_in">in</span>(k+k+<span class="number">1</span>,m+<span class="number">1</span>,r,m+<span class="number">1</span>,y,t),<span class="built_in">in</span>(k+k,l,m,x,m,t);</span><br><span class="line">       <span class="comment">//否则递归两边区间</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>至此我们便可以对区间进行范围性加法操作，<br />
 但要如何查询呢<br />
 当我们要查询1-3的区间和时，<br />
@@ -720,97 +666,11 @@
 接着我们发现(1-2)∈(1-2),则返回答案，<br />
 (3)不完全∈(3-4),发现其左儿子包含了3，则递归左儿子，然后查询到了(3)，便返回(3)<br />
 <img src="/picture/tree5.png" class="lazyload placeholder" data-srcset="/picture/tree5.png" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" alt="" /></p>
-<pre class="highlight"><code class="">ll cal(int k,int l,int r,int a,int b,ll ans)&#123;
-  //ans记录当前节点接受的值
-	ans += v[k];
-  //累计已标记的值
-	if(l==a&amp;&amp;r==b)&#123;
-		return 1LL*(f[k] + ans * (b - a + 1 ));
-    //刚好查询到范围，返回当前区间和+标记值*区间范围
-	&#125;
-	int m=(l+r)&gt;&gt;1;
-	if(b&lt;=m)return cal(k+k,l,m,a,b,ans);
-       //查询区间右边界&lt;=当前区间左儿子右边界，
-      //查询区间∈当前区间左儿子
-	else if(a&gt;m)return cal(k+k+1,m+1,r,a,b,ans);
-       //查询区间左边界&gt;=当前区间右儿子左边界，
-      //查询区间∈当前区间右儿子
-	else 
-	return cal(k+k,l,m,a,m,ans)+cal(k+k+1,m+1,r,m+1,b,ans);
-         //否则递归两边区间
-&#125;
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">ll cal(int k,int l,int r,int a,int b,ll ans)&#123;</span><br><span class="line">  //ans记录当前节点接受的值</span><br><span class="line">	ans += v[k];</span><br><span class="line">  //累计已标记的值</span><br><span class="line">	if(l==a&amp;&amp;r==b)&#123;</span><br><span class="line">		return 1LL*(f[k] + ans * (b - a + 1 ));</span><br><span class="line">    //刚好查询到范围，返回当前区间和+标记值*区间范围</span><br><span class="line">	&#125;</span><br><span class="line">	int m=(l+r)&gt;&gt;1;</span><br><span class="line">	if(b&lt;=m)return cal(k+k,l,m,a,b,ans);</span><br><span class="line">       //查询区间右边界&lt;=当前区间左儿子右边界，</span><br><span class="line">      //查询区间∈当前区间左儿子</span><br><span class="line">	else if(a&gt;m)return cal(k+k+1,m+1,r,a,b,ans);</span><br><span class="line">       //查询区间左边界&gt;=当前区间右儿子左边界，</span><br><span class="line">      //查询区间∈当前区间右儿子</span><br><span class="line">	else </span><br><span class="line">	return cal(k+k,l,m,a,m,ans)+cal(k+k+1,m+1,r,m+1,b,ans);</span><br><span class="line">         //否则递归两边区间</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>另外对于n个数的数组，把他递归分成一颗二叉搜索树，其的数组范围就是结点的数量，应该开到4n<br />
 洛谷原题1<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3372">线段树加法</a><br />
 answer code:</p>
-<pre class="highlight"><code class="cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> rep(i,n,m) for(int i=n;i&lt;=m;++i)</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> per(i,n,m) for(int i=n;i&gt;=m;--i)</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> PII pair<span class="hljs-string">&lt;int,int&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> lowbit(x) x&amp;-x</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> INF 1&lt;&lt;30</span>
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-<span class="hljs-keyword">typedef</span> <span class="hljs-type">long</span> <span class="hljs-type">long</span> ll;
-<span class="hljs-type">const</span> <span class="hljs-type">int</span> N=<span class="hljs-number">4e5</span>+<span class="hljs-number">10</span>;
-<span class="hljs-type">int</span> num[N];
-ll f[N],v[N];
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">build</span><span class="hljs-params">(<span class="hljs-type">int</span> k,<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r)</span></span>&#123;
-	v[k]=<span class="hljs-number">0</span>;
-	<span class="hljs-keyword">if</span>(l==r)&#123;
-		f[k]=num[l];
-		<span class="hljs-keyword">return</span> ;
-	&#125;
-	<span class="hljs-type">int</span> m=(l+r)&gt;&gt;<span class="hljs-number">1</span>;
-	<span class="hljs-built_in">build</span>(k+k,l,m);
-	<span class="hljs-built_in">build</span>(k+k+<span class="hljs-number">1</span>,m+<span class="hljs-number">1</span>,r);
-	f[k]=f[k+<span class="hljs-number">1</span>+k]+f[k+k];
-&#125;
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">in</span><span class="hljs-params">(<span class="hljs-type">int</span> k,<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r,<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> y,ll t)</span></span>&#123;
-	<span class="hljs-keyword">if</span>(l==x&amp;&amp;r==y)&#123;
-		v[k]+=t;	
-		<span class="hljs-keyword">return</span> ;
-	&#125;
-	f[k]+=(y-x+<span class="hljs-number">1</span>)*t;
-	<span class="hljs-type">int</span> m=(l+r)&gt;&gt;<span class="hljs-number">1</span>;
-	<span class="hljs-keyword">if</span>(y&lt;=m)
-	    <span class="hljs-built_in">in</span>(k+k,l,m,x,y,t);
-	<span class="hljs-keyword">else</span>  
-	<span class="hljs-keyword">if</span>(x&gt;m)
-	   <span class="hljs-built_in">in</span>(k+k+<span class="hljs-number">1</span>,m+<span class="hljs-number">1</span>,r,x,y,t);
-	<span class="hljs-keyword">else</span> 
-	    <span class="hljs-built_in">in</span>(k+k+<span class="hljs-number">1</span>,m+<span class="hljs-number">1</span>,r,m+<span class="hljs-number">1</span>,y,t),<span class="hljs-built_in">in</span>(k+k,l,m,x,m,t);
-
-&#125;
-<span class="hljs-function">ll <span class="hljs-title">cal</span><span class="hljs-params">(<span class="hljs-type">int</span> k,<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r,<span class="hljs-type">int</span> a,<span class="hljs-type">int</span> b,ll ans)</span></span>&#123;
-	ans += v[k];
-	<span class="hljs-keyword">if</span>(l==a&amp;&amp;r==b)&#123;
-		<span class="hljs-keyword">return</span> <span class="hljs-number">1LL</span>*(f[k] + ans * (b - a + <span class="hljs-number">1</span> ));
-	&#125;
-	<span class="hljs-type">int</span> m=(l+r)&gt;&gt;<span class="hljs-number">1</span>;
-	<span class="hljs-keyword">if</span>(b&lt;=m)<span class="hljs-keyword">return</span> <span class="hljs-built_in">cal</span>(k+k,l,m,a,b,ans);
-	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(a&gt;m)<span class="hljs-keyword">return</span> <span class="hljs-built_in">cal</span>(k+k+<span class="hljs-number">1</span>,m+<span class="hljs-number">1</span>,r,a,b,ans);
-	<span class="hljs-keyword">else</span> 
-	<span class="hljs-keyword">return</span> <span class="hljs-built_in">cal</span>(k+k,l,m,a,m,ans)+<span class="hljs-built_in">cal</span>(k+k+<span class="hljs-number">1</span>,m+<span class="hljs-number">1</span>,r,m+<span class="hljs-number">1</span>,b,ans);
-&#125;
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
-</span>&#123;
-	<span class="hljs-type">int</span> n,m;cin&gt;&gt;n&gt;&gt;m;
-	<span class="hljs-built_in">rep</span>(i,<span class="hljs-number">1</span>,n)cin&gt;&gt;num[i];
-	<span class="hljs-built_in">build</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,n);
-	<span class="hljs-keyword">while</span>(m--)&#123;
-		<span class="hljs-type">int</span> t;cin&gt;&gt;t;
-		<span class="hljs-keyword">if</span>(t==<span class="hljs-number">1</span>)&#123;
-			<span class="hljs-type">int</span> a,b;ll c;cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;
-			<span class="hljs-built_in">in</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,n,a,b,c);
-		&#125;
-		<span class="hljs-keyword">else</span> &#123;
-			<span class="hljs-type">int</span> b,c;cin&gt;&gt;b&gt;&gt;c;
-			cout&lt;&lt;<span class="hljs-built_in">cal</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,n,b,c,<span class="hljs-number">0</span>)&lt;&lt;endl;
-	    &#125;
-	&#125;
-	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,n,m) for(int i=n;i&lt;=m;++i)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,n,m) for(int i=n;i&gt;=m;--i)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> PII pair<span class="string">&lt;int,int&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> lowbit(x) x&amp;-x</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> INF 1&lt;&lt;30</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">4e5</span>+<span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> num[N];</span><br><span class="line">ll f[N],v[N];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">build</span><span class="params">(<span class="type">int</span> k,<span class="type">int</span> l,<span class="type">int</span> r)</span></span>&#123;</span><br><span class="line">	v[k]=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span>(l==r)&#123;</span><br><span class="line">		f[k]=num[l];</span><br><span class="line">		<span class="keyword">return</span> ;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">int</span> m=(l+r)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">	<span class="built_in">build</span>(k+k,l,m);</span><br><span class="line">	<span class="built_in">build</span>(k+k+<span class="number">1</span>,m+<span class="number">1</span>,r);</span><br><span class="line">	f[k]=f[k+<span class="number">1</span>+k]+f[k+k];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">in</span><span class="params">(<span class="type">int</span> k,<span class="type">int</span> l,<span class="type">int</span> r,<span class="type">int</span> x,<span class="type">int</span> y,ll t)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(l==x&amp;&amp;r==y)&#123;</span><br><span class="line">		v[k]+=t;	</span><br><span class="line">		<span class="keyword">return</span> ;</span><br><span class="line">	&#125;</span><br><span class="line">	f[k]+=(y-x+<span class="number">1</span>)*t;</span><br><span class="line">	<span class="type">int</span> m=(l+r)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span>(y&lt;=m)</span><br><span class="line">	    <span class="built_in">in</span>(k+k,l,m,x,y,t);</span><br><span class="line">	<span class="keyword">else</span>  </span><br><span class="line">	<span class="keyword">if</span>(x&gt;m)</span><br><span class="line">	   <span class="built_in">in</span>(k+k+<span class="number">1</span>,m+<span class="number">1</span>,r,x,y,t);</span><br><span class="line">	<span class="keyword">else</span> </span><br><span class="line">	    <span class="built_in">in</span>(k+k+<span class="number">1</span>,m+<span class="number">1</span>,r,m+<span class="number">1</span>,y,t),<span class="built_in">in</span>(k+k,l,m,x,m,t);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="function">ll <span class="title">cal</span><span class="params">(<span class="type">int</span> k,<span class="type">int</span> l,<span class="type">int</span> r,<span class="type">int</span> a,<span class="type">int</span> b,ll ans)</span></span>&#123;</span><br><span class="line">	ans += v[k];</span><br><span class="line">	<span class="keyword">if</span>(l==a&amp;&amp;r==b)&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1LL</span>*(f[k] + ans * (b - a + <span class="number">1</span> ));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">int</span> m=(l+r)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span>(b&lt;=m)<span class="keyword">return</span> <span class="built_in">cal</span>(k+k,l,m,a,b,ans);</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(a&gt;m)<span class="keyword">return</span> <span class="built_in">cal</span>(k+k+<span class="number">1</span>,m+<span class="number">1</span>,r,a,b,ans);</span><br><span class="line">	<span class="keyword">else</span> </span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">cal</span>(k+k,l,m,a,m,ans)+<span class="built_in">cal</span>(k+k+<span class="number">1</span>,m+<span class="number">1</span>,r,m+<span class="number">1</span>,b,ans);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> n,m;cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">	<span class="built_in">rep</span>(i,<span class="number">1</span>,n)cin&gt;&gt;num[i];</span><br><span class="line">	<span class="built_in">build</span>(<span class="number">1</span>,<span class="number">1</span>,n);</span><br><span class="line">	<span class="keyword">while</span>(m--)&#123;</span><br><span class="line">		<span class="type">int</span> t;cin&gt;&gt;t;</span><br><span class="line">		<span class="keyword">if</span>(t==<span class="number">1</span>)&#123;</span><br><span class="line">			<span class="type">int</span> a,b;ll c;cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;</span><br><span class="line">			<span class="built_in">in</span>(<span class="number">1</span>,<span class="number">1</span>,n,a,b,c);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="type">int</span> b,c;cin&gt;&gt;b&gt;&gt;c;</span><br><span class="line">			cout&lt;&lt;<span class="built_in">cal</span>(<span class="number">1</span>,<span class="number">1</span>,n,b,c,<span class="number">0</span>)&lt;&lt;endl;</span><br><span class="line">	    &#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>🥰🥰🥰😘<br />
 2022-9-7   23：24<br />
 <s>待更新区间乘法…</s></p>
@@ -819,148 +679,14 @@ ll f[N],v[N];
 <p>当我们需要对区间进行乘法操作和加法时，一个标记肯定不满足，所以需要另开一个数组标记该结点需要的乘数，并且这两种操作方法对于取模操作是不封闭的，每一次都可以取模运算。</p>
 <p>此外我们需要用一个函数来维护区间内的标记，使得标记下传，对于题目给的加法和乘法操作，在下传标记的时候要么先加后乘，要么先乘后加，而我们采用的是先乘后加。（）</p>
 <p>//push维护标记下传</p>
-<pre class="highlight"><code class="">void push(int k,int l,int r)&#123;
-    int m=(l+r)&gt;&gt;1;
-	//维护节点权值
-	//f[儿子]=(mul[父亲]*f[儿子]+add[父亲]*(区间长度))%模
-    f[k+k]=(mul[k]*f[k+k]+add[k]*(m-l+1))%p;
-    f[k+k+1]=(mul[k]*f[k+k+1]+add[k]*(r-m))%p;
-    
-	//维护乘法和加法后的值
-    //mul[儿子]=(mul[父亲]*mul[儿子])%模
-	mul[k+k]=(mul[k]*mul[k+k])%p;
-    mul[k+k+1]=(mul[k]*mul[k+k+1])%p;
-
-    //add[儿子]=(add[儿子]*mul[父亲]+add[父亲])%模
-    add[k+k]=(add[k+k]*mul[k]+add[k])%p;
-    add[k+k+1]=(add[k+k+1]*mul[k]+add[k])%p;
-    
-	//初始化标记
-    mul[k]=1;
-    add[k]=0;
-    return ;
-&#125;
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">void push(int k,int l,int r)&#123;</span><br><span class="line">    int m=(l+r)&gt;&gt;1;</span><br><span class="line">	//维护节点权值</span><br><span class="line">	//f[儿子]=(mul[父亲]*f[儿子]+add[父亲]*(区间长度))%模</span><br><span class="line">    f[k+k]=(mul[k]*f[k+k]+add[k]*(m-l+1))%p;</span><br><span class="line">    f[k+k+1]=(mul[k]*f[k+k+1]+add[k]*(r-m))%p;</span><br><span class="line">    </span><br><span class="line">	//维护乘法和加法后的值</span><br><span class="line">    //mul[儿子]=(mul[父亲]*mul[儿子])%模</span><br><span class="line">	mul[k+k]=(mul[k]*mul[k+k])%p;</span><br><span class="line">    mul[k+k+1]=(mul[k]*mul[k+k+1])%p;</span><br><span class="line"></span><br><span class="line">    //add[儿子]=(add[儿子]*mul[父亲]+add[父亲])%模</span><br><span class="line">    add[k+k]=(add[k+k]*mul[k]+add[k])%p;</span><br><span class="line">    add[k+k+1]=(add[k+k+1]*mul[k]+add[k])%p;</span><br><span class="line">    </span><br><span class="line">	//初始化标记</span><br><span class="line">    mul[k]=1;</span><br><span class="line">    add[k]=0;</span><br><span class="line">    return ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>为了使得标记值每次都能往下传递，所以每次操作都应该用一次push<br />
 来保证标记传递和标记初始化<br />
 区间乘法，t表示乘上的数</p>
-<pre class="highlight"><code class="">    f[k]=(f[k]*t)%p;
-    mul[k]=(mul[k]*t)%p;
-    add[k]=(add[k]*t)%p;
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f[k]=(f[k]*t)%p;</span><br><span class="line">mul[k]=(mul[k]*t)%p;</span><br><span class="line">add[k]=(add[k]*t)%p;</span><br></pre></td></tr></table></figure>
 <p>区间加法</p>
-<pre class="highlight"><code class="">    add[k]=(add[k]+t)%p;
-    f[k]=(f[k]+t*(r-l+1))%p;
-</code></pre>
-<pre class="highlight"><code class="cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> rep(i,n,m) for(int i=n;i&lt;=m;++i)</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> per(i,n,m) for(int i=n;i&gt;=m;--i)</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> PII pair<span class="hljs-string">&lt;int,int&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> lowbit(x) x&amp;-x</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> INF 1&lt;&lt;30</span>
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-<span class="hljs-keyword">typedef</span> <span class="hljs-type">long</span> <span class="hljs-type">long</span> ll;
-<span class="hljs-type">const</span> <span class="hljs-type">int</span> N=<span class="hljs-number">3e5</span>+<span class="hljs-number">10</span>;
-ll num[N],f[N],add[N],mul[N],p;
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">build</span><span class="hljs-params">(<span class="hljs-type">int</span> k,<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r)</span></span>&#123;
-	add[k]=<span class="hljs-number">0</span>;
-    mul[k]=<span class="hljs-number">1</span>;
-	<span class="hljs-keyword">if</span>(l==r)&#123;
-		f[k]=num[l];
-        f[k]%=p;
-		<span class="hljs-keyword">return</span> ;
-	&#125;
-	<span class="hljs-type">int</span> m=(l+r)&gt;&gt;<span class="hljs-number">1</span>;
-	<span class="hljs-built_in">build</span>(k+k,l,m);
-	<span class="hljs-built_in">build</span>(k+k+<span class="hljs-number">1</span>,m+<span class="hljs-number">1</span>,r);
-	f[k]=(f[k+<span class="hljs-number">1</span>+k]+f[k+k])%p;
-    <span class="hljs-comment">//cout&lt;&lt;k&lt;&lt;&#x27; &#x27;&lt;&lt;f[k]&lt;&lt;endl;</span>
-&#125;
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">push</span><span class="hljs-params">(<span class="hljs-type">int</span> k,<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r)</span></span>&#123;
-    <span class="hljs-type">int</span> m=(l+r)&gt;&gt;<span class="hljs-number">1</span>;
-    f[k+k]=(mul[k]*f[k+k]+add[k]*(m-l+<span class="hljs-number">1</span>))%p;
-    f[k+k+<span class="hljs-number">1</span>]=(mul[k]*f[k+k+<span class="hljs-number">1</span>]+add[k]*(r-m))%p;
-    <span class="hljs-comment">//维护乘法和加法后的值</span>
-    mul[k+k]=(mul[k]*mul[k+k])%p;
-    mul[k+k+<span class="hljs-number">1</span>]=(mul[k]*mul[k+k+<span class="hljs-number">1</span>])%p;
-
-    add[k+k]=(add[k+k]*mul[k]+add[k])%p;
-    add[k+k+<span class="hljs-number">1</span>]=(add[k+k+<span class="hljs-number">1</span>]*mul[k]+add[k])%p;
-    <span class="hljs-comment">//维护乘法加法的值</span>
-    mul[k]=<span class="hljs-number">1</span>;
-    add[k]=<span class="hljs-number">0</span>;
-    <span class="hljs-comment">//初始化</span>
-    <span class="hljs-keyword">return</span> ;
-&#125;
-<span class="hljs-comment">//乘法操作</span>
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">in1</span><span class="hljs-params">(<span class="hljs-type">int</span> k,<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r,<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> y,ll t)</span></span>&#123;
-    <span class="hljs-keyword">if</span>(y&lt;l||x&gt;r) <span class="hljs-keyword">return</span> ;
-
-    <span class="hljs-keyword">if</span>(x&lt;=l&amp;r&lt;=y)&#123;
-        f[k]=(f[k]*t)%p;
-        mul[k]=(mul[k]*t)%p;
-        add[k]=(add[k]*t)%p;
-        <span class="hljs-keyword">return</span> ;
-    &#125;
-
-    <span class="hljs-built_in">push</span>(k,l,r);
-    <span class="hljs-type">int</span> m=(l+r)&gt;&gt;<span class="hljs-number">1</span>;
-    <span class="hljs-built_in">in1</span>(k+k,l,m,x,y,t);
-    <span class="hljs-built_in">in1</span>(k+k+<span class="hljs-number">1</span>,m+<span class="hljs-number">1</span>,r,x,y,t);
-    f[k]=(f[k+k+<span class="hljs-number">1</span>]+f[k+k])%p;
-    <span class="hljs-keyword">return</span> ;
-&#125;
-<span class="hljs-comment">//加法操作</span>
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">in2</span><span class="hljs-params">(<span class="hljs-type">int</span> k,<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r,<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> y,ll t)</span></span>&#123;
-    <span class="hljs-keyword">if</span>(y&lt;l||x&gt;r) <span class="hljs-keyword">return</span> ;
-
-    <span class="hljs-keyword">if</span>(x&lt;=l&amp;&amp;r&lt;=y)&#123;
-        add[k]=(add[k]+t)%p;
-        f[k]=(f[k]+t*(r-l+<span class="hljs-number">1</span>))%p;
-        <span class="hljs-keyword">return</span> ;
-    &#125;
-
-    <span class="hljs-built_in">push</span>(k,l,r);
-    <span class="hljs-type">int</span> m=(l+r)&gt;&gt;<span class="hljs-number">1</span>;
-    <span class="hljs-built_in">in2</span>(k+k,l,m,x,y,t);
-    <span class="hljs-built_in">in2</span>(k+k+<span class="hljs-number">1</span>,m+<span class="hljs-number">1</span>,r,x,y,t);
-    f[k]=(f[k+k+<span class="hljs-number">1</span>]+f[k+k])%p;
-    <span class="hljs-keyword">return</span> ;
-&#125;
-<span class="hljs-comment">//计算区间和</span>
-<span class="hljs-function">ll <span class="hljs-title">cal</span><span class="hljs-params">(<span class="hljs-type">int</span> k,<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r,<span class="hljs-type">int</span> a,<span class="hljs-type">int</span> b)</span></span>&#123;
-    <span class="hljs-keyword">if</span>(b&lt;l||a&gt;r) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-
-    <span class="hljs-keyword">if</span>(a&lt;=l&amp;&amp;r&lt;=b)&#123;
-        <span class="hljs-keyword">return</span> f[k];
-    &#125;
-
-    <span class="hljs-built_in">push</span>(k,l,r);
-    <span class="hljs-type">int</span> m=(l+r)&gt;&gt;<span class="hljs-number">1</span>;
-    <span class="hljs-keyword">return</span> (<span class="hljs-built_in">cal</span>(k+k,l,m,a,b)+<span class="hljs-built_in">cal</span>(k+k+<span class="hljs-number">1</span>,m+<span class="hljs-number">1</span>,r,a,b))%p;
-&#125;
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
-</span>&#123;
-	<span class="hljs-type">int</span> n,m;cin&gt;&gt;n&gt;&gt;m&gt;&gt;p;
-	<span class="hljs-built_in">rep</span>(i,<span class="hljs-number">1</span>,n)cin&gt;&gt;num[i];
-	<span class="hljs-built_in">build</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,n);
-	<span class="hljs-keyword">while</span>(m--)&#123;
-		<span class="hljs-type">int</span> t;cin&gt;&gt;t;
-		<span class="hljs-keyword">if</span>(t==<span class="hljs-number">1</span>)&#123;
-			<span class="hljs-type">int</span> a,b;ll c;cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;
-			<span class="hljs-built_in">in1</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,n,a,b,c);
-		&#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(t==<span class="hljs-number">2</span>)&#123;
-            <span class="hljs-type">int</span> a,b;ll c;cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;
-            <span class="hljs-built_in">in2</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,n,a,b,c);
-        &#125;
-		<span class="hljs-keyword">else</span> &#123;
-			<span class="hljs-type">int</span> b,c;cin&gt;&gt;b&gt;&gt;c;
-			cout&lt;&lt;<span class="hljs-built_in">cal</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,n,b,c)&lt;&lt;endl;
-	    &#125;
-	&#125;
-	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-&#125;
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">add[k]=(add[k]+t)%p;</span><br><span class="line">f[k]=(f[k]+t*(r-l+1))%p;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,n,m) for(int i=n;i&lt;=m;++i)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,n,m) for(int i=n;i&gt;=m;--i)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> PII pair<span class="string">&lt;int,int&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> lowbit(x) x&amp;-x</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> INF 1&lt;&lt;30</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">3e5</span>+<span class="number">10</span>;</span><br><span class="line">ll num[N],f[N],add[N],mul[N],p;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">build</span><span class="params">(<span class="type">int</span> k,<span class="type">int</span> l,<span class="type">int</span> r)</span></span>&#123;</span><br><span class="line">	add[k]=<span class="number">0</span>;</span><br><span class="line">    mul[k]=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span>(l==r)&#123;</span><br><span class="line">		f[k]=num[l];</span><br><span class="line">        f[k]%=p;</span><br><span class="line">		<span class="keyword">return</span> ;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">int</span> m=(l+r)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">	<span class="built_in">build</span>(k+k,l,m);</span><br><span class="line">	<span class="built_in">build</span>(k+k+<span class="number">1</span>,m+<span class="number">1</span>,r);</span><br><span class="line">	f[k]=(f[k+<span class="number">1</span>+k]+f[k+k])%p;</span><br><span class="line">    <span class="comment">//cout&lt;&lt;k&lt;&lt;&#x27; &#x27;&lt;&lt;f[k]&lt;&lt;endl;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">push</span><span class="params">(<span class="type">int</span> k,<span class="type">int</span> l,<span class="type">int</span> r)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> m=(l+r)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">    f[k+k]=(mul[k]*f[k+k]+add[k]*(m-l+<span class="number">1</span>))%p;</span><br><span class="line">    f[k+k+<span class="number">1</span>]=(mul[k]*f[k+k+<span class="number">1</span>]+add[k]*(r-m))%p;</span><br><span class="line">    <span class="comment">//维护乘法和加法后的值</span></span><br><span class="line">    mul[k+k]=(mul[k]*mul[k+k])%p;</span><br><span class="line">    mul[k+k+<span class="number">1</span>]=(mul[k]*mul[k+k+<span class="number">1</span>])%p;</span><br><span class="line"></span><br><span class="line">    add[k+k]=(add[k+k]*mul[k]+add[k])%p;</span><br><span class="line">    add[k+k+<span class="number">1</span>]=(add[k+k+<span class="number">1</span>]*mul[k]+add[k])%p;</span><br><span class="line">    <span class="comment">//维护乘法加法的值</span></span><br><span class="line">    mul[k]=<span class="number">1</span>;</span><br><span class="line">    add[k]=<span class="number">0</span>;</span><br><span class="line">    <span class="comment">//初始化</span></span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//乘法操作</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">in1</span><span class="params">(<span class="type">int</span> k,<span class="type">int</span> l,<span class="type">int</span> r,<span class="type">int</span> x,<span class="type">int</span> y,ll t)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(y&lt;l||x&gt;r) <span class="keyword">return</span> ;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(x&lt;=l&amp;r&lt;=y)&#123;</span><br><span class="line">        f[k]=(f[k]*t)%p;</span><br><span class="line">        mul[k]=(mul[k]*t)%p;</span><br><span class="line">        add[k]=(add[k]*t)%p;</span><br><span class="line">        <span class="keyword">return</span> ;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">push</span>(k,l,r);</span><br><span class="line">    <span class="type">int</span> m=(l+r)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">    <span class="built_in">in1</span>(k+k,l,m,x,y,t);</span><br><span class="line">    <span class="built_in">in1</span>(k+k+<span class="number">1</span>,m+<span class="number">1</span>,r,x,y,t);</span><br><span class="line">    f[k]=(f[k+k+<span class="number">1</span>]+f[k+k])%p;</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//加法操作</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">in2</span><span class="params">(<span class="type">int</span> k,<span class="type">int</span> l,<span class="type">int</span> r,<span class="type">int</span> x,<span class="type">int</span> y,ll t)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(y&lt;l||x&gt;r) <span class="keyword">return</span> ;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(x&lt;=l&amp;&amp;r&lt;=y)&#123;</span><br><span class="line">        add[k]=(add[k]+t)%p;</span><br><span class="line">        f[k]=(f[k]+t*(r-l+<span class="number">1</span>))%p;</span><br><span class="line">        <span class="keyword">return</span> ;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">push</span>(k,l,r);</span><br><span class="line">    <span class="type">int</span> m=(l+r)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">    <span class="built_in">in2</span>(k+k,l,m,x,y,t);</span><br><span class="line">    <span class="built_in">in2</span>(k+k+<span class="number">1</span>,m+<span class="number">1</span>,r,x,y,t);</span><br><span class="line">    f[k]=(f[k+k+<span class="number">1</span>]+f[k+k])%p;</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//计算区间和</span></span><br><span class="line"><span class="function">ll <span class="title">cal</span><span class="params">(<span class="type">int</span> k,<span class="type">int</span> l,<span class="type">int</span> r,<span class="type">int</span> a,<span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(b&lt;l||a&gt;r) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(a&lt;=l&amp;&amp;r&lt;=b)&#123;</span><br><span class="line">        <span class="keyword">return</span> f[k];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">push</span>(k,l,r);</span><br><span class="line">    <span class="type">int</span> m=(l+r)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> (<span class="built_in">cal</span>(k+k,l,m,a,b)+<span class="built_in">cal</span>(k+k+<span class="number">1</span>,m+<span class="number">1</span>,r,a,b))%p;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> n,m;cin&gt;&gt;n&gt;&gt;m&gt;&gt;p;</span><br><span class="line">	<span class="built_in">rep</span>(i,<span class="number">1</span>,n)cin&gt;&gt;num[i];</span><br><span class="line">	<span class="built_in">build</span>(<span class="number">1</span>,<span class="number">1</span>,n);</span><br><span class="line">	<span class="keyword">while</span>(m--)&#123;</span><br><span class="line">		<span class="type">int</span> t;cin&gt;&gt;t;</span><br><span class="line">		<span class="keyword">if</span>(t==<span class="number">1</span>)&#123;</span><br><span class="line">			<span class="type">int</span> a,b;ll c;cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;</span><br><span class="line">			<span class="built_in">in1</span>(<span class="number">1</span>,<span class="number">1</span>,n,a,b,c);</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(t==<span class="number">2</span>)&#123;</span><br><span class="line">            <span class="type">int</span> a,b;ll c;cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;</span><br><span class="line">            <span class="built_in">in2</span>(<span class="number">1</span>,<span class="number">1</span>,n,a,b,c);</span><br><span class="line">        &#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="type">int</span> b,c;cin&gt;&gt;b&gt;&gt;c;</span><br><span class="line">			cout&lt;&lt;<span class="built_in">cal</span>(<span class="number">1</span>,<span class="number">1</span>,n,b,c)&lt;&lt;endl;</span><br><span class="line">	    &#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>差不多吧，总觉得还是有个点不是很透彻，慢慢悟吧<br />
 2022-9-8   19：54</p>
 <p>微博摸张长图<br />

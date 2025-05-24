@@ -56,8 +56,6 @@
         
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
         
-            
-        
     
     <!-- import script -->
     
@@ -637,22 +635,9 @@
 <p>若求 3 到 6的区间和时，便是 前缀和 6 - 前缀和 2，而 前缀和 6 = t[6] +  t[4] ，所以3 到 6 的区间和便是  t[6] +  t[4] - t[2]</p>
 <p><img src="/picture/tree.png" class="lazyload placeholder" data-srcset="/picture/tree.png" srcset="https://pic1.zhimg.com/v2-cd38920285d125be80b3eb504052c550_b.webp" alt="" /></p>
 <p>单点加值：</p>
-<pre class="highlight"><code class="cpp"><span class="hljs-comment">//包含a点的父亲位置都要加上b</span>
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-type">int</span> a,<span class="hljs-type">int</span> b)</span></span>&#123;
-    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=a;i&lt;=n;i+=<span class="hljs-built_in">lowbit</span>(i))
-        t[i]+=b;
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//包含a点的父亲位置都要加上b</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=a;i&lt;=n;i+=<span class="built_in">lowbit</span>(i))</span><br><span class="line">        t[i]+=b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>前缀和：</p>
-<pre class="highlight"><code class="cpp"><span class="hljs-comment">//x所包含的区间和 + x区间前面所包含的区间和</span>
-<span class="hljs-comment">//x区间的长度为lowbit(x)</span>
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">sum</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span>&#123;
-    <span class="hljs-type">int</span> ans=<span class="hljs-number">0</span>;
-    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=x;i&gt;<span class="hljs-number">0</span>;i-=<span class="hljs-built_in">lowbit</span>(i))
-        ans+=t[i];
-    <span class="hljs-keyword">return</span> ans;
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//x所包含的区间和 + x区间前面所包含的区间和</span></span><br><span class="line"><span class="comment">//x区间的长度为lowbit(x)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sum</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> ans=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=x;i&gt;<span class="number">0</span>;i-=<span class="built_in">lowbit</span>(i))</span><br><span class="line">        ans+=t[i];</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>下面就是单点改值和区间和查询的问题</p>
 <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3374">P3374 【模板】树状数组 1 - 洛谷 | 计算机科学教育新生态 </a></p>
 <p>题目描述<br />
@@ -673,45 +658,7 @@ $     (0 1 0 1 0)_B$   //x  的补码<br />
 &amp;    <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>10110</mn><msub><mo stretchy="false">)</mo><mi>B</mi></msub></mrow><annotation encoding="application/x-tex">(1 0 1 1 0)_B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mord">0</span><span class="mord">1</span><span class="mord">1</span><span class="mord">0</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05017em;">B</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>   //-x 的补码<br />
 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo></mrow><annotation encoding="application/x-tex">=</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span></span></span></span>  <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>00010</mn><msub><mo stretchy="false">)</mo><mi>B</mi></msub></mrow><annotation encoding="application/x-tex">(0 0 0 1 0)_B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">1</span><span class="mord">0</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05017em;">B</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>   //按位与后的补码(同时也是原码)<br />
 于是我们便可以得出x在二进制位下最小1所表示的数值</p>
-<pre class="highlight"><code class="cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> rep(i,n,m) for(int i=n;i&lt;=m;++i)</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> per(i,n,m) for(int i=n;i&gt;=m;--i)</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> PII pair<span class="hljs-string">&lt;int,int&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> lowbit(x) x&amp;-x</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> INF 1&lt;&lt;30</span>
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-<span class="hljs-keyword">typedef</span> <span class="hljs-type">long</span> <span class="hljs-type">long</span> ll;
-<span class="hljs-type">const</span> <span class="hljs-type">int</span> N=<span class="hljs-number">5e5</span>+<span class="hljs-number">10</span>;
-<span class="hljs-type">int</span> t[N],n,q;
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-type">int</span> a,<span class="hljs-type">int</span> b)</span></span>&#123;
-    <span class="hljs-comment">//父亲节点都 +b</span>
-    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=a;i&lt;=n;i+=<span class="hljs-built_in">lowbit</span>(i))t[i]+=b;
-&#125;
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">sum</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span>&#123;
-    <span class="hljs-type">int</span> ans=<span class="hljs-number">0</span>;
-    前面每一段区间和
-    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=x;i&gt;<span class="hljs-number">0</span>;i-=<span class="hljs-built_in">lowbit</span>(i))ans+=t[i];
-    <span class="hljs-keyword">return</span> ans;
-&#125;
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
-</span>&#123;
-    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>);cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
-    cin&gt;&gt;n&gt;&gt;q;
-    <span class="hljs-built_in">rep</span>(i,<span class="hljs-number">1</span>,n)&#123;
-        <span class="hljs-type">int</span> x;cin&gt;&gt;x;
-        <span class="hljs-built_in">add</span>(i,x);
-    &#125;
-    <span class="hljs-keyword">while</span>(q--)&#123;
-        <span class="hljs-type">int</span> a,b,c;cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;
-        <span class="hljs-keyword">if</span>(a==<span class="hljs-number">1</span>)
-            <span class="hljs-built_in">add</span>(b,c);
-        <span class="hljs-keyword">else</span> 
-            cout&lt;&lt;<span class="hljs-built_in">sum</span>(c)-<span class="hljs-built_in">sum</span>(b<span class="hljs-number">-1</span>)&lt;&lt;endl;
-            <span class="hljs-comment">//前缀和差</span>
-    &#125;
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,n,m) for(int i=n;i&lt;=m;++i)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,n,m) for(int i=n;i&gt;=m;--i)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> PII pair<span class="string">&lt;int,int&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> lowbit(x) x&amp;-x</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> INF 1&lt;&lt;30</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">5e5</span>+<span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> t[N],n,q;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="comment">//父亲节点都 +b</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=a;i&lt;=n;i+=<span class="built_in">lowbit</span>(i))t[i]+=b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sum</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> ans=<span class="number">0</span>;</span><br><span class="line">    前面每一段区间和</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=x;i&gt;<span class="number">0</span>;i-=<span class="built_in">lowbit</span>(i))ans+=t[i];</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ios::<span class="built_in">sync_with_stdio</span>(<span class="number">0</span>);cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;q;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">1</span>,n)&#123;</span><br><span class="line">        <span class="type">int</span> x;cin&gt;&gt;x;</span><br><span class="line">        <span class="built_in">add</span>(i,x);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(q--)&#123;</span><br><span class="line">        <span class="type">int</span> a,b,c;cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;</span><br><span class="line">        <span class="keyword">if</span>(a==<span class="number">1</span>)</span><br><span class="line">            <span class="built_in">add</span>(b,c);</span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">            cout&lt;&lt;<span class="built_in">sum</span>(c)-<span class="built_in">sum</span>(b<span class="number">-1</span>)&lt;&lt;endl;</span><br><span class="line">            <span class="comment">//前缀和差</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>还有区间改值和单点查询的问题，</p>
 <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3368">P3368 【模板】树状数组 2 - 洛谷 | 计算机科学教育新生态 </a></p>
 <p>题目描述<br />
@@ -722,56 +669,13 @@ $     (0 1 0 1 0)_B$   //x  的补码<br />
 <p>接下来 M 行每行包含 2 或 4 个整数，表示一个操作，具体如下：</p>
 <p>操作 1： 格式：1 x y k 含义：将区间 [x,y] 内每个数加上 k；</p>
 <p>操作 2： 格式：2 x 含义：输出第 x 个数的值。</p>
-<pre class="highlight"><code class="">下标i    0  1  2  3  4  5  6  7    
-
-原数值a  0  1  2  1 -2  4  9  0
-
-差分值b  0  1  1 -1 -3  6  5 -9
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">下标i    0  1  2  3  4  5  6  7    </span><br><span class="line"></span><br><span class="line">原数值a  0  1  2  1 -2  4  9  0</span><br><span class="line"></span><br><span class="line">差分值b  0  1  1 -1 -3  6  5 -9</span><br></pre></td></tr></table></figure>
 <p>对于区间改值后的区间和，我们知道可以用差分做，那差分是什么呢，</p>
 <p>差分 b[i] 就是 a[i] - a[i-1]  ，而 a[n] 可以用 表示（哈哈哈，公式好大个），当区间 [l，r] 内+x时，只需 b[l] +x，b[r+1] -x，即可保证只有区间内值增加</p>
 <p>对于该题，我们不妨初始化差分数组为0，然后使次区间改值时对差分数组边界进行两次操作</p>
 <p>最后的单点查询就是改变的差分值加上原数值，即 sum(x) + a[x]</p>
 <p>（以下用t数组代表差分数组，q数组表示原数值数组）</p>
-<pre class="highlight"><code class="cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> rep(i,n,m) for(int i=n;i&lt;=m;++i)</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> per(i,n,m) for(int i=n;i&gt;=m;--i)</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> PII pair<span class="hljs-string">&lt;int,int&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> lowbit(x)  x&amp;-x</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> INF 1&lt;&lt;30</span>
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-<span class="hljs-keyword">typedef</span> <span class="hljs-type">long</span> <span class="hljs-type">long</span> ll;
-<span class="hljs-type">const</span> <span class="hljs-type">int</span> N=<span class="hljs-number">5e5</span>+<span class="hljs-number">10</span>;
-<span class="hljs-type">int</span> q[N],t[N],n,T;
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-type">int</span> a,<span class="hljs-type">int</span> b)</span></span>&#123;
-    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=a;i&lt;=n;i+=<span class="hljs-built_in">lowbit</span>(i))t[i]+=b;
-&#125;
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">sum</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span>&#123;
-    <span class="hljs-type">int</span> ans=<span class="hljs-number">0</span>;
-    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=x;i&gt;<span class="hljs-number">0</span>;i-=<span class="hljs-built_in">lowbit</span>(i))ans+=t[i];
-    <span class="hljs-keyword">return</span> ans;
-&#125;
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
-</span>&#123;
-    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>);cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
-    cin&gt;&gt;n&gt;&gt;T;
-    <span class="hljs-built_in">rep</span>(i,<span class="hljs-number">1</span>,n)cin&gt;&gt;q[i];
-    <span class="hljs-keyword">while</span>(T--)&#123;
-        <span class="hljs-type">int</span> x,a,b,c;cin&gt;&gt;x;
-        <span class="hljs-keyword">if</span>(x==<span class="hljs-number">1</span>)&#123;
-            cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;
-            <span class="hljs-comment">//差分边界进行操作</span>
-            <span class="hljs-built_in">add</span>(a,c);
-            <span class="hljs-built_in">add</span>(b+<span class="hljs-number">1</span>,-c);
-        &#125;<span class="hljs-keyword">else</span> &#123;
-            cin&gt;&gt;a;
-            <span class="hljs-comment">//单点查询值=差分数组前缀和+原数值</span>
-            cout&lt;&lt;<span class="hljs-built_in">sum</span>(a)+q[a]&lt;&lt;endl;   
-        &#125;
-    &#125;
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,n,m) for(int i=n;i&lt;=m;++i)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,n,m) for(int i=n;i&gt;=m;--i)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> PII pair<span class="string">&lt;int,int&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> lowbit(x)  x&amp;-x</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> INF 1&lt;&lt;30</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">5e5</span>+<span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> q[N],t[N],n,T;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=a;i&lt;=n;i+=<span class="built_in">lowbit</span>(i))t[i]+=b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sum</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> ans=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=x;i&gt;<span class="number">0</span>;i-=<span class="built_in">lowbit</span>(i))ans+=t[i];</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ios::<span class="built_in">sync_with_stdio</span>(<span class="number">0</span>);cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;T;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">1</span>,n)cin&gt;&gt;q[i];</span><br><span class="line">    <span class="keyword">while</span>(T--)&#123;</span><br><span class="line">        <span class="type">int</span> x,a,b,c;cin&gt;&gt;x;</span><br><span class="line">        <span class="keyword">if</span>(x==<span class="number">1</span>)&#123;</span><br><span class="line">            cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;</span><br><span class="line">            <span class="comment">//差分边界进行操作</span></span><br><span class="line">            <span class="built_in">add</span>(a,c);</span><br><span class="line">            <span class="built_in">add</span>(b+<span class="number">1</span>,-c);</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            cin&gt;&gt;a;</span><br><span class="line">            <span class="comment">//单点查询值=差分数组前缀和+原数值</span></span><br><span class="line">            cout&lt;&lt;<span class="built_in">sum</span>(a)+q[a]&lt;&lt;endl;   </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>对于某些会越界的样例，必要时要int改long long。</p>
 <p>今天刚学，有点囫囵吞枣，描述的不太清楚。</p>
 
