@@ -552,7 +552,7 @@ pre:hover::-webkit-scrollbar-thumb:hover,
 #l_side .side_category {
   min-height: auto;
   order: ;
-  background: #fff;
+  background: rgba(255,255,255,0.6);
 }
 #l_side .side_category .content {
   padding: 8px 0;
@@ -616,7 +616,7 @@ pre:hover::-webkit-scrollbar-thumb:hover,
   background: rgba(217,241,231,0.8);
 }
 #l_side .side_tagcloud {
-  background: #fff;
+  background: rgba(255,255,255,0.6);
   order: ;
 }
 #l_side .side_tagcloud .content {
@@ -636,7 +636,7 @@ pre:hover::-webkit-scrollbar-thumb:hover,
 }
 #l_side .side_recent_post {
   order: ;
-  background: #fff;
+  background: rgba(255,255,255,0.6);
 }
 #l_side .side_recent_post .aside-list .aside-list-item {
   padding: 0.5rem 0;
@@ -685,7 +685,7 @@ pre:hover::-webkit-scrollbar-thumb:hover,
 }
 #l_side .side_archives {
   order: ;
-  background: #fff;
+  background: rgba(255,255,255,0.6);
 }
 #l_side .side_archives .card-archive-list {
   list-style: none;
@@ -722,7 +722,7 @@ pre:hover::-webkit-scrollbar-thumb:hover,
 }
 #l_side .side_webinfo {
   order: ;
-  background: #fff;
+  background: rgba(255,255,255,0.6);
 }
 #l_side .side_webinfo .webinfo-item {
   display: block;
@@ -2368,7 +2368,7 @@ pre:hover::-webkit-scrollbar-thumb:hover,
   box-sizing: border-box;
   transition: all 0.3s;
   position: relative;
-  background: url("https://img10.360buyimg.com/ddimg/jfs/t1/166587/8/21344/72069/6088c24fEda5fdeb6/f9730ab637b7ca47.png");
+  background: rgba(255,255,255,0.6);
 }
 .motto .motto-title {
   text-align: center;
@@ -2392,7 +2392,7 @@ pre:hover::-webkit-scrollbar-thumb:hover,
   border-radius: 10px;
   box-sizing: border-box;
   transition: all 0.3s;
-  background: url("https://img10.360buyimg.com/ddimg/jfs/t1/166587/8/21344/72069/6088c24fEda5fdeb6/f9730ab637b7ca47.png");
+  background: rgba(255,255,255,0.6);
 }
 .index-notice .index-notice-icon {
   color: #f00;
